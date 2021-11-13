@@ -18,7 +18,7 @@ public class TestItemSpawner : MonoBehaviour
         while(true)
         {
             Instantiate(item);
-            item.GetComponent<TestItem>().prefab = item;
+            item.GetComponent<TestItem>().spawner = gameObject;
             yield return new WaitForSeconds(timeToWaitBetweenSpawns);
         }
     }

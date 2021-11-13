@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class TestItem : MonoBehaviour
 {
-    public GameObject prefab;
-    public void Destroy()
-    {
-        Destroy(this.gameObject);
-        prefab = gameObject;
-    }
+    public GameObject spawner = null;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<TestInventoryPlayer>().UpdateText(prefab);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<TestInventoryPlayer>().UpdateText(spawner.GetComponent<TestItemSpawner>().item);
             Debug.Log("Collision");
             Destroy(this.gameObject);
         }

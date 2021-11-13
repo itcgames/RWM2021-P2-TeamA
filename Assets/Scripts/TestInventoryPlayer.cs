@@ -10,6 +10,7 @@ public class TestInventoryPlayer : MonoBehaviour
     public Text itemAmount;
     private Inventory _inventory;
     private int _itemCounter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,8 +32,8 @@ public class TestInventoryPlayer : MonoBehaviour
     public void UpdateText(GameObject itemObject)
     {
         _inventory.AddItem(itemObject, 1);
-        //stackAmount.text = "Stack Amount: " + _inventory.Items.Count.ToString();
-        //_itemCounter++;
-        //itemAmount.text = "Total Items: " + _itemCounter.ToString();
+        stackAmount.text = "Stack Amount: " + _inventory.Items.Count.ToString();
+        _itemCounter++;
+        itemAmount.text = "Total Items: " + _itemCounter.ToString();
     }
 }
