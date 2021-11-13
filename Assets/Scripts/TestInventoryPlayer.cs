@@ -28,17 +28,11 @@ public class TestInventoryPlayer : MonoBehaviour
         transform.Translate(movement);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void UpdateText(GameObject itemObject)
     {
-        if(collision.tag == "Item")
-        {
-            Debug.Log("colliding");
-            InventoryItem item = collision.gameObject.GetComponent<InventoryItem>();
-            _inventory.AddItem(item.gameObject, 1);
-            stackAmount.text = "Stack Amount: " + _inventory.Items.Count.ToString();
-            _itemCounter++;
-            itemAmount.text = "Total Items: " + _itemCounter.ToString();
-            Destroy(collision.gameObject);
-        }
+        _inventory.AddItem(itemObject, 1);
+        //stackAmount.text = "Stack Amount: " + _inventory.Items.Count.ToString();
+        //_itemCounter++;
+        //itemAmount.text = "Total Items: " + _itemCounter.ToString();
     }
 }
