@@ -158,6 +158,13 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "rwm.inventory": {
+      "version": "https://github.com/itcgames/RWM-InventorySystem.git?path=/Packages/rwm.inventory#v0.2.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "2eade18ff2b6b49aa4f6a76aec593df272bee787"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
