@@ -9,13 +9,14 @@ public class ShowPanel : MonoBehaviour
     public Image itemBox;
     public Image activeItem;
     private Vector3 _origanlPosition;
-    private List<SpriteRenderer> items;
+    private Vector2 _itemPosition;
     public Canvas canvas;
+    private int _itemCount = 0;
 
     private void Start()
     {
         _origanlPosition = new Vector3(panelToShow.transform.position.x, panelToShow.transform.position.y, panelToShow.transform.position.z);
-        items = new List<SpriteRenderer>();
+        _itemPosition = new Vector2(-180f, 35f);
     }
     public void PanelShow()
     {
@@ -29,25 +30,28 @@ public class ShowPanel : MonoBehaviour
 
     private void Update()
     {
-        if(items != null)
-        {
-            foreach(SpriteRenderer image in items)
-            {
-                image.transform.position = new Vector3(image.transform.position.x, itemBox.GetComponent<RectTransform>().position.y, 0);
-            }
-        }
+
     }
 
 
-    public void AddItemImage(SpriteRenderer sprite)
+    public void AddItemImage(string texture, string itemName)
     {
-        GameObject imgObject = new GameObject("item");
+        _itemCount++;
+        if (_itemCount > 18) return;
+        GameObject imgObject = new GameObject(itemName);
         RectTransform trans = imgObject.AddComponent<RectTransform>();
         trans.transform.SetParent(itemBox.transform);
         trans.localScale = Vector3.one;
-        trans.anchoredPosition = new Vector2(0f, 0f);
+        trans.anchoredPosition = _itemPosition;
+        _itemPosition.x += 45;
+        if(_itemCount == 9)
+        {
+            _itemPosition.x = -180f;
+            _itemPosition.y -= 55f;
+        }
+        trans.sizeDelta = new Vector2(30, 30);
         Image image = imgObject.AddComponent<Image>();
-        Texture2D tex = Resources.Load<Texture2D>("Bomb");
+        Texture2D tex = Resources.Load<Texture2D>(texture);
         image.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
         imgObject.transform.SetParent(itemBox.transform);
     }

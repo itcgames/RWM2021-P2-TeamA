@@ -48,12 +48,12 @@ public class TestInventoryPlayer : MonoBehaviour
         }
     }
 
-    public void UpdateText(GameObject itemObject, SpriteRenderer image)
+    public void UpdateText(GameObject itemObject, string texture, string itemName)
     {
         _inventory.AddItem(itemObject, 1); 
         if(_inventory.Items.Count > _stackCounter)
         {
-            _showPanel.AddItemImage(image);
+            _showPanel.AddItemImage(texture, itemName);
             _stackCounter++;
         }
     }

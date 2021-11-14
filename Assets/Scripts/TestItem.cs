@@ -11,7 +11,7 @@ public class TestItem : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             SpriteRenderer sprite = spawner.GetComponent<TestItemSpawner>().item.GetComponent<SpriteRenderer>();
-            GameObject.FindGameObjectWithTag("Player").GetComponent<TestInventoryPlayer>().UpdateText(spawner.GetComponent<TestItemSpawner>().item, sprite);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<TestInventoryPlayer>().UpdateText(spawner.GetComponent<TestItemSpawner>().item, "Bomb", gameObject.GetComponent<InventoryItem>().Name);
             Debug.Log("Collision");
             Destroy(this.gameObject);
         }

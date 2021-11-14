@@ -675,7 +675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dbf903c8f92df94792142c5d1a44221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxStackAmount: 5
+  _maxStackAmount: 16
   _useDefaultDisplay: 0
   _font: {fileID: 0}
 --- !u!114 &231892091
