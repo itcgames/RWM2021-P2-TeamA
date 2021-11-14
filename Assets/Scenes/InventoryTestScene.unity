@@ -691,6 +691,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelToShow: {fileID: 147254812}
+  itemBox: {fileID: 594549086}
+  activeItem: {fileID: 538955068}
+  canvas: {fileID: 735762881}
 --- !u!1 &300770037
 GameObject:
   m_ObjectHideFlags: 0

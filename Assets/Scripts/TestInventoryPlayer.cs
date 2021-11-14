@@ -11,7 +11,7 @@ public class TestInventoryPlayer : MonoBehaviour
     private Inventory _inventory;
     private ShowPanel _showPanel;
     private bool _showInventory;
-    private int _itemCounter;
+    private int _stackCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +19,7 @@ public class TestInventoryPlayer : MonoBehaviour
         _showInventory = false;
         _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
-        _itemCounter = 0;
+        _stackCounter = 0;
     }
 
     // Update is called once per frame
@@ -48,11 +48,13 @@ public class TestInventoryPlayer : MonoBehaviour
         }
     }
 
-    public void UpdateText(GameObject itemObject)
+    public void UpdateText(GameObject itemObject, SpriteRenderer image)
     {
-        _inventory.AddItem(itemObject, 1);
-        stackAmount.text = "Stack Amount: " + _inventory.Items.Count.ToString();
-        _itemCounter++;
-        itemAmount.text = "Total Items: " + _itemCounter.ToString();
+        _inventory.AddItem(itemObject, 1); 
+        if(_inventory.Items.Count > _stackCounter)
+        {
+            _showPanel.AddItemImage(image);
+            _stackCounter++;
+        }
     }
 }
