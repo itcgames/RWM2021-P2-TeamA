@@ -9,11 +9,15 @@ public class TestInventoryPlayer : MonoBehaviour
     public Text stackAmount;
     public Text itemAmount;
     private Inventory _inventory;
+    private ShowPanel _showPanel;
+    private bool _showInventory;
     private int _itemCounter;
 
     // Start is called before the first frame update
     void Start()
     {
+        _showInventory = false;
+        _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
         _itemCounter = 0;
     }
@@ -27,6 +31,21 @@ public class TestInventoryPlayer : MonoBehaviour
         Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
         movement *= Time.deltaTime;
         transform.Translate(movement);
+
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            _showInventory = !_showInventory;
+            if (_showInventory)
+            {
+                _showPanel.PanelShow();
+                Time.timeScale = 0;
+            }
+            else
+            {
+                _showPanel.MovePanelBack();
+                Time.timeScale = 1;
+            }
+        }
     }
 
     public void UpdateText(GameObject itemObject)
