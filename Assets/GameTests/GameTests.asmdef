@@ -3,7 +3,8 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Scripts"
+        "Scripts",
+        "MichaelRRyan.TopdownCharacterController"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
