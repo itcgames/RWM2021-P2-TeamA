@@ -12,11 +12,16 @@ public class TestInventoryPlayer : MonoBehaviour
     private ShowPanel _showPanel;
     private bool _showInventory;
     private int _stackCounter;
+    private Animator _inventoryAnimator;
+    public GameObject panel;
 
     // Start is called before the first frame update
     void Start()
     {
+        _inventoryAnimator = panel.GetComponent<Animator>();
         _showInventory = false;
+        _inventoryAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        _inventoryAnimator.SetBool("isHidden", !_showInventory);
         _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
         _stackCounter = 0;
@@ -35,14 +40,15 @@ public class TestInventoryPlayer : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.I))
         {
             _showInventory = !_showInventory;
+            _inventoryAnimator.SetBool("isHidden", !_showInventory);
             if (_showInventory)
             {
-                _showPanel.PanelShow();
+                //_showPanel.PanelShow();
                 Time.timeScale = 0;
             }
             else
             {
-                _showPanel.MovePanelBack();
+                //_showPanel.MovePanelBack();
                 Time.timeScale = 1;
             }
         }
