@@ -21,7 +21,7 @@ public class TestInventoryPlayer : MonoBehaviour
         _inventoryAnimator = panel.GetComponent<Animator>();
         _showInventory = false;
         _inventoryAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
-        _inventoryAnimator.SetBool("isHidden", !_showInventory);
+        _inventoryAnimator.SetBool("isHidden", _showInventory);
         _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
         _stackCounter = 0;
@@ -40,7 +40,7 @@ public class TestInventoryPlayer : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.I))
         {
             _showInventory = !_showInventory;
-            _inventoryAnimator.SetBool("isHidden", !_showInventory);
+            _inventoryAnimator.SetBool("isHidden", _showInventory);
             if (_showInventory)
             {
                 //_showPanel.PanelShow();
