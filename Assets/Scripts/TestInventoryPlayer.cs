@@ -9,13 +9,17 @@ public class TestInventoryPlayer : MonoBehaviour
     public Text stackAmount;
     public Text itemAmount;
     private Inventory _inventory;
-    private int _itemCounter;
+    private ShowPanel _showPanel;
+    private bool _showInventory;
+    private int _stackCounter;
 
     // Start is called before the first frame update
     void Start()
     {
+        _showInventory = false;
+        _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
-        _itemCounter = 0;
+        _stackCounter = 0;
     }
 
     // Update is called once per frame
@@ -27,13 +31,30 @@ public class TestInventoryPlayer : MonoBehaviour
         Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
         movement *= Time.deltaTime;
         transform.Translate(movement);
+
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            _showInventory = !_showInventory;
+            if (_showInventory)
+            {
+                _showPanel.PanelShow();
+                Time.timeScale = 0;
+            }
+            else
+            {
+                _showPanel.MovePanelBack();
+                Time.timeScale = 1;
+            }
+        }
     }
 
-    public void UpdateText(GameObject itemObject)
+    public void UpdateText(GameObject itemObject, string texture, string itemName)
     {
-        _inventory.AddItem(itemObject, 1);
-        stackAmount.text = "Stack Amount: " + _inventory.Items.Count.ToString();
-        _itemCounter++;
-        itemAmount.text = "Total Items: " + _itemCounter.ToString();
+        _inventory.AddItem(itemObject, 1); 
+        if(_inventory.Items.Count > _stackCounter)
+        {
+            _showPanel.AddItemImage(texture, itemName);
+            _stackCounter++;
+        }
     }
 }
