@@ -402,8 +402,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4, y: 471.4}
-  m_SizeDelta: {x: 13.8532715, y: -31.79895}
+  m_AnchoredPosition: {x: 7.5, y: 410}
+  m_SizeDelta: {x: 20.811462, y: 21.546448}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &147254814
 MonoBehaviour:
@@ -619,6 +619,7 @@ MonoBehaviour:
   speed: {x: 20, y: 20}
   stackAmount: {fileID: 1067990250}
   itemAmount: {fileID: 1489412732}
+  panel: {fileID: 147254812}
 --- !u!212 &231892088
 SpriteRenderer:
   m_ObjectHideFlags: 0
