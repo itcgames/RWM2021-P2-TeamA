@@ -79,7 +79,7 @@
       "dependencies": {}
     },
     "com.unity.collab-proxy": {
-      "version": "1.10.2",
+      "version": "1.12.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -171,6 +171,13 @@
       "source": "git",
       "dependencies": {},
       "hash": "2eade18ff2b6b49aa4f6a76aec593df272bee787"
+    },
+    "rwm.leveleditor": {
+      "version": "https://github.com/itcgames/RWM-LevelEditor.git?path=/Level%20Editor/Packages/rwm.leveleditor#V0.1.01",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9b582bb5dce20c83cc28f1f0ecb191e6f3656093"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
