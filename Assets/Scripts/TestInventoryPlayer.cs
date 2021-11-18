@@ -32,18 +32,23 @@ public class TestInventoryPlayer : MonoBehaviour
         _inventory = GetComponentInChildren<Inventory>();
         _stackCounter = 0;
     }
+    private void Move()
+    {
+        if(!_showInventory)
+        {
+            float xInput = Input.GetAxis("Horizontal");
+            float yInput = Input.GetAxis("Vertical");
 
+            Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
+            movement *= Time.deltaTime;
+            transform.Translate(movement);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
-        float xInput = Input.GetAxis("Horizontal");
-        float yInput = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
-        movement *= Time.deltaTime;
-        transform.Translate(movement);
-
-        if(Input.GetKeyDown(KeyCode.I))
+        Move();
+        if (Input.GetKeyDown(KeyCode.I))
         {
             _showInventory = !_showInventory;
             _inventoryAnimator.SetBool("isHidden", _showInventory);
@@ -54,6 +59,25 @@ public class TestInventoryPlayer : MonoBehaviour
             else
             {
                 Time.timeScale = 1;
+            }
+        }
+        if(_showInventory)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                MoveUpInInventory();
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                MoveDownInInventory();
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                MoveLeftInInventory();
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                MoveRightInInventory();
             }
         }
     }
@@ -73,6 +97,7 @@ public class TestInventoryPlayer : MonoBehaviour
         if (_cursorLocationInInventory.x > 0)
         {
             _cursorLocationInInventory.x--;
+            cursor.transform.position += new Vector3(-45, 0, 0);
         }
     }
 
@@ -81,6 +106,7 @@ public class TestInventoryPlayer : MonoBehaviour
         if (_cursorLocationInInventory.x < (_maxItemsPerRow - 1))
         {
             _cursorLocationInInventory.x++;
+            cursor.transform.position += new Vector3(45, 0,0);
         }
     }
 
@@ -88,7 +114,8 @@ public class TestInventoryPlayer : MonoBehaviour
     {
         if (_cursorLocationInInventory.y < (_maxItemsPerColumn - 1))
         {
-            _cursorLocationInInventory.y--;
+            _cursorLocationInInventory.y++;
+            cursor.transform.position += new Vector3(0, -55, 0);
         }
     }
 
@@ -97,6 +124,7 @@ public class TestInventoryPlayer : MonoBehaviour
         if(_cursorLocationInInventory.y > 0)
         {
             _cursorLocationInInventory.y--;
+            cursor.transform.position += new Vector3(0, 55, 0);
         }
     }
 }
