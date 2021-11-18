@@ -15,11 +15,11 @@ public class TestInventoryPlayer : MonoBehaviour
     private int _stackCounter;
     private Animator _inventoryAnimator;
     public GameObject panel;
-    [SerializeField]
-    private uint _maxItemsPerRow = 9;
-    [SerializeField]
-    private uint _maxItemsPerColumn = 2;
+    public uint _maxItemsPerRow = 9;
+    public uint _maxItemsPerColumn = 2;
     private Vector2 _cursorLocationInInventory = new Vector2(0, 0);
+    [HideInInspector]
+    public uint currentItemId = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -88,6 +88,7 @@ public class TestInventoryPlayer : MonoBehaviour
         if(_inventory.Items.Count > _stackCounter)
         {
             _showPanel.AddItemImage(texture, itemName);
+            _showPanel.SetActiveItem();
             _stackCounter++;
         }
     }
@@ -96,8 +97,10 @@ public class TestInventoryPlayer : MonoBehaviour
     {
         if (_cursorLocationInInventory.x > 0)
         {
+            currentItemId--;
             _cursorLocationInInventory.x--;
             cursor.transform.position += new Vector3(-45, 0, 0);
+            _showPanel.SetActiveItem();
         }
     }
 
@@ -105,8 +108,13 @@ public class TestInventoryPlayer : MonoBehaviour
     {
         if (_cursorLocationInInventory.x < (_maxItemsPerRow - 1))
         {
-            _cursorLocationInInventory.x++;
-            cursor.transform.position += new Vector3(45, 0,0);
+            if(_inventory.Items.Count > currentItemId + 1)
+            {
+                currentItemId++;
+                _cursorLocationInInventory.x++;
+                cursor.transform.position += new Vector3(45, 0, 0);
+                _showPanel.SetActiveItem();
+            }
         }
     }
 
@@ -114,8 +122,13 @@ public class TestInventoryPlayer : MonoBehaviour
     {
         if (_cursorLocationInInventory.y < (_maxItemsPerColumn - 1))
         {
-            _cursorLocationInInventory.y++;
-            cursor.transform.position += new Vector3(0, -55, 0);
+            if(_inventory.Items.Count > currentItemId + _maxItemsPerRow)
+            {
+                currentItemId += _maxItemsPerRow;
+                _cursorLocationInInventory.y++;
+                cursor.transform.position += new Vector3(0, -55, 0);
+                _showPanel.SetActiveItem();
+            }           
         }
     }
 
@@ -123,8 +136,10 @@ public class TestInventoryPlayer : MonoBehaviour
     {
         if(_cursorLocationInInventory.y > 0)
         {
+            currentItemId -= _maxItemsPerRow;
             _cursorLocationInInventory.y--;
             cursor.transform.position += new Vector3(0, 55, 0);
+            _showPanel.SetActiveItem();
         }
     }
 }
