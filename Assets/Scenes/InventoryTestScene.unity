@@ -619,7 +619,10 @@ MonoBehaviour:
   speed: {x: 20, y: 20}
   stackAmount: {fileID: 1067990250}
   itemAmount: {fileID: 1489412732}
+  cursor: {fileID: 1730682221}
   panel: {fileID: 147254812}
+  _maxItemsPerRow: 9
+  _maxItemsPerColumn: 2
 --- !u!212 &231892088
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -696,7 +699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dbf903c8f92df94792142c5d1a44221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxStackAmount: 16
+  _maxStackAmount: 45
   _useDefaultDisplay: 0
   _font: {fileID: 0}
 --- !u!114 &231892091
@@ -715,6 +718,8 @@ MonoBehaviour:
   itemBox: {fileID: 594549086}
   activeItem: {fileID: 538955068}
   canvas: {fileID: 735762881}
+  NumberPerRow: 9
+  NumberOfColumns: 2
 --- !u!1 &300770037
 GameObject:
   m_ObjectHideFlags: 0

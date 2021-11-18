@@ -8,12 +8,18 @@ public class TestInventoryPlayer : MonoBehaviour
     public Vector2 speed = new Vector2(20, 20);
     public Text stackAmount;
     public Text itemAmount;
+    public GameObject cursor;
     private Inventory _inventory;
     private ShowPanel _showPanel;
     private bool _showInventory;
     private int _stackCounter;
     private Animator _inventoryAnimator;
     public GameObject panel;
+    [SerializeField]
+    private uint _maxItemsPerRow = 9;
+    [SerializeField]
+    private uint _maxItemsPerColumn = 2;
+    private Vector2 _cursorLocationInInventory = new Vector2(0, 0);
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +65,38 @@ public class TestInventoryPlayer : MonoBehaviour
         {
             _showPanel.AddItemImage(texture, itemName);
             _stackCounter++;
+        }
+    }
+
+    public void MoveLeftInInventory()
+    {
+        if (_cursorLocationInInventory.x > 0)
+        {
+            _cursorLocationInInventory.x--;
+        }
+    }
+
+    public void MoveRightInInventory()
+    {
+        if (_cursorLocationInInventory.x < (_maxItemsPerRow - 1))
+        {
+            _cursorLocationInInventory.x++;
+        }
+    }
+
+    public void MoveDownInInventory()
+    {
+        if (_cursorLocationInInventory.y < (_maxItemsPerColumn - 1))
+        {
+            _cursorLocationInInventory.y--;
+        }
+    }
+
+    public void MoveUpInInventory()
+    {
+        if(_cursorLocationInInventory.y > 0)
+        {
+            _cursorLocationInInventory.y--;
         }
     }
 }

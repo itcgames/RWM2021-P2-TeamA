@@ -8,44 +8,38 @@ public class ShowPanel : MonoBehaviour
     public GameObject panelToShow;
     public Image itemBox;
     public Image activeItem;
-    private Vector3 _origanlPosition;
     private Vector2 _itemPosition;
     public Canvas canvas;
     private int _itemCount = 0;
+    public uint NumberPerRow;
+    private uint _numberPerRow = 0;
+    public uint NumberOfColumns;
+    private uint _numberOfColumns = 0;
 
     private void Start()
     {
-        _origanlPosition = new Vector3(panelToShow.transform.position.x, panelToShow.transform.position.y, panelToShow.transform.position.z);
         _itemPosition = new Vector2(-180f, 35f);
     }
-    public void PanelShow()
-    {
-        panelToShow.transform.position -= new Vector3(0, 407);
-    }
-
-    public void MovePanelBack()
-    {
-        panelToShow.transform.position = _origanlPosition;
-    }
-
-    private void Update()
-    {
-
-    }
-
 
     public void AddItemImage(string texture, string itemName)
     {
+        if (_numberOfColumns >= NumberOfColumns && _numberPerRow >= NumberPerRow * NumberOfColumns)
+        {
+            return;
+        }
         _itemCount++;
-        if (_itemCount > 18) return;
+        _numberPerRow++;
+        if (_numberOfColumns == 0) _numberOfColumns++;
+        if (_itemCount > GetComponentInParent<Inventory>().MaxStackAmount) return;
         GameObject imgObject = new GameObject(itemName);
         RectTransform trans = imgObject.AddComponent<RectTransform>();
         trans.transform.SetParent(itemBox.transform);
         trans.localScale = Vector3.one;
         trans.anchoredPosition = _itemPosition;
         _itemPosition.x += 45;
-        if(_itemCount == 9)
+        if(_numberPerRow == NumberPerRow && _numberOfColumns < NumberOfColumns)
         {
+            _numberOfColumns++;
             _itemPosition.x = -180f;
             _itemPosition.y -= 55f;
         }
