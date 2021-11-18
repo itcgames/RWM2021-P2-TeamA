@@ -97,6 +97,10 @@ public class TestInventoryPlayer : MonoBehaviour
     {
         if (_cursorLocationInInventory.x > 0)
         {
+            if(currentItemId % _maxItemsPerRow == 0)
+            {
+                _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() - 1);
+            }
             currentItemId--;
             _cursorLocationInInventory.x--;
             cursor.transform.position += new Vector3(-45, 0, 0);
@@ -111,6 +115,10 @@ public class TestInventoryPlayer : MonoBehaviour
             if(_inventory.Items.Count > currentItemId + 1)
             {
                 currentItemId++;
+                if (currentItemId % _maxItemsPerRow == 0)
+                {
+                    _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() + 1);
+                }
                 _cursorLocationInInventory.x++;
                 cursor.transform.position += new Vector3(45, 0, 0);
                 _showPanel.SetActiveItem();
