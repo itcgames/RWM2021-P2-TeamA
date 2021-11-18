@@ -43,18 +43,16 @@ public class TestInventoryPlayer : MonoBehaviour
             _inventoryAnimator.SetBool("isHidden", _showInventory);
             if (_showInventory)
             {
-                //_showPanel.PanelShow();
                 Time.timeScale = 0;
             }
             else
             {
-                //_showPanel.MovePanelBack();
                 Time.timeScale = 1;
             }
         }
     }
 
-    public void UpdateText(GameObject itemObject, string texture, string itemName)
+    public void AddObjectToInventory(GameObject itemObject, string texture, string itemName)
     {
         _inventory.AddItem(itemObject, 1); 
         if(_inventory.Items.Count > _stackCounter)
