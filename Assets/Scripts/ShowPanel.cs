@@ -16,8 +16,10 @@ public class ShowPanel : MonoBehaviour
     private uint NumberOfColumns;
     private uint _numberOfColumns = 0;
     private List<List<GameObject>> _itemImages;
-    private int _currentPage = 0;
-    private int _currentlySelectedPage = 0;
+    [HideInInspector]
+    public int _currentPage = 0;
+    [HideInInspector]
+    public int _currentlySelectedPage = 0;
     GameObject _activeItem;
 
     private void Start()
@@ -38,8 +40,8 @@ public class ShowPanel : MonoBehaviour
             _currentPage++;
             _numberPerRow = 0;
             _numberOfColumns = 0;
-            _itemPosition.x = 180f;
-            _itemPosition.y -= 55f;
+            _itemPosition.x = -180f;
+            _itemPosition.y = 35f;
         }
         _itemCount++;
         _numberPerRow++;
@@ -62,18 +64,23 @@ public class ShowPanel : MonoBehaviour
         Texture2D tex = Resources.Load<Texture2D>(texture);
         image.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
         imgObject.transform.SetParent(itemBox.transform);
-        _itemImages[_currentPage].Add(Instantiate(imgObject));
-        _itemImages[_currentPage][_itemImages[_currentPage].Count - 1].SetActive(false);
+        _itemImages[_currentPage].Add(imgObject);
+        if(_currentPage != _currentlySelectedPage)
+        {
+            _itemImages[_currentPage][_itemImages[_currentPage].Count - 1].SetActive(false);
+        }       
     }
 
     public void SetActiveItem()
     {
         if(_activeItem != null)
         {
-            _activeItem.SetActive(false);
+            Destroy(_activeItem);
         }
-        int currentItem = (int)GetComponentInParent<TestInventoryPlayer>().currentItemId;
-        _activeItem = _itemImages[_currentlySelectedPage][currentItem];
+        Vector2 cursorLocation = GetComponentInParent<TestInventoryPlayer>()._cursorLocationInInventory;
+        int currentItem = (int)(cursorLocation.x + cursorLocation.y);
+
+        _activeItem = Instantiate(_itemImages[_currentlySelectedPage][currentItem]);
         _activeItem.transform.position = activeItem.transform.position;
         _activeItem.SetActive(true);
         _activeItem.transform.SetParent(activeItem.transform);
@@ -81,19 +88,33 @@ public class ShowPanel : MonoBehaviour
 
     public void UpdateCurrentlySelectedPage(uint pageNumber)
     {
-        foreach(GameObject obj in _itemImages[_currentlySelectedPage])
+        for(int i = 0; i < _itemImages[_currentlySelectedPage].Count; i++)
         {
-            obj.SetActive(false);
+            _itemImages[_currentlySelectedPage][i].SetActive(false);
         }
         _currentlySelectedPage = (int)pageNumber;
-        foreach (GameObject obj in _itemImages[_currentlySelectedPage])
+        for (int i = 0; i < _itemImages[_currentlySelectedPage].Count; i++)
         {
-            obj.SetActive(true);
+            _itemImages[_currentlySelectedPage][i].SetActive(true);
         }
     }
 
     public int GetCurrentlySelectedPage()
     {
         return _currentlySelectedPage;
+    }
+
+    public bool IsMorePagesToRight()
+    {
+        return _currentlySelectedPage < _itemImages.Count - 1;
+    }
+
+    public bool IsMorePagesToLeft()
+    {
+        return _currentlySelectedPage > 0;
+    }
+    public int NumberOfItemsOnCurrentPage()
+    {
+        return _itemImages[_currentlySelectedPage].Count;
     }
 }

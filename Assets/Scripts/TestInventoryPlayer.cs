@@ -17,7 +17,8 @@ public class TestInventoryPlayer : MonoBehaviour
     public GameObject panel;
     public uint _maxItemsPerRow = 9;
     public uint _maxItemsPerColumn = 2;
-    private Vector2 _cursorLocationInInventory = new Vector2(0, 0);
+    [HideInInspector]
+    public Vector2 _cursorLocationInInventory = new Vector2(0, 0);
     [HideInInspector]
     public uint currentItemId = 0;
 
@@ -97,30 +98,41 @@ public class TestInventoryPlayer : MonoBehaviour
     {
         if (_cursorLocationInInventory.x > 0)
         {
-            if(currentItemId % _maxItemsPerRow == 0)
-            {
-                _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() - 1);
-            }
             currentItemId--;
             _cursorLocationInInventory.x--;
             cursor.transform.position += new Vector3(-45, 0, 0);
+            _showPanel.SetActiveItem();
+        }
+        if(_cursorLocationInInventory.y == 0 && _showPanel.IsMorePagesToLeft())
+        {
+            currentItemId -= 9;
+            _cursorLocationInInventory = new Vector2(8, 0);
+            cursor.transform.position += new Vector3(45 * (_maxItemsPerRow - 1), 0, 0);
+            _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() - 1);
             _showPanel.SetActiveItem();
         }
     }
 
     public void MoveRightInInventory()
     {
-        if (_cursorLocationInInventory.x < (_maxItemsPerRow - 1))
+        if(_cursorLocationInInventory.x < (_showPanel.NumberOfItemsOnCurrentPage() - 1) && _cursorLocationInInventory.x < _maxItemsPerRow - 1)
         {
             if(_inventory.Items.Count > currentItemId + 1)
             {
                 currentItemId++;
-                if (currentItemId % _maxItemsPerRow == 0)
-                {
-                    _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() + 1);
-                }
                 _cursorLocationInInventory.x++;
                 cursor.transform.position += new Vector3(45, 0, 0);
+                _showPanel.SetActiveItem();
+            }
+        }
+        if(currentItemId % (_maxItemsPerRow - 1) == 0)
+        {
+            if(_showPanel.IsMorePagesToRight())
+            {
+                currentItemId += 9;                
+                _cursorLocationInInventory = new Vector2(0, 0);
+                cursor.transform.position -= new Vector3(45 * (_maxItemsPerRow - 1), 0, 0);
+                _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() + 1);
                 _showPanel.SetActiveItem();
             }
         }
