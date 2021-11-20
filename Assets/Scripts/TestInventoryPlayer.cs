@@ -96,16 +96,17 @@ public class TestInventoryPlayer : MonoBehaviour
 
     public void MoveLeftInInventory()
     {
-        if (_cursorLocationInInventory.x > 0)
+        if (_showPanel.CurrentIndex > 0 && _showPanel.CurrentIndex < _maxItemsPerRow ||
+            _showPanel.CurrentIndex > _maxItemsPerRow)
         {
-            currentItemId--;
+            _showPanel.MoveLeft();
             _cursorLocationInInventory.x--;
             cursor.transform.position += new Vector3(-45, 0, 0);
             _showPanel.SetActiveItem();
+            return;
         }
-        if(_cursorLocationInInventory.y == 0 && _showPanel.IsMorePagesToLeft())
+        if(_showPanel.CurrentIndex == 0 && _showPanel.IsMorePagesToLeft())
         {
-            currentItemId -= 9;
             _cursorLocationInInventory = new Vector2(8, 0);
             cursor.transform.position += new Vector3(45 * (_maxItemsPerRow - 1), 0, 0);
             _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() - 1);
@@ -115,23 +116,43 @@ public class TestInventoryPlayer : MonoBehaviour
 
     public void MoveRightInInventory()
     {
-        if(_cursorLocationInInventory.x < (_showPanel.NumberOfItemsOnCurrentPage() - 1) && _cursorLocationInInventory.x < _maxItemsPerRow - 1)
+        if(_showPanel.CurrentIndex < (_maxItemsPerRow - 1) || (_cursorLocationInInventory.y == 1 && _showPanel.CurrentIndex < _maxItemsPerRow * _maxItemsPerColumn - 1))
         {
-            if(_inventory.Items.Count > currentItemId + 1)
+            if(_showPanel.IsItemRight())
             {
-                currentItemId++;
+                _showPanel.MoveRight();
                 _cursorLocationInInventory.x++;
                 cursor.transform.position += new Vector3(45, 0, 0);
                 _showPanel.SetActiveItem();
+                return;
             }
         }
-        if(currentItemId % (_maxItemsPerRow - 1) == 0)
+
+        if (_cursorLocationInInventory.y == 0 && _showPanel.CurrentIndex == _maxItemsPerRow - 1)
         {
-            if(_showPanel.IsMorePagesToRight())
+            if (_showPanel.IsMorePagesToRight())
             {
-                currentItemId += 9;                
                 _cursorLocationInInventory = new Vector2(0, 0);
                 cursor.transform.position -= new Vector3(45 * (_maxItemsPerRow - 1), 0, 0);
+                _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() + 1);
+                _showPanel.SetActiveItem();
+            }
+        }
+        else if(_cursorLocationInInventory.y == 1 && _showPanel.CurrentIndex == _maxItemsPerRow * _maxItemsPerColumn - 1)
+        {
+            if (_showPanel.IsMorePagesToRight())
+            {
+                if(_showPanel.NumberOfItemsOnPage(_showPanel.GetCurrentlySelectedPage() + 1) > _maxItemsPerRow)
+                {
+                    _cursorLocationInInventory = new Vector2(0, 1);
+                    cursor.transform.position -= new Vector3(45 * (_maxItemsPerRow - 1), 0, 0);
+                }
+                else
+                {
+                    _cursorLocationInInventory = new Vector2(0, 0);
+                    cursor.transform.position -= new Vector3(45 * (_maxItemsPerRow - 1), -55, 0);
+                }
+                               
                 _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() + 1);
                 _showPanel.SetActiveItem();
             }
@@ -142,9 +163,9 @@ public class TestInventoryPlayer : MonoBehaviour
     {
         if (_cursorLocationInInventory.y < (_maxItemsPerColumn - 1))
         {
-            if(_inventory.Items.Count > currentItemId + _maxItemsPerRow)
+            if(_showPanel.IsItemDown())
             {
-                currentItemId += _maxItemsPerRow;
+                _showPanel.MoveDown();
                 _cursorLocationInInventory.y++;
                 cursor.transform.position += new Vector3(0, -55, 0);
                 _showPanel.SetActiveItem();
@@ -156,7 +177,7 @@ public class TestInventoryPlayer : MonoBehaviour
     {
         if(_cursorLocationInInventory.y > 0)
         {
-            currentItemId -= _maxItemsPerRow;
+            _showPanel.MoveUp();
             _cursorLocationInInventory.y--;
             cursor.transform.position += new Vector3(0, 55, 0);
             _showPanel.SetActiveItem();

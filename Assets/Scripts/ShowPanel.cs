@@ -21,6 +21,8 @@ public class ShowPanel : MonoBehaviour
     [HideInInspector]
     public int _currentlySelectedPage = 0;
     GameObject _activeItem;
+    private int _currentIndex = 0;
+    public int CurrentIndex { get => _currentIndex;}
 
     private void Start()
     {
@@ -78,8 +80,9 @@ public class ShowPanel : MonoBehaviour
             Destroy(_activeItem);
         }
         Vector2 cursorLocation = GetComponentInParent<TestInventoryPlayer>()._cursorLocationInInventory;
-        int currentItem = (int)(cursorLocation.x + cursorLocation.y);
-
+        int currentItem = (int)(cursorLocation.x + (cursorLocation.y * GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow));
+        _currentIndex = currentItem;
+        Debug.Log("Current item: " + currentItem);
         _activeItem = Instantiate(_itemImages[_currentlySelectedPage][currentItem]);
         _activeItem.transform.position = activeItem.transform.position;
         _activeItem.SetActive(true);
@@ -116,5 +119,63 @@ public class ShowPanel : MonoBehaviour
     public int NumberOfItemsOnCurrentPage()
     {
         return _itemImages[_currentlySelectedPage].Count;
+    }
+    public int NumberOfItemsOnPage(int page)
+    {
+        if (page < 0 || page >= _itemImages.Count) return -1;
+        return _itemImages[page].Count;
+    }
+
+    //public bool IsItemRightOfCurrent(int current)
+    //{
+    //    return current < (GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow - 1)
+    //        && _itemImages[_currentlySelectedPage].Count >= (GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow - 1);
+    //}
+
+    //public bool IsItemLeftOfCurrent(int current)
+    //{
+    //    return current > (0);          
+    //}
+    //public bool IsItemBelowCurrent(int current)
+    //{
+    //    return current < (GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow)
+    //        && _itemImages[_currentlySelectedPage].Count >= (GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow + current);
+    //}
+
+    //public bool IsItemAboveCurrent(int current)
+    //{
+    //    return current >= (GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow);
+    //}
+
+    public void MoveLeft()
+    {
+        _currentIndex--;
+    }
+    public void MoveRight()
+    {
+        _currentIndex++;
+    }
+    public void MoveUp()
+    {
+        _currentIndex -= (int)GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow;
+    }
+    public void MoveDown()
+    {
+        _currentIndex += (int)GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow;
+    }
+
+    public bool IsItemRight()
+    {
+        return _itemImages[_currentlySelectedPage].Count > _currentIndex + 1;
+    }
+
+    public bool IsItemDown()
+    {
+        return _itemImages[_currentlySelectedPage].Count > _currentIndex + (int)GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow;
+    }
+
+    public bool IsItemUp()
+    {
+        return _currentIndex - (int)GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow > 0;
     }
 }
