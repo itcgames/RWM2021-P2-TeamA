@@ -126,27 +126,6 @@ public class ShowPanel : MonoBehaviour
         return _itemImages[page].Count;
     }
 
-    //public bool IsItemRightOfCurrent(int current)
-    //{
-    //    return current < (GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow - 1)
-    //        && _itemImages[_currentlySelectedPage].Count >= (GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow - 1);
-    //}
-
-    //public bool IsItemLeftOfCurrent(int current)
-    //{
-    //    return current > (0);          
-    //}
-    //public bool IsItemBelowCurrent(int current)
-    //{
-    //    return current < (GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow)
-    //        && _itemImages[_currentlySelectedPage].Count >= (GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow + current);
-    //}
-
-    //public bool IsItemAboveCurrent(int current)
-    //{
-    //    return current >= (GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow);
-    //}
-
     public void MoveLeft()
     {
         _currentIndex--;
@@ -177,5 +156,17 @@ public class ShowPanel : MonoBehaviour
     public bool IsItemUp()
     {
         return _currentIndex - (int)GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow > 0;
+    }
+
+    public int TotalPages()
+    {
+        return _itemImages.Count;
+    }
+
+    public int TotalItems()
+    {
+        int sum = 0;
+        _itemImages.ForEach(x => x.ForEach(y => sum++));
+        return sum;
     }
 }

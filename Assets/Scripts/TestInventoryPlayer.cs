@@ -107,7 +107,14 @@ public class TestInventoryPlayer : MonoBehaviour
         }
         if(_showPanel.CurrentIndex == 0 && _showPanel.IsMorePagesToLeft())
         {
-            _cursorLocationInInventory = new Vector2(8, 0);
+            _cursorLocationInInventory = new Vector2(_maxItemsPerRow - 1, 0);
+            cursor.transform.position += new Vector3(45 * (_maxItemsPerRow - 1), 0, 0);
+            _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() - 1);
+            _showPanel.SetActiveItem();
+        }
+        else if(_showPanel.CurrentIndex == _maxItemsPerRow && _showPanel.IsMorePagesToLeft())
+        {
+            _cursorLocationInInventory = new Vector2(_maxItemsPerRow - 1, 1);
             cursor.transform.position += new Vector3(45 * (_maxItemsPerRow - 1), 0, 0);
             _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() - 1);
             _showPanel.SetActiveItem();
