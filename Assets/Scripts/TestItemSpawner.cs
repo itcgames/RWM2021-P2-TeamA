@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TestItemSpawner : MonoBehaviour
 {
@@ -19,7 +20,16 @@ public class TestItemSpawner : MonoBehaviour
         {
             Instantiate(item);
             item.GetComponent<TestItem>().spawner = gameObject;
+            item.transform.position = gameObject.transform.position;
             yield return new WaitForSeconds(timeToWaitBetweenSpawns);
         }
+    }
+
+    public GameObject CreateItem()
+    {
+        Instantiate(item);
+        item.GetComponent<TestItem>().spawner = gameObject;
+        item.transform.position = gameObject.transform.position;
+        return item;
     }
 }
