@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class CameraFollowSnap : MonoBehaviour
 {
+    private struct Bounds
+    {
+        public float left;
+        public float right;
+        public float bottom;
+        public float top;
+    }
+
     // Public Variables.
     public Transform target;
     public Vector2 boundaryOffset = Vector2.zero;
@@ -46,23 +54,20 @@ public class CameraFollowSnap : MonoBehaviour
 
     private void CheckTargetBounds()
     {
-        // Takes the positions into variables for ease of use.
-        Vector3 tPos = target.position; // Target position.
-        Vector3 mPos = transform.position; // My position.
-
         Vector3 panTo = Vector3.zero;
+        Bounds bounds = GetBounds();
 
         // Checks the target against the bounds.
-        if (tPos.x < mPos.x - HalfAreaSize.x + boundaryOffset.x) // Left bound.
+        if (target.position.x < bounds.left)
             panTo.x = -1.0f;
 
-        if (tPos.x > mPos.x + HalfAreaSize.x - boundaryOffset.x) // Right bound.
+        else if (target.position.x > bounds.right)
             panTo.x = 1.0f;
 
-        if (tPos.y < mPos.y - HalfAreaSize.y + boundaryOffset.y) // Bottom bound.
+        if (target.position.y < bounds.bottom)
             panTo.y = -1.0f;
 
-        if (tPos.y > mPos.y + HalfAreaSize.y - boundaryOffset.y) // Top bound.
+        else if (target.position.y > bounds.top)
             panTo.y = 1.0f;
 
         // If the target was outside any of the bounds, begin panning.
@@ -86,9 +91,43 @@ public class CameraFollowSnap : MonoBehaviour
 
         // Interpolates between the two points, clamping if t excedes 1.
         transform.position = Vector3.Lerp(_panStartPos, _panEndPos, t);
-        
+
+        // Pushes the target if it's within the boundary offset.
+        HandleTargetMovement();
+
         // Ends the pan if the time excedes secondsPerPan.
         if (secondsSincePanStart >= secondsPerPan)
             _panStartSeconds = -1.0f;
+    }
+
+    private void HandleTargetMovement()
+    {
+        // Takes the target's position into variables for readability.
+        Vector3 tPos = target.position;
+
+        Bounds bounds = GetBounds();
+
+        if (tPos.x < bounds.left) 
+            target.position = new Vector3(bounds.left, tPos.y, tPos.z);
+
+        else if (tPos.x > bounds.right)
+            target.position = new Vector3(bounds.right, tPos.y, tPos.z);
+
+        if (tPos.y < bounds.bottom)
+            target.position = new Vector3(tPos.x, bounds.bottom, tPos.z);
+
+        else if (tPos.y > bounds.top)
+            target.position = new Vector3(tPos.x, bounds.top, tPos.z);
+    }
+
+    private Bounds GetBounds()
+    {
+        return new Bounds()
+        {
+            left = transform.position.x - HalfAreaSize.x + boundaryOffset.x,
+            right = transform.position.x + HalfAreaSize.x - boundaryOffset.x,
+            bottom = transform.position.y - HalfAreaSize.y + boundaryOffset.y,
+            top = transform.position.y + HalfAreaSize.y - boundaryOffset.y
+        };
     }
 }

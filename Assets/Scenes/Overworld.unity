@@ -218,8 +218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1709164249}
-  boundaryOffset: {x: 0, y: 0}
-  secondsPerPan: 0.5
+  boundaryOffset: {x: 0.5, y: 0.5}
+  secondsPerPan: 1
 --- !u!1001 &211138115
 PrefabInstance:
   m_ObjectHideFlags: 0
