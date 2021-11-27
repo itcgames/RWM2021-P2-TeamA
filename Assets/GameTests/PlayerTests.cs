@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,13 +12,6 @@ public class PlayerTests
     public void Setup()
     {
         SceneManager.LoadScene("Overworld", LoadSceneMode.Single);
-    }
-
-    [TearDown]
-    public void Teardown()
-    {
-        if (player)
-            Object.Destroy(player.gameObject);
     }
 
     [UnityTest]
