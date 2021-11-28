@@ -65,4 +65,33 @@ public class EntityManagerTests
         // Checks that the player has ignored the movement input.
         Assert.AreEqual(previousPlayerPosition, playerObj.transform.position);
     }
+
+    [UnityTest]
+    public IEnumerator EnemiesSpawnOnCameraMovement()
+    {
+        // Gets the camera component and sets the initial values.
+        var cameraObj = GameObject.Find("Main Camera");
+        CameraFollowSnap camSnap = cameraObj.GetComponent<CameraFollowSnap>();
+        camSnap.secondsPerPan = 0.5f;
+
+        // Gets the player and moves it outside the camera bounds.
+        var playerObj = GameObject.Find("Player");
+        playerObj.transform.position = cameraObj.transform.position +
+            Vector3.right * camSnap.HalfAreaSize.x;
+
+        // Pauses for a fraction of a second to allow the camera to start moving.
+        yield return new WaitForSeconds(0.55f);
+
+        // Checks that there's spawn smoke in the room.
+        Assert.NotZero(GameObject.FindGameObjectsWithTag("SpawnSmoke").Length);
+
+        // Gets the entity manager and waits for the enemy spawn time.
+        var entityManagerObj = GameObject.Find("EntityManager");
+        EntityManager entityManager = entityManagerObj.GetComponent<EntityManager>();
+        yield return new WaitForSeconds(entityManager.enemySpawnSeconds);
+
+        // Checks that there's no spawn smoke and there is enemies.
+        Assert.Zero(GameObject.FindGameObjectsWithTag("SpawnSmoke").Length);
+        Assert.NotZero(GameObject.FindGameObjectsWithTag("Enemy").Length);
+    }
 }
