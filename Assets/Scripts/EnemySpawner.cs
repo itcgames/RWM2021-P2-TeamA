@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class TestItemSpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
     public GameObject item;
     public GameObject player;
@@ -19,7 +18,7 @@ public class TestItemSpawner : MonoBehaviour
 
     private IEnumerator SpawnItem()
     {
-        while(true)
+        while (true)
         {
 
             CreateItem();
@@ -30,9 +29,9 @@ public class TestItemSpawner : MonoBehaviour
     public GameObject CreateItem()
     {
         Instantiate(item);
-        item.GetComponent<TestItem>().spawner = gameObject;
-       
-        foreach(Transform trans in spawnLocations)
+        item.GetComponent<TestEnemyScript>().player = player;
+
+        foreach (Transform trans in spawnLocations)
         {
             Vector2 postion = item.transform.position;
             item.transform.position = trans.position;
@@ -40,7 +39,7 @@ public class TestItemSpawner : MonoBehaviour
             collider2Ds = Physics2D.OverlapCircleAll(trans.position, 0.2f);
             List<Collider2D> colliders = collider2Ds.ToList();
             colliders = colliders.Where(x => x.gameObject.tag == "Player").ToList();
-            if(colliders.Count == 0)
+            if (colliders.Count == 0)
             {
                 return item;
             }
@@ -49,7 +48,7 @@ public class TestItemSpawner : MonoBehaviour
                 item.transform.position = postion;
             }
         }
-        
+
         return item;
     }
 }
