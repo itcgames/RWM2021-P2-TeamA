@@ -22,7 +22,7 @@ public class TestInventoryPlayer : MonoBehaviour
     public Vector2 _cursorLocationInInventory = new Vector2(0, 0);
     [HideInInspector]
     public uint currentItemId = 0;
-
+    private Vector2 _direction = new Vector2(0,0);
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +45,10 @@ public class TestInventoryPlayer : MonoBehaviour
             Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
             movement *= Time.deltaTime;
             transform.Translate(movement);
+            if (xInput > 0) _direction = Vector2.right;
+            else if (xInput < 0) _direction = Vector2.left;
+            if (yInput > 0) _direction = Vector2.up;
+            else if (yInput < 0) _direction = Vector2.down;
         }
     }
     // Update is called once per frame
@@ -99,7 +103,7 @@ public class TestInventoryPlayer : MonoBehaviour
                     Destroy(bomb.GetComponent<InventoryItem>());
                     Destroy(bomb.GetComponent<TestItem>());
                     BombScript script = bomb.AddComponent<BombScript>();
-                    script.direction = Vector2.left;
+                    script.direction = _direction;
                     bomb.transform.position = transform.position;
                 }
             }
