@@ -83,9 +83,9 @@ public class EntityManager : MonoBehaviour
 				GameObject enemy = Instantiate(
 					enemyPrefabs[enemyType], position, transform.rotation);
 
-				// Takes a reference to the enemy and disables it for now.
+				// Takes a reference to the enemy.
 				enemies[i] = enemy;
-				enemy.SetActive(false);
+				// TODO: Disable enemy script.
 
 				// Spawns a smoke prefab in the enemy location.
 				GameObject smokeObj = Instantiate(
@@ -100,7 +100,8 @@ public class EntityManager : MonoBehaviour
 				Destroy(smokeObj);
 
 			foreach (GameObject enemy in enemies)
-				enemy.SetActive(true);
+				if (enemy)
+					enemy.SetActive(true); // TODO: Replace with enabling enemy script.
 		}
 
 		yield return null;
@@ -120,7 +121,7 @@ public class EntityManager : MonoBehaviour
 			);
 
 			// Breaks if there's nothing in the chosen location.
-			if (Physics2D.OverlapCircle(position, 1.0f) == null)
+			if (Physics2D.OverlapCircle(position, 1.5f) == null)
 				break;
 		}
 
