@@ -331,9 +331,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxEnemiesPerRoom: 6
   minEnemiesPerRoom: 4
+  enemySpawnSeconds: 1
   enemyPrefabs:
   - {fileID: 8066728499407963535, guid: cd6215b988f350e44b248e09583c62b0, type: 3}
   - {fileID: 1170023581146917918, guid: 8c1874096000d4f499336f99b5cc410c, type: 3}
+  spawnSmokePrefab: {fileID: 4884333843683855636, guid: a301724edd45d8a458c929fa7bb73940,
+    type: 3}
   cameraMover: {fileID: 146270868}
   playerController: {fileID: 2092942535}
   playerRigidbody: {fileID: 2092942534}

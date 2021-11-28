@@ -6,7 +6,7 @@ public class CameraFollowSnap : MonoBehaviour
 {
     public delegate void MovementEventCallback();
 
-    private struct Bounds
+    public struct Bounds
     {
         public float left;
         public float right;
@@ -138,7 +138,7 @@ public class CameraFollowSnap : MonoBehaviour
             target.position = new Vector3(tPos.x, bounds.top, tPos.z);
     }
 
-    private Bounds GetBounds()
+    public Bounds GetBounds()
     {
         return new Bounds()
         {
