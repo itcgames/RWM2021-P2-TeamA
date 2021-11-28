@@ -97,7 +97,7 @@ public class TestInventoryPlayer : MonoBehaviour
                     bombs[0].GetComponent<InventoryItem>().NumberOfItems--;
                     if(bombs[0].GetComponent<InventoryItem>().NumberOfItems == 0)
                     {
-                        bombs.RemoveAt(0);
+                        _inventory.Items.RemoveAll(x => x.GetComponent<InventoryItem>().NumberOfItems == 0);
                     }
                     GameObject bomb = Instantiate(Resources.Load<GameObject>("Prefabs/Bomb"));
                     Destroy(bomb.GetComponent<InventoryItem>());
