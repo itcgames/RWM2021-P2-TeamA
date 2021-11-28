@@ -33,6 +33,7 @@ public class TestInventoryPlayer : MonoBehaviour
         _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
         _stackCounter = 0;
+        
     }
     private void Move()
     {
@@ -80,6 +81,27 @@ public class TestInventoryPlayer : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 MoveRightInInventory();
+            }
+        }
+        else
+        {
+            if(Input.GetKeyDown(KeyCode.B) && _inventory.Items != null)
+            {
+                List<GameObject> bombs = _inventory.Items.FindAll(x => x.tag == "Bomb");
+                if(bombs.Count > 0)
+                {
+                    bombs[0].GetComponent<InventoryItem>().NumberOfItems--;
+                    if(bombs[0].GetComponent<InventoryItem>().NumberOfItems == 0)
+                    {
+                        bombs.RemoveAt(0);
+                    }
+                    GameObject bomb = Instantiate(Resources.Load<GameObject>("Prefabs/Bomb"));
+                    Destroy(bomb.GetComponent<InventoryItem>());
+                    Destroy(bomb.GetComponent<TestItem>());
+                    BombScript script = bomb.AddComponent<BombScript>();
+                    script.direction = Vector2.left;
+                    bomb.transform.position = transform.position;
+                }
             }
         }
     }
