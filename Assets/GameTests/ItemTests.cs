@@ -62,17 +62,5 @@ namespace Tests
             yield return null;
         }
 
-        //[UnityTest]
-        //public IEnumerator PickUpCorrectAmountOfBombs()
-        //{
-        //    playerObj = GameObject.Find("Player");
-        //    testInventory = playerObj.GetComponent<TestInventoryPlayer>();
-        //    showPanel = playerObj.GetComponent<ShowPanel>();
-        //    GameObject bomb = Resources.Load<GameObject>("Prefabs/Bomb");
-        //    bomb.transform.position = playerObj.transform.position;
-        //    yield return new WaitForSeconds(0.2f);
-        //    Assert.AreEqual(testInventory.GetAmountOfItemAtPosition(0), 4);
-        //    yield return null;
-        //}
     }
 }

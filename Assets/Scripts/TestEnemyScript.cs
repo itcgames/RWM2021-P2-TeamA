@@ -12,7 +12,8 @@ public class TestEnemyScript : MonoBehaviour
     private SpriteRenderer _sprite;
     public GameObject player;
     public bool hasShield;
-    private Vector2 direction;
+    [HideInInspector]
+    public Vector2 direction;
     // Start is called before the first frame update
     void Start()
     {
