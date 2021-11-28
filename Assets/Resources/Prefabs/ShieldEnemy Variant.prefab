@@ -16,7 +16,7 @@ PrefabInstance:
     - target: {fileID: 5846731200286122515, guid: b836e5787a28b73468f8ccc2be69da19,
         type: 3}
       propertyPath: m_Name
-      value: ShieldEnemy
+      value: ShieldEnemy Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5846731200286122604, guid: b836e5787a28b73468f8ccc2be69da19,
         type: 3}

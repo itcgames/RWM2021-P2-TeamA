@@ -9,7 +9,8 @@ public class TestInventoryPlayer : MonoBehaviour
     public Text stackAmount;
     public Text itemAmount;
     public GameObject cursor;
-    private Inventory _inventory;
+    [HideInInspector]
+    public Inventory _inventory;
     private ShowPanel _showPanel;
     private bool _showInventory;
     private int _stackCounter;
@@ -83,9 +84,9 @@ public class TestInventoryPlayer : MonoBehaviour
         }
     }
 
-    public void AddObjectToInventory(GameObject itemObject, string texture, string itemName)
+    public void AddObjectToInventory(GameObject itemObject, string texture, string itemName, uint amount)
     {
-        _inventory.AddItem(itemObject, 1); 
+        _inventory.AddItem(itemObject, amount); 
         if(_inventory.Items.Count > _stackCounter)
         {
             _showPanel.AddItemImage(texture, itemName);
@@ -189,5 +190,10 @@ public class TestInventoryPlayer : MonoBehaviour
             cursor.transform.position += new Vector3(0, 55, 0);
             _showPanel.SetActiveItem();
         }
+    }
+
+    public uint GetAmountOfItemAtPosition(int index)
+    {
+        return _inventory.Items[index].GetComponent<InventoryItem>().NumberOfItems;
     }
 }

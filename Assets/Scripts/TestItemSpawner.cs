@@ -32,23 +32,31 @@ public class TestItemSpawner : MonoBehaviour
         Instantiate(item);
         item.GetComponent<TestItem>().spawner = gameObject;
        
-        foreach(Transform trans in spawnLocations)
+        if(spawnLocations != null && spawnLocations.Length > 0)
         {
-            Vector2 postion = item.transform.position;
-            item.transform.position = trans.position;
-            Collider2D[] collider2Ds;
-            collider2Ds = Physics2D.OverlapCircleAll(trans.position, 0.2f);
-            List<Collider2D> colliders = collider2Ds.ToList();
-            colliders = colliders.Where(x => x.gameObject.tag == "Player").ToList();
-            if(colliders.Count == 0)
+            foreach (Transform trans in spawnLocations)
             {
-                return item;
-            }
-            else
-            {
-                item.transform.position = postion;
+                Vector2 postion = item.transform.position;
+                item.transform.position = trans.position;
+                Collider2D[] collider2Ds;
+                collider2Ds = Physics2D.OverlapCircleAll(trans.position, 0.2f);
+                List<Collider2D> colliders = collider2Ds.ToList();
+                colliders = colliders.Where(x => x.gameObject.tag == "Player").ToList();
+                if (colliders.Count == 0)
+                {
+                    return item;
+                }
+                else
+                {
+                    item.transform.position = postion;
+                }
             }
         }
+        else
+        {
+            item.transform.position = transform.position;
+        }
+       
         
         return item;
     }

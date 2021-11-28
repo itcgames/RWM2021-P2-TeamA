@@ -7,14 +7,20 @@ public class TestItem : MonoBehaviour
 {
     public GameObject spawner = null;
     public string textureName;
+
+    public string Name { get => gameObject.GetComponent<InventoryItem>().Name;  }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            SpriteRenderer sprite = spawner.GetComponent<TestItemSpawner>().item.GetComponent<SpriteRenderer>();
+            uint amount = 1;
+            if (tag == "Bomb")
+            {
+                amount = 4;
+            }
             GameObject.FindGameObjectWithTag("Player").GetComponent<TestInventoryPlayer>()
-                .AddObjectToInventory(spawner.GetComponent<TestItemSpawner>().item, textureName, gameObject.GetComponent<InventoryItem>().Name);
-            Debug.Log("Collision");
+                .AddObjectToInventory(spawner.GetComponent<TestItemSpawner>().item, textureName, gameObject.GetComponent<InventoryItem>().Name, amount);
+            Debug.Log("Item: " + Name + " Amount Added: " + amount);
             Destroy(this.gameObject);
         }
     }    
