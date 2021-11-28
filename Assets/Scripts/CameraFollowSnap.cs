@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CameraFollowSnap : MonoBehaviour
 {
-    private struct Bounds
+    public delegate void MovementEventCallback();
+
+    public struct Bounds
     {
         public float left;
         public float right;
@@ -19,11 +21,19 @@ public class CameraFollowSnap : MonoBehaviour
 
     // Public Property.
     public Vector2 HalfAreaSize { get; private set; }
+    public List<MovementEventCallback> BeginMovementCallbacks { get; set; }
+    public List<MovementEventCallback> EndMovementCallbacks { get; set; }
 
     // Internal Variables.
     private Vector3 _panStartPos = Vector3.zero;
     private Vector3 _panEndPos = Vector3.zero;
     private float _panStartSeconds = -1.0f;
+
+    private void Awake()
+    {
+        BeginMovementCallbacks = new List<MovementEventCallback>();
+        EndMovementCallbacks = new List<MovementEventCallback>();
+    }
 
     void Start()
     {
@@ -82,6 +92,9 @@ public class CameraFollowSnap : MonoBehaviour
         _panEndPos = new Vector3(transform.position.x + panTo.x * HalfAreaSize.x * 2.0f,
                                  transform.position.y + panTo.y * HalfAreaSize.y * 2.0f,
                                  transform.position.z);
+
+        foreach (var callback in BeginMovementCallbacks)
+            callback();
     }
 
     private void InterpolatePosition()
@@ -97,7 +110,12 @@ public class CameraFollowSnap : MonoBehaviour
 
         // Ends the pan if the time excedes secondsPerPan.
         if (secondsSincePanStart >= secondsPerPan)
+        {
             _panStartSeconds = -1.0f;
+
+            foreach (var callback in EndMovementCallbacks)
+                callback();
+        }
     }
 
     private void HandleTargetMovement()
@@ -120,7 +138,7 @@ public class CameraFollowSnap : MonoBehaviour
             target.position = new Vector3(tPos.x, bounds.top, tPos.z);
     }
 
-    private Bounds GetBounds()
+    public Bounds GetBounds()
     {
         return new Bounds()
         {
