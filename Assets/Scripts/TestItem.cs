@@ -17,6 +17,8 @@ public class TestItem : MonoBehaviour
             if (tag == "Bomb")
             {
                 amount = 4;
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                player.GetComponent<TestInventoryPlayer>().AddBomb((int)amount);
             }
             GameObject.FindGameObjectWithTag("Player").GetComponent<TestInventoryPlayer>()
                 .AddObjectToInventory(spawner.GetComponent<TestItemSpawner>().item, textureName, gameObject.GetComponent<InventoryItem>().Name, amount);

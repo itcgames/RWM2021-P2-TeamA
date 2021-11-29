@@ -8,6 +8,8 @@ public class TestInventoryPlayer : MonoBehaviour
     public Vector2 speed = new Vector2(20, 20);
     public Text stackAmount;
     public Text itemAmount;
+    public Text bombAmount;
+    private int _bombAmount = 0;
     public GameObject cursor;
     [HideInInspector]
     public Inventory _inventory;
@@ -26,6 +28,7 @@ public class TestInventoryPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bombAmount.text = "x" + _bombAmount;
         _inventoryAnimator = panel.GetComponent<Animator>();
         _showInventory = false;
         _inventoryAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
@@ -105,6 +108,8 @@ public class TestInventoryPlayer : MonoBehaviour
                     BombScript script = bomb.AddComponent<BombScript>();
                     script.direction = _direction;
                     bomb.transform.position = transform.position;
+                    _bombAmount--;
+                    bombAmount.text = "x" + _bombAmount;
                 }
             }
         }
@@ -221,5 +226,11 @@ public class TestInventoryPlayer : MonoBehaviour
     public uint GetAmountOfItemAtPosition(int index)
     {
         return _inventory.Items[index].GetComponent<InventoryItem>().NumberOfItems;
+    }
+
+    public void AddBomb(int amount)
+    {
+        _bombAmount += amount;
+        bombAmount.text = "x" + _bombAmount;
     }
 }
