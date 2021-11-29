@@ -89,6 +89,13 @@ public class TestInventoryPlayer : MonoBehaviour
             {
                 MoveRightInInventory();
             }
+            else if(Input.GetKeyDown(KeyCode.Return))
+            {
+                if(_inventory.Items[_showPanel.CurrentIndex].gameObject.tag == "Potion")
+                {
+                    Debug.Log("trying to use potion");
+                }
+            }
         }
         else
         {
@@ -100,7 +107,16 @@ public class TestInventoryPlayer : MonoBehaviour
                     bombs[0].GetComponent<InventoryItem>().NumberOfItems--;
                     if(bombs[0].GetComponent<InventoryItem>().NumberOfItems == 0)
                     {
-                        _inventory.Items.RemoveAll(x => x.GetComponent<InventoryItem>().NumberOfItems == 0);
+                        //_inventory.Items.RemoveAll(x => x.GetComponent<InventoryItem>().NumberOfItems == 0);
+                        foreach(GameObject item in _inventory.Items)
+                        {
+                            if(item.GetComponent<InventoryItem>().NumberOfItems == 0)
+                            {
+                                _showPanel.UseItem();
+                                _inventory.Items.Remove(item);
+                                break;
+                            }
+                        }
                     }
                     GameObject bomb = Instantiate(Resources.Load<GameObject>("Prefabs/Bomb"));
                     Destroy(bomb.GetComponent<InventoryItem>());

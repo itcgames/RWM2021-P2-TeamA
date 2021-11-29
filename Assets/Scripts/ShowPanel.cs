@@ -21,6 +21,7 @@ public class ShowPanel : MonoBehaviour
     [HideInInspector]
     public int _currentlySelectedPage = 0;
     GameObject _activeItem;
+    private int _activeItemIndex = 0;
     private int _currentIndex = 0;
     public int CurrentIndex { get => _currentIndex;}
 
@@ -168,5 +169,33 @@ public class ShowPanel : MonoBehaviour
         int sum = 0;
         _itemImages.ForEach(x => x.ForEach(y => sum++));
         return sum;
+    }
+
+    public void UseItem()
+    {
+        Destroy(_itemImages[_currentlySelectedPage][_currentIndex]);
+        _itemCount--;
+        _itemImages[_currentlySelectedPage].RemoveAt(_currentIndex);
+        if(_itemImages[_currentlySelectedPage].Count > 0)
+        {
+            _activeItem = Instantiate(_itemImages[_currentlySelectedPage][_currentIndex]);
+            _activeItem.transform.position = activeItem.transform.position;
+            _activeItem.SetActive(true);
+            _activeItem.transform.SetParent(activeItem.transform);
+        }
+        else
+        {
+            _activeItem.SetActive(false);
+        }
+        
+        if(_itemImages[_currentlySelectedPage].Count < (int)GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow && _itemImages[_currentlySelectedPage].Count > 0)
+        {
+            _itemPosition.x -= 45;
+            foreach (GameObject item in _itemImages[_currentlySelectedPage])
+            {               
+                RectTransform trans = item.GetComponent<RectTransform>();
+                trans.anchoredPosition = new Vector2(trans.anchoredPosition.x - 45, trans.anchoredPosition.y);
+            }
+        }
     }
 }
