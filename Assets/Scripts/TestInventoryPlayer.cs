@@ -48,7 +48,7 @@ public class TestInventoryPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        //Move();
         if (Input.GetKeyDown(KeyCode.I))
         {
             _showInventory = !_showInventory;
