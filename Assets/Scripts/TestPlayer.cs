@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class TestPlayer : MonoBehaviour
 {
     public int maxHealth;
-    private int _health;
+    [HideInInspector]
+    public int _health;
     public Image[] hearts;
     public Sprite fadedHeart;
     public Sprite fullHeart;
@@ -39,6 +40,9 @@ public class TestPlayer : MonoBehaviour
     public void HealPlayerToFull()
     {
         _health = maxHealth;
-        
+        foreach (Image heart in hearts)
+        {
+            heart.sprite = fullHeart;
+        }
     }
 }

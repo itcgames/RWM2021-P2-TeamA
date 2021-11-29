@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemTag: Item
-  maxItemsPerStack: 1
+  maxItemsPerStack: 2
   isStackable: 0
 --- !u!50 &388625722569042797
 Rigidbody2D:

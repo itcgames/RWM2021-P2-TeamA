@@ -26,6 +26,7 @@ public class TestInventoryPlayer : MonoBehaviour
     [HideInInspector]
     public uint currentItemId = 0;
     private Vector2 _direction = new Vector2(0,0);
+    private TestPlayer _testPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +37,7 @@ public class TestInventoryPlayer : MonoBehaviour
         _inventoryAnimator.SetBool("isHidden", _showInventory);
         _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
+        _testPlayer = GetComponentInChildren<TestPlayer>();
         _stackCounter = 0;
         
     }
@@ -94,6 +96,24 @@ public class TestInventoryPlayer : MonoBehaviour
                 if(_inventory.Items[_showPanel.CurrentIndex].gameObject.tag == "Potion")
                 {
                     Debug.Log("trying to use potion");
+                    if(_testPlayer._health < _testPlayer.maxHealth)
+                    {
+                        _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems -= 1;
+                        _testPlayer.HealPlayerToFull();
+                        if (_inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems == 0)
+                        {
+                            foreach (GameObject item in _inventory.Items)
+                            {
+                                if (item.GetComponent<InventoryItem>().NumberOfItems == 0)
+                                {
+                                    _showPanel.UseItem();
+                                    _inventory.Items.Remove(item);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
                 }
             }
         }
