@@ -649,7 +649,9 @@ MonoBehaviour:
   speed: {x: 20, y: 20}
   stackAmount: {fileID: 1067990250}
   itemAmount: {fileID: 1489412732}
+  bombAmount: {fileID: 477735155}
   cursor: {fileID: 1730682221}
+  _inventory: {fileID: 0}
   panel: {fileID: 147254812}
   _maxItemsPerRow: 9
   _maxItemsPerColumn: 2
@@ -907,7 +909,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -239.7}
+  m_AnchoredPosition: {x: 4.3, y: -252.7}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &477735155
@@ -942,7 +944,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: X 0
 --- !u!222 &477735156
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2219,7 +2221,7 @@ RectTransform:
   m_GameObject: {fileID: 1755825862}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 147254813}
   m_RootOrder: 9
@@ -2242,13 +2244,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.454902, g: 0.08235294, b: 0.08235294, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 558ebef5fff546a4abb89cea205c8374, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2447,7 +2449,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1978193914}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.05, y: 3.27, z: -0.036015034}
+  m_LocalPosition: {x: -5.05, y: -4.01, z: -0.036015034}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1574722714}

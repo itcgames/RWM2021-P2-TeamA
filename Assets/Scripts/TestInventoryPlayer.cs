@@ -8,8 +8,11 @@ public class TestInventoryPlayer : MonoBehaviour
     public Vector2 speed = new Vector2(20, 20);
     public Text stackAmount;
     public Text itemAmount;
+    public Text bombAmount;
+    private int _bombAmount = 0;
     public GameObject cursor;
-    private Inventory _inventory;
+    [HideInInspector]
+    public Inventory _inventory;
     private ShowPanel _showPanel;
     private bool _showInventory;
     private int _stackCounter;
@@ -21,10 +24,11 @@ public class TestInventoryPlayer : MonoBehaviour
     public Vector2 _cursorLocationInInventory = new Vector2(0, 0);
     [HideInInspector]
     public uint currentItemId = 0;
-
+    private Vector2 _direction = new Vector2(0,0);
     // Start is called before the first frame update
     void Start()
     {
+        bombAmount.text = "x" + _bombAmount;
         _inventoryAnimator = panel.GetComponent<Animator>();
         _showInventory = false;
         _inventoryAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
@@ -32,6 +36,7 @@ public class TestInventoryPlayer : MonoBehaviour
         _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
         _stackCounter = 0;
+        
     }
     private void Move()
     {
@@ -43,6 +48,10 @@ public class TestInventoryPlayer : MonoBehaviour
             Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
             movement *= Time.deltaTime;
             transform.Translate(movement);
+            if (xInput > 0) _direction = Vector2.right;
+            else if (xInput < 0) _direction = Vector2.left;
+            if (yInput > 0) _direction = Vector2.up;
+            else if (yInput < 0) _direction = Vector2.down;
         }
     }
     // Update is called once per frame
@@ -81,11 +90,34 @@ public class TestInventoryPlayer : MonoBehaviour
                 MoveRightInInventory();
             }
         }
+        else
+        {
+            if(Input.GetKeyDown(KeyCode.B) && _inventory.Items != null)
+            {
+                List<GameObject> bombs = _inventory.Items.FindAll(x => x.tag == "Bomb");
+                if(bombs.Count > 0)
+                {
+                    bombs[0].GetComponent<InventoryItem>().NumberOfItems--;
+                    if(bombs[0].GetComponent<InventoryItem>().NumberOfItems == 0)
+                    {
+                        _inventory.Items.RemoveAll(x => x.GetComponent<InventoryItem>().NumberOfItems == 0);
+                    }
+                    GameObject bomb = Instantiate(Resources.Load<GameObject>("Prefabs/Bomb"));
+                    Destroy(bomb.GetComponent<InventoryItem>());
+                    Destroy(bomb.GetComponent<TestItem>());
+                    BombScript script = bomb.AddComponent<BombScript>();
+                    script.direction = _direction;
+                    bomb.transform.position = transform.position;
+                    _bombAmount--;
+                    bombAmount.text = "x" + _bombAmount;
+                }
+            }
+        }
     }
 
-    public void AddObjectToInventory(GameObject itemObject, string texture, string itemName)
+    public void AddObjectToInventory(GameObject itemObject, string texture, string itemName, uint amount)
     {
-        _inventory.AddItem(itemObject, 1); 
+        _inventory.AddItem(itemObject, amount); 
         if(_inventory.Items.Count > _stackCounter)
         {
             _showPanel.AddItemImage(texture, itemName);
@@ -189,5 +221,16 @@ public class TestInventoryPlayer : MonoBehaviour
             cursor.transform.position += new Vector3(0, 55, 0);
             _showPanel.SetActiveItem();
         }
+    }
+
+    public uint GetAmountOfItemAtPosition(int index)
+    {
+        return _inventory.Items[index].GetComponent<InventoryItem>().NumberOfItems;
+    }
+
+    public void AddBomb(int amount)
+    {
+        _bombAmount += amount;
+        bombAmount.text = "x" + _bombAmount;
     }
 }
