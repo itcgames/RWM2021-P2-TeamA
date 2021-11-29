@@ -52,7 +52,7 @@ public class TestEnemyScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<TestPlayer>().TakeDamage(0.5f);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<TestPlayer>().TakeDamage(1);
             Debug.Log("Player took damage");
         }
     }
