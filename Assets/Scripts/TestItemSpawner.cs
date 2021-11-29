@@ -41,7 +41,7 @@ public class TestItemSpawner : MonoBehaviour
                 Collider2D[] collider2Ds;
                 collider2Ds = Physics2D.OverlapCircleAll(trans.position, 0.2f);
                 List<Collider2D> colliders = collider2Ds.ToList();
-                colliders = colliders.Where(x => x.gameObject.tag == "Player").ToList();
+                colliders = colliders.Where(x => x.gameObject.tag != item.gameObject.tag).ToList();
                 if (colliders.Count == 0)
                 {
                     return item;
