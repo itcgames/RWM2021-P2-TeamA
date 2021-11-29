@@ -8,7 +8,8 @@ public class TestPlayer : MonoBehaviour
     public int maxHealth;
     private int _health;
     public Image[] hearts;
-
+    public Sprite fadedHeart;
+    public Sprite fullHeart;
     private void Start()
     {
         _health = maxHealth;
@@ -22,10 +23,15 @@ public class TestPlayer : MonoBehaviour
         if(damage >= _health)
         {
             _health = 0;
+            foreach(Image heart in hearts)
+            {
+                heart.sprite = fadedHeart;
+            }
         }
         else
         {
             _health -= damage;
+            hearts[_health].sprite = fadedHeart;
         }
 
     }
@@ -33,5 +39,6 @@ public class TestPlayer : MonoBehaviour
     public void HealPlayerToFull()
     {
         _health = maxHealth;
+        
     }
 }

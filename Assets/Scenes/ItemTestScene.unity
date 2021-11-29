@@ -653,6 +653,7 @@ MonoBehaviour:
   stackAmount: {fileID: 1067990250}
   itemAmount: {fileID: 1489412732}
   bombAmount: {fileID: 477735155}
+  useMovement: 1
   cursor: {fileID: 1730682221}
   _inventory: {fileID: 0}
   panel: {fileID: 147254812}
@@ -769,7 +770,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c09b4f1f80c890418658bdc21a75b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  maxHealth: 3
+  hearts:
+  - {fileID: 265717132}
+  - {fileID: 605705079}
+  - {fileID: 1643339660}
+  fadedHeart: {fileID: 21300000, guid: 5fd5b0cd2e8c56a478fc6dc8f3c5999f, type: 3}
+  fullHeart: {fileID: 21300000, guid: d6b8676fdae598a46a90a7e935f9a15c, type: 3}
 --- !u!1 &265717130
 GameObject:
   m_ObjectHideFlags: 0

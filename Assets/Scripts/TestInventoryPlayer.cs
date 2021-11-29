@@ -10,7 +10,7 @@ public class TestInventoryPlayer : MonoBehaviour
     public Text itemAmount;
     public Text bombAmount;
     private int _bombAmount = 0;
-
+    public bool useMovement;
     public GameObject cursor;
     [HideInInspector]
     public Inventory _inventory;
@@ -45,6 +45,9 @@ public class TestInventoryPlayer : MonoBehaviour
         {
             float xInput = Input.GetAxis("Horizontal");
             float yInput = Input.GetAxis("Vertical");
+            Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
+            movement *= Time.deltaTime;
+            transform.Translate(movement);
             if (xInput > 0) _direction = Vector2.right;
             else if (xInput < 0) _direction = Vector2.left;
             if (yInput > 0) _direction = Vector2.up;
