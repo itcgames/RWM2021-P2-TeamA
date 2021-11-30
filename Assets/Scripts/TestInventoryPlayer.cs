@@ -19,6 +19,7 @@ public class TestInventoryPlayer : MonoBehaviour
     private bool _showInventory;
     private int _stackCounter;
     private Animator _inventoryAnimator;
+    private Animator _playerAnimator;
     public GameObject panel;
     public uint _maxItemsPerRow = 9;
     public uint _maxItemsPerColumn = 2;
@@ -32,6 +33,7 @@ public class TestInventoryPlayer : MonoBehaviour
     void Start()
     {
         bombAmount.text = "x" + _bombAmount;
+        _playerAnimator = GetComponent<Animator>();
         _inventoryAnimator = panel.GetComponent<Animator>();
         _showInventory = false;
         _inventoryAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
@@ -51,10 +53,40 @@ public class TestInventoryPlayer : MonoBehaviour
             Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
             movement *= Time.deltaTime;
             transform.Translate(movement);
-            if (xInput > 0) _direction = Vector2.right;
-            else if (xInput < 0) _direction = Vector2.left;
-            if (yInput > 0) _direction = Vector2.up;
-            else if (yInput < 0) _direction = Vector2.down;
+            if (xInput > 0)
+            {
+                _direction = Vector2.right;
+                transform.localScale = new Vector3(15,15,15);
+                _playerAnimator.SetBool("MoveRight", true);
+                _playerAnimator.SetBool("MoveLeft", false);
+                _playerAnimator.SetBool("MoveUp", false);
+                _playerAnimator.SetBool("MoveDown", false);
+            }
+            else if (xInput < 0)
+            {
+                _direction = Vector2.left;
+                transform.localScale = new Vector3(15, 15, 15);
+                _playerAnimator.SetBool("MoveRight", false);
+                _playerAnimator.SetBool("MoveLeft", true);
+                _playerAnimator.SetBool("MoveUp", false);
+                _playerAnimator.SetBool("MoveDown", false);
+            }
+            if (yInput > 0)
+            {
+                _direction = Vector2.up;
+                _playerAnimator.SetBool("MoveRight", false);
+                _playerAnimator.SetBool("MoveLeft", false);
+                _playerAnimator.SetBool("MoveUp", true);
+                _playerAnimator.SetBool("MoveDown", false);
+            }
+            else if (yInput < 0)
+            {
+                _direction = Vector2.down;
+                _playerAnimator.SetBool("MoveRight", false);
+                _playerAnimator.SetBool("MoveLeft", false);
+                _playerAnimator.SetBool("MoveUp", false);
+                _playerAnimator.SetBool("MoveDown", true);
+            }
         }
     }
     // Update is called once per frame
