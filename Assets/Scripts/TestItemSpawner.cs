@@ -10,6 +10,7 @@ public class TestItemSpawner : MonoBehaviour
     public GameObject player;
     public float timeToWaitBetweenSpawns;
     public Transform[] spawnLocations;
+    List<GameObject> items;
 
     // Start is called before the first frame update
     void Start()
@@ -27,12 +28,36 @@ public class TestItemSpawner : MonoBehaviour
         }
     }
 
+    
+
+    private void Update()
+    {
+        foreach(GameObject item in items)
+        {
+            if(item.GetComponent<TestItem>().spawner == null)
+            {
+                item.GetComponent<TestItem>().spawner = gameObject;
+            }
+            
+        }
+    }
+
     public GameObject CreateItem()
     {
         Instantiate(item);
         item.GetComponent<TestItem>().spawner = gameObject;
-       
-        if(spawnLocations != null && spawnLocations.Length > 0)
+        if(items == null)
+        {
+            items = new List<GameObject>();
+        }
+        items.Add(item);
+        if (item.tag == "Potion")
+        {
+            PotionScript script = item.GetComponent<PotionScript>();
+            script.IsRedPotion = true;
+            script.IsBluePotion = false;
+        }
+        if (spawnLocations != null && spawnLocations.Length > 0)
         {
             foreach (Transform trans in spawnLocations)
             {

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 388625722569042796}
   - component: {fileID: -4525580710946437797}
   - component: {fileID: 7213598532898828485}
+  - component: {fileID: 3090922197413216752}
   m_Layer: 8
   m_Name: Potion
   m_TagString: Potion
@@ -175,3 +176,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388625722569042784}
   m_CullTransparentMesh: 0
+--- !u!114 &3090922197413216752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388625722569042784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df21d0a2fa04d34b893d1a5f1b8300a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsRedPotion: 1
+  IsBluePotion: 0

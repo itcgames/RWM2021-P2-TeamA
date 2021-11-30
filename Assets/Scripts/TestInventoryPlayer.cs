@@ -100,14 +100,25 @@ public class TestInventoryPlayer : MonoBehaviour
                     if(_testPlayer._health < _testPlayer.maxHealth)
                     {
                         InventoryItem item = _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>();
-                        int newAmount = (int)item.NumberOfItems - 1;
-                        _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems = (uint)newAmount;
-
-                        _testPlayer.HealPlayerToFull();
-                        if (item.NumberOfItems == 0)
+                        if(item.NumberOfItems > 0)
                         {
-                            _showPanel.SetCurrentItemToHidden();
-                        }
+                            int newAmount = (int)item.NumberOfItems - 1;
+                            _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems = (uint)newAmount;
+                            PotionScript script = _inventory.Items[_showPanel.CurrentIndex].GetComponent<PotionScript>();
+                            _testPlayer.HealPlayerToFull();
+                            if (item.NumberOfItems == 0 && script.IsRedPotion)
+                            {
+                                item.NumberOfItems = 1;
+                                script.IsBluePotion = true;
+                                script.IsRedPotion = false;
+                                _showPanel.SetCurrentItemToBluePotion();
+
+                            }
+                            else if (item.NumberOfItems == 0 && script.IsBluePotion)
+                            {
+                                _showPanel.SetCurrentItemToHidden();
+                            }
+                        }                       
                     }
                     
                 }

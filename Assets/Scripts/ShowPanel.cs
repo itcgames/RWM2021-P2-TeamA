@@ -176,31 +176,8 @@ public class ShowPanel : MonoBehaviour
         _itemImages[_currentlySelectedPage][_currentIndex].GetComponent<Image>().color = Color.red;
     }
 
-    public void UseItem()
+    public void SetCurrentItemToBluePotion()
     {
-        Destroy(_itemImages[_currentlySelectedPage][_currentIndex]);
-        _itemCount--;
-        _itemImages[_currentlySelectedPage].RemoveAt(_currentIndex);
-        if(_itemImages[_currentlySelectedPage].Count > 0)
-        {
-            _activeItem = Instantiate(_itemImages[_currentlySelectedPage][_currentIndex]);
-            _activeItem.transform.position = activeItem.transform.position;
-            _activeItem.SetActive(true);
-            _activeItem.transform.SetParent(activeItem.transform);
-        }
-        else
-        {
-            _activeItem.SetActive(false);
-        }
-        
-        if(_itemImages[_currentlySelectedPage].Count < (int)GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow && _itemImages[_currentlySelectedPage].Count > 0)
-        {
-            _itemPosition.x -= 45;
-            foreach (GameObject item in _itemImages[_currentlySelectedPage])
-            {               
-                RectTransform trans = item.GetComponent<RectTransform>();
-                trans.anchoredPosition = new Vector2(trans.anchoredPosition.x - 45, trans.anchoredPosition.y);
-            }
-        }
+        _itemImages[_currentlySelectedPage][_currentIndex].GetComponent<Image>().color = Color.blue;
     }
 }
