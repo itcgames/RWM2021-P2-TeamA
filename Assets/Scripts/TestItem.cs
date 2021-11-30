@@ -20,6 +20,10 @@ public class TestItem : MonoBehaviour
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
                 player.GetComponent<TestInventoryPlayer>().AddBomb((int)amount);
             }
+            if(tag == "Potion")
+            {
+                amount = 2;
+            }
             GameObject.FindGameObjectWithTag("Player").GetComponent<TestInventoryPlayer>()
                 .AddObjectToInventory(spawner.GetComponent<TestItemSpawner>().item, textureName, gameObject.GetComponent<InventoryItem>().Name, amount);
             Debug.Log("Item: " + Name + " Amount Added: " + amount);

@@ -21,6 +21,7 @@ public class ShowPanel : MonoBehaviour
     [HideInInspector]
     public int _currentlySelectedPage = 0;
     GameObject _activeItem;
+    private int _activeItemIndex = 0;
     private int _currentIndex = 0;
     public int CurrentIndex { get => _currentIndex;}
 
@@ -168,5 +169,15 @@ public class ShowPanel : MonoBehaviour
         int sum = 0;
         _itemImages.ForEach(x => x.ForEach(y => sum++));
         return sum;
+    }
+
+    public void SetCurrentItemToHidden()
+    {
+        _itemImages[_currentlySelectedPage][_currentIndex].GetComponent<Image>().color = Color.red;
+    }
+
+    public void SetCurrentItemToBluePotion()
+    {
+        _itemImages[_currentlySelectedPage][_currentIndex].GetComponent<Image>().color = Color.blue;
     }
 }

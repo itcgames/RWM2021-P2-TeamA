@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class TestInventoryPlayer : MonoBehaviour
     public Text itemAmount;
     public Text bombAmount;
     private int _bombAmount = 0;
+    public bool useMovement;
     public GameObject cursor;
     [HideInInspector]
     public Inventory _inventory;
@@ -25,6 +27,7 @@ public class TestInventoryPlayer : MonoBehaviour
     [HideInInspector]
     public uint currentItemId = 0;
     private Vector2 _direction = new Vector2(0,0);
+    private TestPlayer _testPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +38,7 @@ public class TestInventoryPlayer : MonoBehaviour
         _inventoryAnimator.SetBool("isHidden", _showInventory);
         _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
+        _testPlayer = GetComponentInChildren<TestPlayer>();
         _stackCounter = 0;
         
     }
@@ -44,7 +48,6 @@ public class TestInventoryPlayer : MonoBehaviour
         {
             float xInput = Input.GetAxis("Horizontal");
             float yInput = Input.GetAxis("Vertical");
-
             Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
             movement *= Time.deltaTime;
             transform.Translate(movement);
@@ -89,18 +92,57 @@ public class TestInventoryPlayer : MonoBehaviour
             {
                 MoveRightInInventory();
             }
+            else if(Input.GetKeyDown(KeyCode.Return))
+            {
+                if(_inventory.Items[_showPanel.CurrentIndex].gameObject.tag == "Potion")
+                {
+                    Debug.Log("trying to use potion");
+                    if(_testPlayer._health < _testPlayer.maxHealth)
+                    {
+                        InventoryItem item = _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>();
+                        if(item.NumberOfItems > 0)
+                        {
+                            int newAmount = (int)item.NumberOfItems - 1;
+                            _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems = (uint)newAmount;
+                            PotionScript script = _inventory.Items[_showPanel.CurrentIndex].GetComponent<PotionScript>();
+                            _testPlayer.HealPlayerToFull();
+                            if (item.NumberOfItems == 0 && script.IsRedPotion)
+                            {
+                                item.NumberOfItems = 1;
+                                script.IsBluePotion = true;
+                                script.IsRedPotion = false;
+                                _showPanel.SetCurrentItemToBluePotion();
+
+                            }
+                            else if (item.NumberOfItems == 0 && script.IsBluePotion)
+                            {
+                                _showPanel.SetCurrentItemToHidden();
+                            }
+                        }                       
+                    }
+                    
+                }
+            }
         }
         else
         {
             if(Input.GetKeyDown(KeyCode.B) && _inventory.Items != null)
             {
                 List<GameObject> bombs = _inventory.Items.FindAll(x => x.tag == "Bomb");
+                bombs = bombs.Where(x => x.GetComponent<InventoryItem>().NumberOfItems > 0).ToList();
                 if(bombs.Count > 0)
                 {
                     bombs[0].GetComponent<InventoryItem>().NumberOfItems--;
                     if(bombs[0].GetComponent<InventoryItem>().NumberOfItems == 0)
                     {
-                        _inventory.Items.RemoveAll(x => x.GetComponent<InventoryItem>().NumberOfItems == 0);
+                        foreach(GameObject item in _inventory.Items)
+                        {
+                            if(item.GetComponent<InventoryItem>().NumberOfItems == 0)
+                            {
+                                _showPanel.SetCurrentItemToHidden();
+                                break;
+                            }
+                        }
                     }
                     GameObject bomb = Instantiate(Resources.Load<GameObject>("Prefabs/Bomb"));
                     Destroy(bomb.GetComponent<InventoryItem>());
