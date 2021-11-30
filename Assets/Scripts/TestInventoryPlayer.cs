@@ -44,6 +44,7 @@ public class TestInventoryPlayer : MonoBehaviour
         _stackCounter = 0;
         
     }
+
     private void Move()
     {
         if(!_showInventory)
@@ -65,7 +66,7 @@ public class TestInventoryPlayer : MonoBehaviour
             else if (xInput < 0)
             {
                 _direction = Vector2.left;
-                transform.localScale = new Vector3(15, 15, 15);
+                transform.localScale = new Vector3(-15, 15, 15);
                 _playerAnimator.SetBool("MoveRight", false);
                 _playerAnimator.SetBool("MoveLeft", true);
                 _playerAnimator.SetBool("MoveUp", false);
@@ -89,103 +90,150 @@ public class TestInventoryPlayer : MonoBehaviour
             }
         }
     }
+
+    void OpenInventory()
+    {
+        _showInventory = !_showInventory;
+        _inventoryAnimator.SetBool("isHidden", _showInventory);
+        if (_showInventory)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
+
+    void UsePotion()
+    {
+        if (_inventory.Items[_showPanel.CurrentIndex].gameObject.tag == "Potion")
+        {
+            Debug.Log("trying to use potion");
+            if (_testPlayer._health < _testPlayer.maxHealth)
+            {
+                InventoryItem item = _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>();
+                if (item.NumberOfItems > 0)
+                {
+                    int newAmount = (int)item.NumberOfItems - 1;
+                    _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems = (uint)newAmount;
+                    PotionScript script = _inventory.Items[_showPanel.CurrentIndex].GetComponent<PotionScript>();
+                    _testPlayer.HealPlayerToFull();
+                    if (item.NumberOfItems == 0 && script.IsRedPotion)
+                    {
+                        item.NumberOfItems = 1;
+                        script.IsBluePotion = true;
+                        script.IsRedPotion = false;
+                        _showPanel.SetCurrentItemToBluePotion();
+
+                    }
+                    else if (item.NumberOfItems == 0 && script.IsBluePotion)
+                    {
+                        _showPanel.SetCurrentItemToHidden();
+                    }
+                }
+            }
+
+        }
+    }
+
+    void MoveInInventory()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            MoveUpInInventory();
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            MoveDownInInventory();
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            MoveLeftInInventory();
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            MoveRightInInventory();
+        }
+        else if (Input.GetKeyDown(KeyCode.Return))
+        {
+            UsePotion();
+        }
+    }
+
+    void PlaceBomb()
+    {
+        if (Input.GetKeyDown(KeyCode.B) && _inventory.Items != null)
+        {
+            List<GameObject> bombs = _inventory.Items.FindAll(x => x.tag == "Bomb");
+            bombs = bombs.Where(x => x.GetComponent<InventoryItem>().NumberOfItems > 0).ToList();
+            if (bombs.Count > 0)
+            {
+                bombs[0].GetComponent<InventoryItem>().NumberOfItems--;
+                if (bombs[0].GetComponent<InventoryItem>().NumberOfItems == 0)
+                {
+                    foreach (GameObject item in _inventory.Items)
+                    {
+                        if (item.GetComponent<InventoryItem>().NumberOfItems == 0)
+                        {
+                            _showPanel.SetCurrentItemToHidden();
+                            break;
+                        }
+                    }
+                }
+                GameObject bomb = Instantiate(Resources.Load<GameObject>("Prefabs/Bomb"));
+                Destroy(bomb.GetComponent<InventoryItem>());
+                Destroy(bomb.GetComponent<TestItem>());
+                BombScript script = bomb.AddComponent<BombScript>();
+                script.direction = _direction;
+                bomb.transform.position = transform.position;
+                _bombAmount--;
+                bombAmount.text = "x" + _bombAmount;
+            }
+        }
+    }
+
+    private IEnumerator StopAtacking()
+    {
+        yield return new WaitForSeconds(0.33f);
+        _playerAnimator.SetBool("Attack", false);
+    }
+
     // Update is called once per frame
     void Update()
     {
         Move();
         if (Input.GetKeyDown(KeyCode.I))
         {
-            _showInventory = !_showInventory;
-            _inventoryAnimator.SetBool("isHidden", _showInventory);
-            if (_showInventory)
-            {
-                Time.timeScale = 0;
-            }
-            else
-            {
-                Time.timeScale = 1;
-            }
+            OpenInventory();
         }
         if(_showInventory)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                MoveUpInInventory();
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                MoveDownInInventory();
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                MoveLeftInInventory();
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                MoveRightInInventory();
-            }
-            else if(Input.GetKeyDown(KeyCode.Return))
-            {
-                if(_inventory.Items[_showPanel.CurrentIndex].gameObject.tag == "Potion")
-                {
-                    Debug.Log("trying to use potion");
-                    if(_testPlayer._health < _testPlayer.maxHealth)
-                    {
-                        InventoryItem item = _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>();
-                        if(item.NumberOfItems > 0)
-                        {
-                            int newAmount = (int)item.NumberOfItems - 1;
-                            _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems = (uint)newAmount;
-                            PotionScript script = _inventory.Items[_showPanel.CurrentIndex].GetComponent<PotionScript>();
-                            _testPlayer.HealPlayerToFull();
-                            if (item.NumberOfItems == 0 && script.IsRedPotion)
-                            {
-                                item.NumberOfItems = 1;
-                                script.IsBluePotion = true;
-                                script.IsRedPotion = false;
-                                _showPanel.SetCurrentItemToBluePotion();
-
-                            }
-                            else if (item.NumberOfItems == 0 && script.IsBluePotion)
-                            {
-                                _showPanel.SetCurrentItemToHidden();
-                            }
-                        }                       
-                    }
-                    
-                }
-            }
+            MoveInInventory();
         }
         else
         {
-            if(Input.GetKeyDown(KeyCode.B) && _inventory.Items != null)
+            PlaceBomb();
+
+            if(Input.GetKeyDown(KeyCode.Z))
             {
-                List<GameObject> bombs = _inventory.Items.FindAll(x => x.tag == "Bomb");
-                bombs = bombs.Where(x => x.GetComponent<InventoryItem>().NumberOfItems > 0).ToList();
-                if(bombs.Count > 0)
+                bool Attack = _playerAnimator.GetBool("Attack");
+                bool MoveDown = _playerAnimator.GetBool("MoveDown");
+                bool MoveLeft = _playerAnimator.GetBool("MoveLeft");
+                bool MoveRight = _playerAnimator.GetBool("MoveRight");
+                bool MoveUp = _playerAnimator.GetBool("MoveUp");
+
+                if(!Attack && (MoveDown || MoveLeft || MoveRight || MoveUp))
                 {
-                    bombs[0].GetComponent<InventoryItem>().NumberOfItems--;
-                    if(bombs[0].GetComponent<InventoryItem>().NumberOfItems == 0)
-                    {
-                        foreach(GameObject item in _inventory.Items)
-                        {
-                            if(item.GetComponent<InventoryItem>().NumberOfItems == 0)
-                            {
-                                _showPanel.SetCurrentItemToHidden();
-                                break;
-                            }
-                        }
-                    }
-                    GameObject bomb = Instantiate(Resources.Load<GameObject>("Prefabs/Bomb"));
-                    Destroy(bomb.GetComponent<InventoryItem>());
-                    Destroy(bomb.GetComponent<TestItem>());
-                    BombScript script = bomb.AddComponent<BombScript>();
-                    script.direction = _direction;
-                    bomb.transform.position = transform.position;
-                    _bombAmount--;
-                    bombAmount.text = "x" + _bombAmount;
+                    _playerAnimator.SetBool("Attack", true);
+                    StartCoroutine(StopAtacking());
                 }
             }
+
+            //if(_playerAnimator.GetBool("Attack"))
+            //{
+            //    if(_playerAnimator.)
+            //}
         }
     }
 

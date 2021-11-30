@@ -30,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
     {
         Instantiate(item);
         item.GetComponent<TestEnemyScript>().player = player;
-
+        item.transform.localScale = new Vector3(12, 12, 12);
         foreach (Transform trans in spawnLocations)
         {
             Vector2 postion = item.transform.position;
