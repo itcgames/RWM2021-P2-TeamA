@@ -171,6 +171,11 @@ public class ShowPanel : MonoBehaviour
         return sum;
     }
 
+    public void SetCurrentItemToHidden()
+    {
+        _itemImages[_currentlySelectedPage][_currentIndex].GetComponent<Image>().color = Color.red;
+    }
+
     public void UseItem()
     {
         Destroy(_itemImages[_currentlySelectedPage][_currentIndex]);

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -98,19 +99,14 @@ public class TestInventoryPlayer : MonoBehaviour
                     Debug.Log("trying to use potion");
                     if(_testPlayer._health < _testPlayer.maxHealth)
                     {
-                        _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems -= 1;
+                        InventoryItem item = _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>();
+                        int newAmount = (int)item.NumberOfItems - 1;
+                        _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems = (uint)newAmount;
+
                         _testPlayer.HealPlayerToFull();
-                        if (_inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems == 0)
+                        if (item.NumberOfItems == 0)
                         {
-                            foreach (GameObject item in _inventory.Items)
-                            {
-                                if (item.GetComponent<InventoryItem>().NumberOfItems == 0)
-                                {
-                                    _showPanel.UseItem();
-                                    _inventory.Items.Remove(item);
-                                    break;
-                                }
-                            }
+                            _showPanel.SetCurrentItemToHidden();
                         }
                     }
                     
@@ -122,18 +118,17 @@ public class TestInventoryPlayer : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.B) && _inventory.Items != null)
             {
                 List<GameObject> bombs = _inventory.Items.FindAll(x => x.tag == "Bomb");
+                bombs = bombs.Where(x => x.GetComponent<InventoryItem>().NumberOfItems > 0).ToList();
                 if(bombs.Count > 0)
                 {
                     bombs[0].GetComponent<InventoryItem>().NumberOfItems--;
                     if(bombs[0].GetComponent<InventoryItem>().NumberOfItems == 0)
                     {
-                        //_inventory.Items.RemoveAll(x => x.GetComponent<InventoryItem>().NumberOfItems == 0);
                         foreach(GameObject item in _inventory.Items)
                         {
                             if(item.GetComponent<InventoryItem>().NumberOfItems == 0)
                             {
-                                _showPanel.UseItem();
-                                _inventory.Items.Remove(item);
+                                _showPanel.SetCurrentItemToHidden();
                                 break;
                             }
                         }
