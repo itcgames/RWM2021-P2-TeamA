@@ -27,7 +27,7 @@ public class TestInventoryPlayer : MonoBehaviour
     public Vector2 _cursorLocationInInventory = new Vector2(0, 0);
     [HideInInspector]
     public uint currentItemId = 0;
-    private Vector2 _direction = new Vector2(0,0);
+    private Vector2 _direction = new Vector2(0, 0);
     private TestPlayer _testPlayer;
     // Start is called before the first frame update
     void Start()
@@ -42,10 +42,15 @@ public class TestInventoryPlayer : MonoBehaviour
         _inventory = GetComponentInChildren<Inventory>();
         _testPlayer = GetComponentInChildren<TestPlayer>();
         _stackCounter = 0;
-        
+
     }
 
-    private void Move()
+    public bool IsAttacking()
+    {
+        return _playerAnimator.GetBool("Attacking");
+    }
+
+private void Move()
     {
         if(!_showInventory)
         {
@@ -229,11 +234,6 @@ public class TestInventoryPlayer : MonoBehaviour
                     StartCoroutine(StopAtacking());
                 }
             }
-
-            //if(_playerAnimator.GetBool("Attack"))
-            //{
-            //    if(_playerAnimator.)
-            //}
         }
     }
 
