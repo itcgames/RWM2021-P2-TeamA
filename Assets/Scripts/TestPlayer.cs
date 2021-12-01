@@ -45,4 +45,9 @@ public class TestPlayer : MonoBehaviour
             heart.sprite = fullHeart;
         }
     }
+
+    public bool IsAtFullHealth()
+    {
+        return _health == maxHealth;
+    }
 }

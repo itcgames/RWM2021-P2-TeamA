@@ -32,28 +32,21 @@ public class TestItemSpawner : MonoBehaviour
 
     private void Update()
     {
-        foreach(GameObject item in items)
-        {
-            if(item.GetComponent<TestItem>().spawner == null)
-            {
-                item.GetComponent<TestItem>().spawner = gameObject;
-            }
-            
-        }
+       
     }
 
     public GameObject CreateItem()
     {
-        Instantiate(item);
-        item.GetComponent<TestItem>().spawner = gameObject;
+        GameObject i = Instantiate(item);
+        i.GetComponent<TestItem>().spawner = gameObject;
         if(items == null)
         {
             items = new List<GameObject>();
         }
-        items.Add(item);
-        if (item.tag == "Potion")
+        items.Add(i);
+        if (i.tag == "Potion")
         {
-            PotionScript script = item.GetComponent<PotionScript>();
+            PotionScript script = i.GetComponent<PotionScript>();
             script.IsRedPotion = true;
             script.IsBluePotion = false;
         }
@@ -61,28 +54,28 @@ public class TestItemSpawner : MonoBehaviour
         {
             foreach (Transform trans in spawnLocations)
             {
-                Vector2 postion = item.transform.position;
-                item.transform.position = trans.position;
+                Vector2 postion = i.transform.position;
+                i.transform.position = trans.position;
                 Collider2D[] collider2Ds;
                 collider2Ds = Physics2D.OverlapCircleAll(trans.position, 0.2f);
                 List<Collider2D> colliders = collider2Ds.ToList();
-                colliders = colliders.Where(x => x.gameObject.tag != item.gameObject.tag).ToList();
+                colliders = colliders.Where(x => x.gameObject.tag != i.gameObject.tag).ToList();
                 if (colliders.Count == 0)
                 {
-                    return item;
+                    return i;
                 }
                 else
                 {
-                    item.transform.position = postion;
+                    i.transform.position = postion;
                 }
             }
         }
         else
         {
-            item.transform.position = transform.position;
+            i.transform.position = transform.position;
         }
        
         
-        return item;
+        return i;
     }
 }
