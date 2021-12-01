@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class TestInventoryPlayer : MonoBehaviour
 {
+    public GameObject sword;
     public Vector2 speed = new Vector2(20, 20);
     public Text stackAmount;
     public Text itemAmount;
@@ -29,6 +30,7 @@ public class TestInventoryPlayer : MonoBehaviour
     public uint currentItemId = 0;
     private Vector2 _direction = new Vector2(0, 0);
     private TestPlayer _testPlayer;
+    private Vector2 _lastDirectionToAttack = new Vector2(-1, -1);
     // Start is called before the first frame update
     void Start()
     {
@@ -42,15 +44,15 @@ public class TestInventoryPlayer : MonoBehaviour
         _inventory = GetComponentInChildren<Inventory>();
         _testPlayer = GetComponentInChildren<TestPlayer>();
         _stackCounter = 0;
-
+        _direction = Vector2.down;
     }
 
     public bool IsAttacking()
     {
-        return _playerAnimator.GetBool("Attacking");
+        return _playerAnimator.GetBool("Attack");
     }
 
-private void Move()
+    private void Move()
     {
         if(!_showInventory)
         {
@@ -222,19 +224,73 @@ private void Move()
 
             if(Input.GetKeyDown(KeyCode.Z))
             {
-                bool Attack = _playerAnimator.GetBool("Attack");
-                bool MoveDown = _playerAnimator.GetBool("MoveDown");
-                bool MoveLeft = _playerAnimator.GetBool("MoveLeft");
-                bool MoveRight = _playerAnimator.GetBool("MoveRight");
-                bool MoveUp = _playerAnimator.GetBool("MoveUp");
+                Attack();
+            }
+        }
 
-                if(!Attack && (MoveDown || MoveLeft || MoveRight || MoveUp))
+        if (IsAttacking())
+        {
+            Collider2D[] collider2Ds;
+            collider2Ds = Physics2D.OverlapCircleAll(transform.position, 2.0f);
+            List<Collider2D> colliders = collider2Ds.ToList();
+            colliders = colliders.Where(x => x.gameObject.tag == "Enemy").ToList();
+
+            foreach (Collider2D collider in colliders)
+            {
+                collider.gameObject.GetComponent<TestEnemyScript>().PlayParticleEffect();
+                Destroy(collider.gameObject);
+            }
+        }
+    }
+
+    private void Attack()
+    {
+        bool Attack = _playerAnimator.GetBool("Attack");
+
+        if (!Attack)
+        {
+            _playerAnimator.SetBool("Attack", true);
+            StartCoroutine(StopAtacking());
+            if(_testPlayer.IsAtFullHealth())
+            {
+                GameObject swordclone = CreateSword();
+
+                if(_lastDirectionToAttack != _direction)
                 {
-                    _playerAnimator.SetBool("Attack", true);
-                    StartCoroutine(StopAtacking());
+                    Destroy(swordclone);
+                    CreateSword();
+                    _lastDirectionToAttack = _direction;
                 }
             }
         }
+    }
+
+    GameObject CreateSword()
+    {
+        GameObject s = Instantiate(sword);
+        s.transform.position = transform.position;
+        s.transform.localScale = new Vector3(4.0f, 4.0f, 1.0f);
+        MoveInDirection dir = s.GetComponent<MoveInDirection>();
+        dir.direction = _direction;
+        dir.speed = 7.5f;
+
+        if (_direction != Vector2.up)
+        {
+            if (_direction == Vector2.right)
+            {
+                s.transform.Rotate(new Vector3(0, 0, -90));
+            }
+            else if (_direction == Vector2.down)
+            {
+                s.transform.Rotate(new Vector3(0, 0, -180));
+            }
+            else if (_direction == Vector2.left)
+            {
+                s.transform.Rotate(new Vector3(0, 0, -270));
+            }
+        }
+
+        return s;
     }
 
     public void AddObjectToInventory(GameObject itemObject, string texture, string itemName, uint amount)

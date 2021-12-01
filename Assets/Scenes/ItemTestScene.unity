@@ -725,6 +725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fdb08420133989449e308db709aa53f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sword: {fileID: 9033491122278397187, guid: d67215f663d1cc442856b4f168e73fff, type: 3}
   speed: {x: 20, y: 20}
   stackAmount: {fileID: 1067990250}
   itemAmount: {fileID: 1489412732}
@@ -1170,6 +1171,8 @@ MonoBehaviour:
   - {fileID: 1402142465}
   - {fileID: 141771162}
   - {fileID: 1053231324}
+  destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
+    type: 3}
 --- !u!4 &507644395
 Transform:
   m_ObjectHideFlags: 0
@@ -2850,6 +2853,8 @@ MonoBehaviour:
   - {fileID: 1561794221}
   - {fileID: 1887098820}
   - {fileID: 2092669824}
+  destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
+    type: 3}
 --- !u!4 &1941681413
 Transform:
   m_ObjectHideFlags: 0

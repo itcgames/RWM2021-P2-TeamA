@@ -14,6 +14,7 @@ public class TestEnemyScript : MonoBehaviour
     public bool hasShield;
     [HideInInspector]
     public Vector2 direction;
+    public GameObject destroyParticleEffect;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,10 +56,27 @@ public class TestEnemyScript : MonoBehaviour
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if(player.GetComponent<TestInventoryPlayer>().IsAttacking())
             {
-                return;
+                Instantiate(destroyParticleEffect);
+                destroyParticleEffect.GetComponent<ParticleSystem>().Play();
+                Destroy(gameObject);               
             }
             player.GetComponent<TestPlayer>().TakeDamage(1);
             Debug.Log("Player took damage");
         }
+        else if(collision.gameObject.tag == "Sword")
+        {
+            GameObject particleEffect = Instantiate(destroyParticleEffect);
+            particleEffect.transform.position = transform.position;
+            particleEffect.GetComponent<ParticleSystem>().Play();
+            Destroy(collision.gameObject);
+            Destroy(gameObject);            
+        }
+    }
+
+    public void PlayParticleEffect()
+    {
+        GameObject particleEffect = Instantiate(destroyParticleEffect);
+        particleEffect.transform.position = transform.position;
+        particleEffect.GetComponent<ParticleSystem>().Play();
     }
 }
