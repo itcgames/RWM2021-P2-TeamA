@@ -8,6 +8,8 @@ TagManager:
   - Bomb
   - Potion
   - Sword
+  - Enemy
+  - SpawnSmoke
   layers:
   - Default
   - TransparentFX
