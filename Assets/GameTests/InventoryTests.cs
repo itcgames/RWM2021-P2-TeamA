@@ -30,6 +30,7 @@ namespace Tests
         public IEnumerator PlayerIsNotNull()
         {
             playerObj = GameObject.Find("Player");
+            yield return new WaitForSeconds(0.2f);
             Assert.IsNotNull(playerObj);
 
             testInventory = playerObj.GetComponent<TestInventoryPlayer>();
@@ -44,6 +45,7 @@ namespace Tests
         public IEnumerator SpawnerIsNotNull()
         {
             PlayerIsNotNull();
+            yield return new WaitForSeconds(0.2f);
             var spawnerObj = GameObject.Find("ItemSpawner");
             Assert.IsNotNull(spawnerObj);
             spawner = spawnerObj.GetComponent<TestItemSpawner>();
@@ -56,6 +58,7 @@ namespace Tests
         {
             PlayerIsNotNull();
             SpawnerIsNotNull();
+            yield return new WaitForSeconds(0.2f);
             GameObject item = Resources.Load<GameObject>("Prefabs/DefaultItem");
             playerObj = GameObject.Find("Player");
             testInventory = playerObj.GetComponent<TestInventoryPlayer>();
@@ -64,7 +67,7 @@ namespace Tests
             Assert.IsNotNull(item);
             for (int i = 0; i < amountOfItems; i++)
             {
-                testInventory.AddObjectToInventory(item, "Bomb", "item");
+                testInventory.AddObjectToInventory(item, "Bomb", "item", 1);
             }
             Assert.AreEqual(0, showPanel._currentlySelectedPage);
             Assert.AreEqual(0, showPanel.CurrentIndex);
