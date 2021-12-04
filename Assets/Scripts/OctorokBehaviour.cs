@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class OctorokBehaviour : CharacterBehaviour
+public class OctorokBehaviour : EnemyBehaviour
 {
     private const float TIME_BETWEEN_ACTIONS = 1.0f;
     private float _lastMovementChange;
@@ -11,7 +11,7 @@ public class OctorokBehaviour : CharacterBehaviour
         _lastMovementChange = Time.time;
     }
 
-    void Update()
+    new void Update()
     {
         if (_lastMovementChange + TIME_BETWEEN_ACTIONS <= Time.time)
         {
@@ -37,5 +37,8 @@ public class OctorokBehaviour : CharacterBehaviour
                     break;
             }
         }
+
+        // Keeps to the area bounds.
+        base.Update();
     }
 }

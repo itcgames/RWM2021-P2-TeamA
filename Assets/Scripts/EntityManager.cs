@@ -92,6 +92,9 @@ public class EntityManager : MonoBehaviour
 					enemies[i] = controller;
 					controller.enabled = false;
 
+					var behaviour = controller.GetComponent<EnemyBehaviour>();
+					if (behaviour) behaviour.AreaBounds = areaBounds;
+
 					// Spawns a smoke prefab in the enemy location.
 					GameObject smokeObj = Instantiate(
 						spawnSmokePrefab, position, transform.rotation);
