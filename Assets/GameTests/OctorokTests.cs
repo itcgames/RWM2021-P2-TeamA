@@ -19,13 +19,7 @@ public class OctorokTests
         GameObject cameraObj = GameObject.Find("Main Camera");
         var camController = cameraObj.GetComponent<CameraFollowSnap>();
 
-        // Spawns a new Octorok.
-        GameObject octorokPrefab = 
-            Resources.Load<GameObject>("Prefabs/OctorokEnemy");
-        Assert.NotNull(octorokPrefab);
-
-        GameObject octorokObj = Object.Instantiate(octorokPrefab);
-        Assert.NotNull(octorokObj);
+        GameObject octorokObj = SpawnOctorok();
 
         // Sets the octorok's boundaries.
         var behaviour = octorokObj.GetComponent<OctorokBehaviour>();
@@ -41,6 +35,35 @@ public class OctorokTests
         // Checks that the Octorok is within the bounds again.
         Assert.LessOrEqual(octorokObj.transform.position.x, 
                            behaviour.AreaBounds.right);
+    }
+
+    [UnityTest]
+    public IEnumerator DiesOnHit()
+    {
+        GameObject octorokObj = SpawnOctorok();
+
+        // Sets the octorok's boundaries.
+        var behaviour = octorokObj.GetComponent<OctorokBehaviour>();
+        Assert.NotNull(behaviour);
+
+        // Damages the Octorok, waits, checks the Octorok is dead.
+        behaviour.TakeDamage(1.0f);
+        yield return new WaitForSeconds(0.1f);
+        Assert.IsNull(GameObject.Find("Octorok"));
+    }
+
+    private GameObject SpawnOctorok(string name = "Octorok")
+    {
+        GameObject octorokPrefab =
+            Resources.Load<GameObject>("Prefabs/OctorokEnemy");
+        Assert.NotNull(octorokPrefab);
+
+        GameObject octorokObj = Object.Instantiate(octorokPrefab);
+        Assert.NotNull(octorokObj);
+
+        octorokObj.name = name;
+
+        return octorokObj;
     }
 }
 
