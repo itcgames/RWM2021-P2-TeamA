@@ -41,4 +41,15 @@ public class OctorokBehaviour : EnemyBehaviour
         // Keeps to the area bounds.
         base.Update();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            // Gets the player's health component and damages it if it exists.
+            Health health = collision.GetComponent<Health>();
+            if (health)
+                health.TakeDamage(0.5f);
+        }
+    }
 }

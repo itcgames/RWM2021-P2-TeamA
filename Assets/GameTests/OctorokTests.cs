@@ -43,11 +43,11 @@ public class OctorokTests
         GameObject octorokObj = SpawnOctorok();
 
         // Sets the octorok's boundaries.
-        var behaviour = octorokObj.GetComponent<OctorokBehaviour>();
-        Assert.NotNull(behaviour);
+        var healthComponent = octorokObj.GetComponent<Health>();
+        Assert.NotNull(healthComponent);
 
         // Damages the Octorok, waits, checks the Octorok is dead.
-        behaviour.TakeDamage(1.0f);
+        healthComponent.TakeDamage(1.0f);
         yield return new WaitForSeconds(0.1f);
         Assert.IsNull(GameObject.Find("Octorok"));
     }

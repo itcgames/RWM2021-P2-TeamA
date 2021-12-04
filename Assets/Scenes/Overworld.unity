@@ -237,6 +237,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1590756327094295973, guid: 30f37926d62f56143b7c78120f5ace8a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1590756327094295977, guid: 30f37926d62f56143b7c78120f5ace8a,
         type: 3}
       propertyPath: m_RootOrder
@@ -360,6 +365,21 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 211138115}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &939425632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939425631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c7a679d6c84884285a548bae6b2b76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 4
+  damageCooldown: 1
+  numberOfFlashes: 4
 --- !u!61 &939425634
 BoxCollider2D:
   m_ObjectHideFlags: 0

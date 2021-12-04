@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4759321764708349179}
   - component: {fileID: 7265532476658444446}
   - component: {fileID: 3732280998422759147}
+  - component: {fileID: 5160097212952252223}
   m_Layer: 0
   m_Name: OctorokEnemy
   m_TagString: Enemy
@@ -92,7 +93,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -140,3 +141,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2cbd53550878646a8a3170a1f9dc2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5160097212952252223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066728499407963535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c7a679d6c84884285a548bae6b2b76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
+  damageCooldown: 1
+  numberOfFlashes: 4
