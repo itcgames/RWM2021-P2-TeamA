@@ -5,22 +5,32 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField]
-    private float health = 1.0f;
+    private float _health = 1.0f;
 
     public float damageCooldown = 1.0f; // In seconds.
     public int numberOfFlashes = 4;
 
     private float lastHitTime = 0.0f;
 
+    private void Start()
+    {
+        lastHitTime = Time.time - damageCooldown;
+    }
+
+    public float GetHealth()
+    {
+        return _health;
+    }
+
     public void TakeDamage(float damage)
     {
         if (lastHitTime + damageCooldown < Time.time)
         {
-            health -= damage;
+            _health -= damage;
             lastHitTime = Time.time;
 
             // If the health is zero, destroys the object, otherwise flashes.
-            if (health <= 0.0f)
+            if (_health <= 0.0f)
                 Destroy(gameObject);
             else
                 StartCoroutine(CooldownFlash());

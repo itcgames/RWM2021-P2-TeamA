@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c7a679d6c84884285a548bae6b2b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 4
+  _health: 4
   damageCooldown: 1
   numberOfFlashes: 4
 --- !u!61 &939425634
