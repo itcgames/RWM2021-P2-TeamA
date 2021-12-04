@@ -7,63 +7,87 @@ using UnityEngine.SceneManagement;
 
 public class OctorokTests
 {
-    [SetUp]
-    public void Setup()
-    {
-        SceneManager.LoadScene("Overworld", LoadSceneMode.Single);
-    }
+	[SetUp]
+	public void Setup()
+	{
+		SceneManager.LoadScene("Overworld", LoadSceneMode.Single);
+	}
 
-    [UnityTest]
-    public IEnumerator IsConfinedToAreaBoundary()
-    {
-        GameObject cameraObj = GameObject.Find("Main Camera");
-        var camController = cameraObj.GetComponent<CameraFollowSnap>();
+	[UnityTest]
+	public IEnumerator IsConfinedToAreaBoundary()
+	{
+		GameObject cameraObj = GameObject.Find("Main Camera");
+		var camController = cameraObj.GetComponent<CameraFollowSnap>();
 
-        GameObject octorokObj = SpawnOctorok();
+		GameObject octorokObj = SpawnOctorok();
 
-        // Sets the octorok's boundaries.
-        var behaviour = octorokObj.GetComponent<OctorokBehaviour>();
-        Assert.NotNull(behaviour);
-        behaviour.AreaBounds = camController.GetBounds();
+		// Sets the octorok's boundaries.
+		var behaviour = octorokObj.GetComponent<OctorokBehaviour>();
+		Assert.NotNull(behaviour);
+		behaviour.AreaBounds = camController.GetBounds();
 
-        // Moves the Octorok outside the level bounds.
-        octorokObj.transform.position =
-            new Vector3(behaviour.AreaBounds.right + 10.0f, 0.0f);
+		// Moves the Octorok outside the level bounds.
+		octorokObj.transform.position =
+			new Vector3(behaviour.AreaBounds.right + 10.0f, 0.0f);
 
-        yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(0.1f);
 
-        // Checks that the Octorok is within the bounds again.
-        Assert.LessOrEqual(octorokObj.transform.position.x, 
-                           behaviour.AreaBounds.right);
-    }
+		// Checks that the Octorok is within the bounds again.
+		Assert.LessOrEqual(octorokObj.transform.position.x, 
+						   behaviour.AreaBounds.right);
+	}
 
-    [UnityTest]
-    public IEnumerator DiesOnHit()
-    {
-        GameObject octorokObj = SpawnOctorok();
+	[UnityTest]
+	public IEnumerator DiesOnHit()
+	{
+		GameObject octorokObj = SpawnOctorok();
 
-        // Sets the octorok's boundaries.
-        var behaviour = octorokObj.GetComponent<OctorokBehaviour>();
-        Assert.NotNull(behaviour);
+		// Sets the octorok's boundaries.
+		var healthComponent = octorokObj.GetComponent<Health>();
+		Assert.NotNull(healthComponent);
 
-        // Damages the Octorok, waits, checks the Octorok is dead.
-        behaviour.TakeDamage(1.0f);
-        yield return new WaitForSeconds(0.1f);
-        Assert.IsNull(GameObject.Find("Octorok"));
-    }
+		// Damages the Octorok, waits, checks the Octorok is dead.
+		healthComponent.TakeDamage(1.0f);
+		yield return new WaitForSeconds(0.1f);
+		Assert.IsNull(GameObject.Find("Octorok"));
+	}
 
-    private GameObject SpawnOctorok(string name = "Octorok")
-    {
-        GameObject octorokPrefab =
-            Resources.Load<GameObject>("Prefabs/OctorokEnemy");
-        Assert.NotNull(octorokPrefab);
+	[UnityTest]
+	public IEnumerator ThornsDamage()
+	{
+		// Gets the player and player health.
+		GameObject playerObj = GameObject.Find("Player");
+		Assert.IsNotNull(playerObj);
+		Health playerHealth = playerObj.GetComponent<Health>();
+		Assert.IsNotNull(playerHealth);
+		float healthValue = playerHealth.GetHealth();
 
-        GameObject octorokObj = Object.Instantiate(octorokPrefab);
-        Assert.NotNull(octorokObj);
+		// Spawns an Octorok and moves it to the player.
+		GameObject octorok = SpawnOctorok();
+		octorok.transform.position = playerObj.transform.position;
 
-        octorokObj.name = name;
+		// Waits for the collision method to be called.
+		yield return new WaitForSeconds(0.1f);
 
-        return octorokObj;
-    }
+		// Cancels the flash animation to speed up the test.
+		playerHealth.StopAllCoroutines();
+
+		// Checks the health has decreased.
+		Assert.Less(playerHealth.GetHealth(), healthValue);
+	}
+
+	private GameObject SpawnOctorok(string name = "Octorok")
+	{
+		GameObject octorokPrefab =
+			Resources.Load<GameObject>("Prefabs/OctorokEnemy");
+		Assert.NotNull(octorokPrefab);
+
+		GameObject octorokObj = Object.Instantiate(octorokPrefab);
+		Assert.NotNull(octorokObj);
+
+		octorokObj.name = name;
+
+		return octorokObj;
+	}
 }
 

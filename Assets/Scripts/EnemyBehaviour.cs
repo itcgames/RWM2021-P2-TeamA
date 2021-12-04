@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyBehaviour : CharacterBehaviour
 {
-    public float health = 1.0f;
-
     public CameraFollowSnap.Bounds AreaBounds { get; set; }
 
     protected void Update()
@@ -25,13 +23,5 @@ public class EnemyBehaviour : CharacterBehaviour
             newPosition.y = AreaBounds.bottom;
 
         transform.position = new Vector3(newPosition.x, newPosition.y);
-    }
-
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-
-        if (health <= 0.0f)
-            Destroy(gameObject);
     }
 }
