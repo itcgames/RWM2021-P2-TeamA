@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8066728499407963531}
   - component: {fileID: 8066728499407963530}
   - component: {fileID: 4759321764708349179}
+  - component: {fileID: 7265532476658444446}
+  - component: {fileID: 3732280998422759147}
   m_Layer: 0
   m_Name: OctorokEnemy
   m_TagString: Enemy
@@ -106,3 +108,35 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7265532476658444446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066728499407963535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c04ef8e91389449e2f31cd53bc900, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tilebasedMovement: 0
+  MaxSpeed: 1
+  _diagonalMovementAllowed: 0
+  _preferHorizontal: 0
+  _timeToMaxSpeed: 0
+  _timeToFullStop: 0
+  TileSize: 1
+  SecondsPerTile: 0.5
+--- !u!114 &3732280998422759147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066728499407963535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf2cbd53550878646a8a3170a1f9dc2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
