@@ -57,7 +57,7 @@ public class EnemyTests
 	public IEnumerator OctorokDiesOnHit()
 	{
 		GameObject octorokObj = SpawnEnemy(_octorokPrefab, "Octorok");
-		yield return new WaitForSeconds(0.1f);
+		yield return null;
 
 		// Gets the Octorok's health component
 		var healthComponent = octorokObj.GetComponent<Health>();
@@ -65,8 +65,24 @@ public class EnemyTests
 
 		// Damages the Octorok, waits, checks the Octorok is dead.
 		healthComponent.TakeDamage(1.0f);
-		yield return new WaitForSeconds(0.1f);
+		yield return null;
 		Assert.IsNull(GameObject.Find("Octorok"));
+	}
+
+	[UnityTest]
+	public IEnumerator MoblinDiesOnTwoHits()
+	{
+		GameObject moblinObj = SpawnEnemy(_moblinPrefab, "Moblin");
+		yield return null;
+
+		// Gets the Moblin's health component
+		var healthComponent = moblinObj.GetComponent<Health>();
+		Assert.NotNull(healthComponent);
+
+		// Damages the Moblin, waits, checks the Moblin is dead.
+		healthComponent.TakeDamage(2.0f);
+		yield return null;
+		Assert.IsNull(GameObject.Find("Moblin"));
 	}
 
 	[UnityTest]
