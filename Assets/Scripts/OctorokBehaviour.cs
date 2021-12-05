@@ -7,8 +7,18 @@ public class OctorokBehaviour : EnemyBehaviour
     public float projectileSpeed = 5.0f;
 
     private const float TIME_BETWEEN_ACTIONS = 1.0f;
+
+    // The time at which the last action occurred.
     private float _lastMovementChange;
     private float _lastShotFired;
+
+    private Vector2 _direction = Vector2.right;
+
+    // For testing purposes.
+    public float GetLastShotFiredTime()
+    {
+        return _lastShotFired;
+    }
 
     new void Start()
     {
@@ -21,22 +31,12 @@ public class OctorokBehaviour : EnemyBehaviour
     {
         if (_lastMovementChange + TIME_BETWEEN_ACTIONS <= Time.time)
         {
-            // Random chance to fire a projectile.
-            ChanceToFireProjectile();
-
             // Reset and pick a new action.
             _lastMovementChange = Time.time;
             Controller.ClearPersistentInput();
-            int action = Random.Range(0, 5);
 
-            // Moves in a direction depending on the action number. 0 == no movement.
-            switch (action)
-            {
-                case 1: Controller.MoveLeft(true); break;
-                case 2: Controller.MoveRight(true); break;
-                case 3: Controller.MoveDown(true); break;
-                case 4: Controller.MoveUp(true); break;
-            }
+            TakeRandomAction();
+            ChanceToFireProjectile();
         }
 
         // Keeps to the area bounds.
@@ -45,6 +45,8 @@ public class OctorokBehaviour : EnemyBehaviour
 
     private void ChanceToFireProjectile()
     {
+        // Works out the chance to fire. Get's closer to 100% as time without
+        //      firing increases.
         float timeSinceLastShot = Time.time - _lastShotFired;
         int shotChance = (int)Mathf.Max(maxFireInterval - timeSinceLastShot, 0.0f);
 
@@ -52,19 +54,37 @@ public class OctorokBehaviour : EnemyBehaviour
         {
             _lastShotFired = Time.time; // Resets the fired time.
 
-            Vector2 direction = new Vector2(Random.Range(-1, 2),
-                                            Random.Range(-1, 2));
-
-            // Handles cases of two 1s or two 0s.
-            if (direction.x != 0.0f && direction.y != 0.0f)
-                direction.x = 0.0f;
-            else if (direction.x == 0.0f && direction.y == 0.0f)
-                direction.x = 1.0f;
-
+            // Instantiates the projectile and fires it in the last movement direction.
             GameObject proj = Instantiate(projectilePrefab,
                 transform.position, Quaternion.identity);
 
-            proj.GetComponent<Projectile>()?.Fire(direction * projectileSpeed, AreaBounds);
+            proj.GetComponent<Projectile>()?.Fire(_direction * projectileSpeed, AreaBounds);
+        }
+    }
+
+    private void TakeRandomAction()
+    {
+        int action = Random.Range(0, 5);
+
+        // Moves in a direction depending on the action number. 0 == no movement.
+        switch (action)
+        {
+            case 1:
+                Controller.MoveLeft(true);
+                _direction = Vector2.left;
+                break;
+            case 2:
+                Controller.MoveRight(true);
+                _direction = Vector2.right;
+                break;
+            case 3:
+                Controller.MoveDown(true);
+                _direction = Vector2.down;
+                break;
+            case 4:
+                Controller.MoveUp(true);
+                _direction = Vector2.up;
+                break;
         }
     }
 
