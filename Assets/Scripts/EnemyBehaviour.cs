@@ -10,7 +10,7 @@ public class EnemyBehaviour : CharacterBehaviour
     public float maxFireInterval = 10.0f;
     public float projectileSpeed = 5.0f;
 
-    private const float TIME_BETWEEN_ACTIONS = 1.0f;
+    public const float TIME_BETWEEN_ACTIONS = 1.0f;
 
     // The time at which the last action occurred.
     private float _lastMovementChange;
