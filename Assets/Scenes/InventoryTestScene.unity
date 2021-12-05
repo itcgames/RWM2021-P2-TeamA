@@ -549,6 +549,7 @@ GameObject:
   - component: {fileID: 231892085}
   - component: {fileID: 231892090}
   - component: {fileID: 231892091}
+  - component: {fileID: 231892092}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -615,10 +616,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fdb08420133989449e308db709aa53f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sword: {fileID: 477735153}
   speed: {x: 20, y: 20}
   stackAmount: {fileID: 1067990250}
   itemAmount: {fileID: 1489412732}
+  bombAmount: {fileID: 477735155}
+  useMovement: 0
   cursor: {fileID: 1730682221}
+  _inventory: {fileID: 0}
   panel: {fileID: 147254812}
   _maxItemsPerRow: 9
   _maxItemsPerColumn: 2
@@ -721,6 +726,25 @@ MonoBehaviour:
   canvas: {fileID: 735762881}
   _currentPage: 0
   _currentlySelectedPage: 0
+--- !u!95 &231892092
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231892084}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 70bba47af47b0d245bde987e86447222, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &300770037
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,7 +853,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 388625722569042784, guid: ac885d188cd855b46abf621d9ac441a8, type: 3}
+  player: {fileID: 0}
   timeToWaitBetweenSpawns: 1
+  spawnLocations: []
 --- !u!4 &417207557
 Transform:
   m_ObjectHideFlags: 0
@@ -869,7 +895,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477735153}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -878,7 +904,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -239.7}
+  m_AnchoredPosition: {x: 0, y: -239.70007}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &477735155
@@ -1893,7 +1919,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 388625722569042784, guid: df69872c19065544c83d92b91b333267, type: 3}
+  player: {fileID: 0}
   timeToWaitBetweenSpawns: 1
+  spawnLocations: []
 --- !u!4 &1589394162
 Transform:
   m_ObjectHideFlags: 0

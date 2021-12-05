@@ -66,7 +66,7 @@ public class EntityManager : MonoBehaviour
 				Random.Range(minEnemiesPerRoom, maxEnemiesPerRoom));
 
 			// For storing references for later.
-			GameObject[] enemies = new GameObject[numberOfEnemies];
+			EnemyBehaviour[] enemies = new EnemyBehaviour[numberOfEnemies];
 			GameObject[] smoke = new GameObject[numberOfEnemies];
 
 			// Gets the bounds of the room.
@@ -83,14 +83,22 @@ public class EntityManager : MonoBehaviour
 				GameObject enemy = Instantiate(
 					enemyPrefabs[enemyType], position, transform.rotation);
 
-				// Takes a reference to the enemy.
-				enemies[i] = enemy;
-				// TODO: Disable enemy script.
+				// Tries to get the character controller and continues if successful.
+				var behaviour = enemy.GetComponent<EnemyBehaviour>();
+				if (behaviour)
+				{
+					// Takes a reference to the enemy.
+					enemies[i] = behaviour;
+					behaviour.enabled = false;
+					behaviour.AreaBounds = areaBounds;
 
-				// Spawns a smoke prefab in the enemy location.
-				GameObject smokeObj = Instantiate(
-					spawnSmokePrefab, position, transform.rotation);
-				smoke[i] = smokeObj;
+					// Spawns a smoke prefab in the enemy location.
+					GameObject smokeObj = Instantiate(
+						spawnSmokePrefab, position, transform.rotation);
+					smoke[i] = smokeObj;
+				}
+				else // If the enemy has no character controller, delete it.
+					Destroy(enemy);
 			}
 
 			// Waits for the enemy spawn time and then reveals the enemy.
@@ -99,9 +107,9 @@ public class EntityManager : MonoBehaviour
 			foreach (GameObject smokeObj in smoke)
 				Destroy(smokeObj);
 
-			foreach (GameObject enemy in enemies)
+			foreach (EnemyBehaviour enemy in enemies)
 				if (enemy)
-					enemy.SetActive(true); // TODO: Replace with enabling enemy script.
+					enemy.enabled = true;
 		}
 
 		yield return null;
