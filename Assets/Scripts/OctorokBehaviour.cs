@@ -13,6 +13,10 @@ public class OctorokBehaviour : EnemyBehaviour
     private float _lastShotFired;
 
     private Vector2 _direction = Vector2.right;
+    private Animator _animator;
+    private SpriteRenderer _sprite;
+
+    bool _canAnimate = false;
 
     // For testing purposes.
     public float GetLastShotFiredTime()
@@ -25,6 +29,10 @@ public class OctorokBehaviour : EnemyBehaviour
         base.Start();
         _lastMovementChange = Time.time - TIME_BETWEEN_ACTIONS;
         _lastShotFired = Time.time;
+
+        _animator = GetComponentInChildren<Animator>();
+        _sprite = GetComponentInChildren<SpriteRenderer>();
+        if (_animator && _sprite) _canAnimate = true;
     }
 
     new void Update()
@@ -72,6 +80,7 @@ public class OctorokBehaviour : EnemyBehaviour
             case 1:
                 Controller.MoveLeft(true);
                 _direction = Vector2.left;
+                
                 break;
             case 2:
                 Controller.MoveRight(true);
@@ -85,6 +94,13 @@ public class OctorokBehaviour : EnemyBehaviour
                 Controller.MoveUp(true);
                 _direction = Vector2.up;
                 break;
+        }
+
+        if (_canAnimate)
+        {
+            _animator.SetBool("IsVertical", _direction.y != 0.0f);
+            _sprite.flipY = _direction.y > 0.0f;
+            _sprite.flipX = _direction.x > 0.0f;
         }
     }
 
