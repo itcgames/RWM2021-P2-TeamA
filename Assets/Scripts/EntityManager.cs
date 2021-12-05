@@ -66,8 +66,7 @@ public class EntityManager : MonoBehaviour
 				Random.Range(minEnemiesPerRoom, maxEnemiesPerRoom));
 
 			// For storing references for later.
-			TopdownCharacterController[] enemies = 
-				new TopdownCharacterController[numberOfEnemies];
+			EnemyBehaviour[] enemies = new EnemyBehaviour[numberOfEnemies];
 			GameObject[] smoke = new GameObject[numberOfEnemies];
 
 			// Gets the bounds of the room.
@@ -85,15 +84,13 @@ public class EntityManager : MonoBehaviour
 					enemyPrefabs[enemyType], position, transform.rotation);
 
 				// Tries to get the character controller and continues if successful.
-				var controller = enemy.GetComponent<TopdownCharacterController>();
-				if (controller)
+				var behaviour = enemy.GetComponent<EnemyBehaviour>();
+				if (behaviour)
 				{
 					// Takes a reference to the enemy.
-					enemies[i] = controller;
-					controller.enabled = false;
-
-					var behaviour = controller.GetComponent<EnemyBehaviour>();
-					if (behaviour) behaviour.AreaBounds = areaBounds;
+					enemies[i] = behaviour;
+					behaviour.enabled = false;
+					behaviour.AreaBounds = areaBounds;
 
 					// Spawns a smoke prefab in the enemy location.
 					GameObject smokeObj = Instantiate(
@@ -110,7 +107,7 @@ public class EntityManager : MonoBehaviour
 			foreach (GameObject smokeObj in smoke)
 				Destroy(smokeObj);
 
-			foreach (TopdownCharacterController enemy in enemies)
+			foreach (EnemyBehaviour enemy in enemies)
 				if (enemy)
 					enemy.enabled = true;
 		}
