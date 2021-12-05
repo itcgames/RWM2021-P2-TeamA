@@ -11,6 +11,10 @@ public class TestPlayer : MonoBehaviour
     public Image[] hearts;
     public Sprite fadedHeart;
     public Sprite fullHeart;
+    //public bool UseHealth;
+
+
+
     private void Start()
     {
         _health = maxHealth;

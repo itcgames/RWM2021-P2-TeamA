@@ -31,6 +31,7 @@ public class TestInventoryPlayer : MonoBehaviour
     private Vector2 _direction = new Vector2(0, 0);
     private TestPlayer _testPlayer;
     private Vector2 _lastDirectionToAttack = new Vector2(-1, -1);
+    int scaleSize = 5;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +46,7 @@ public class TestInventoryPlayer : MonoBehaviour
         _testPlayer = GetComponentInChildren<TestPlayer>();
         _stackCounter = 0;
         _direction = Vector2.down;
+        transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
     }
 
     public bool IsAttacking()
@@ -58,13 +60,16 @@ public class TestInventoryPlayer : MonoBehaviour
         {
             float xInput = Input.GetAxis("Horizontal");
             float yInput = Input.GetAxis("Vertical");
-            Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
-            movement *= Time.deltaTime;
-            transform.Translate(movement);
+            if(useMovement)
+            {
+                Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
+                movement *= Time.deltaTime;
+                transform.Translate(movement);
+            }
             if (xInput > 0)
             {
                 _direction = Vector2.right;
-                transform.localScale = new Vector3(15,15,15);
+                transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
                 _playerAnimator.SetBool("MoveRight", true);
                 _playerAnimator.SetBool("MoveLeft", false);
                 _playerAnimator.SetBool("MoveUp", false);
@@ -73,7 +78,7 @@ public class TestInventoryPlayer : MonoBehaviour
             else if (xInput < 0)
             {
                 _direction = Vector2.left;
-                transform.localScale = new Vector3(-15, 15, 15);
+                transform.localScale = new Vector3(-scaleSize, scaleSize, scaleSize);
                 _playerAnimator.SetBool("MoveRight", false);
                 _playerAnimator.SetBool("MoveLeft", true);
                 _playerAnimator.SetBool("MoveUp", false);

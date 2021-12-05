@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 7265532476658444446}
   - component: {fileID: 3732280998422759147}
   - component: {fileID: 5160097212952252223}
+  - component: {fileID: 5308113394664408341}
   m_Layer: 0
   m_Name: OctorokEnemy
   m_TagString: Enemy
@@ -213,3 +214,27 @@ MonoBehaviour:
   _health: 1
   damageCooldown: 1
   numberOfFlashes: 4
+--- !u!114 &5308113394664408341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066728499407963535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 651d5ba02a6654d4b8ff0de18d328770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+  usingSprites: 0
+  leftSprite: 0
+  rightSprite: 0
+  upSprite: 0
+  downSprite: 0
+  player: {fileID: 0}
+  hasShield: 0
+  direction: {x: 0, y: 0}
+  destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
+    type: 3}
+  hurtPlayerOnCollision: 0
