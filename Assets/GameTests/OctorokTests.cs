@@ -22,7 +22,7 @@ public class OctorokTests
 		GameObject octorokObj = SpawnOctorok();
 
 		// Sets the octorok's boundaries.
-		var behaviour = octorokObj.GetComponent<OctorokBehaviour>();
+		var behaviour = octorokObj.GetComponent<EnemyBehaviour>();
 		Assert.NotNull(behaviour);
 		behaviour.AreaBounds = camController.GetBounds();
 
@@ -41,6 +41,7 @@ public class OctorokTests
 	public IEnumerator DiesOnHit()
 	{
 		GameObject octorokObj = SpawnOctorok();
+		yield return new WaitForSeconds(0.1f);
 
 		// Sets the octorok's boundaries.
 		var healthComponent = octorokObj.GetComponent<Health>();
@@ -76,25 +77,11 @@ public class OctorokTests
 		Assert.Less(playerHealth.GetHealth(), healthValue);
 	}
 
-	private GameObject SpawnOctorok(string name = "Octorok")
-	{
-		GameObject octorokPrefab =
-			Resources.Load<GameObject>("Prefabs/OctorokEnemy");
-		Assert.NotNull(octorokPrefab);
-
-		GameObject octorokObj = Object.Instantiate(octorokPrefab);
-		Assert.NotNull(octorokObj);
-
-		octorokObj.name = name;
-
-		return octorokObj;
-	}
-
 	[UnityTest]
 	public IEnumerator FiresProjectile()
 	{
 		GameObject octorokObj = SpawnOctorok();
-		OctorokBehaviour octorok = octorokObj.GetComponent<OctorokBehaviour>();
+		EnemyBehaviour octorok = octorokObj.GetComponent<EnemyBehaviour>();
 
 		// Waits for the octorok to be initialised.
 		yield return new WaitForSeconds(0.1f);
@@ -117,6 +104,28 @@ public class OctorokTests
 		}
 
 		Assert.IsTrue(fired);
+	}
+
+	private GameObject SpawnOctorok(string name = "Octorok")
+	{
+		GameObject entityManagerObj = GameObject.Find("EntityManager");
+		Assert.NotNull(entityManagerObj);
+
+		EntityManager entityManager =
+			entityManagerObj.GetComponent<EntityManager>();
+		Assert.NotNull(entityManager);
+
+		GameObject octorokPrefab =
+			Resources.Load<GameObject>("Prefabs/OctorokEnemy");
+		Assert.NotNull(octorokPrefab);
+
+		EnemyBehaviour octorok =
+			entityManager.SpawnEnemy(octorokPrefab, Vector3.zero);
+		Assert.NotNull(octorok);
+
+		octorok.name = name;
+
+		return octorok.gameObject;
 	}
 }
 

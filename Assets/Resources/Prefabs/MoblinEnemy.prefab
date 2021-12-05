@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1170023581146917914}
   - component: {fileID: 1170023581146917917}
   - component: {fileID: 6293776329214487591}
+  - component: {fileID: 3908531028915424599}
+  - component: {fileID: 1249158498440036800}
   m_Layer: 0
   m_Name: MoblinEnemy
   m_TagString: Enemy
@@ -106,3 +108,38 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3908531028915424599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170023581146917918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c04ef8e91389449e2f31cd53bc900, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tilebasedMovement: 0
+  MaxSpeed: 2
+  _diagonalMovementAllowed: 0
+  _preferHorizontal: 0
+  _timeToMaxSpeed: 0
+  _timeToFullStop: 0
+  TileSize: 1
+  SecondsPerTile: 0.5
+--- !u!114 &1249158498440036800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170023581146917918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7b6792ea94f1b4d85fdcd3c848e901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 0}
+  maxFireInterval: 10
+  projectileSpeed: 5

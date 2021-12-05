@@ -16,7 +16,6 @@ public class EntityManager : MonoBehaviour
 	public TopdownCharacterController playerController;
 	public Rigidbody2D playerRigidbody;
 
-
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -80,25 +79,19 @@ public class EntityManager : MonoBehaviour
 
 				// Spawns an enemy of a random type.
 				int enemyType = Random.Range(0, enemyPrefabs.Length);
-				GameObject enemy = Instantiate(
-					enemyPrefabs[enemyType], position, transform.rotation);
+				EnemyBehaviour enemy = SpawnEnemy(enemyPrefabs[enemyType],
+												  position, areaBounds);
 
-				// Tries to get the character controller and continues if successful.
-				var behaviour = enemy.GetComponent<EnemyBehaviour>();
-				if (behaviour)
+				// If the enemy was spawned correctly.
+				if (enemy)
 				{
 					// Takes a reference to the enemy.
-					enemies[i] = behaviour;
-					behaviour.enabled = false;
-					behaviour.AreaBounds = areaBounds;
+					enemies[i] = enemy;
+					enemy.enabled = false;
 
 					// Spawns a smoke prefab in the enemy location.
-					GameObject smokeObj = Instantiate(
-						spawnSmokePrefab, position, transform.rotation);
-					smoke[i] = smokeObj;
+					smoke[i] = SpawnSmoke(position);
 				}
-				else // If the enemy has no character controller, delete it.
-					Destroy(enemy);
 			}
 
 			// Waits for the enemy spawn time and then reveals the enemy.
@@ -113,6 +106,39 @@ public class EntityManager : MonoBehaviour
 		}
 
 		yield return null;
+	}
+
+	public EnemyBehaviour SpawnEnemy(GameObject prefab, Vector3 position, 
+									 CameraFollowSnap.Bounds? bounds = null)
+    {
+        GameObject enemy = Instantiate(prefab, position, Quaternion.identity);
+        var behaviour = enemy.GetComponent<EnemyBehaviour>();
+
+		// If no enemy behaviour, destroys the game object and returns null.
+        if (!behaviour)
+        {
+			Destroy(enemy);
+            return null;
+        }
+
+        // Sets the bounds to the passed value if not null.
+        if (bounds != null)
+            behaviour.AreaBounds = bounds.Value;
+
+        // Else sets the bounds from the camera mover if not null.
+        else if (cameraMover)
+            behaviour.AreaBounds = cameraMover.GetBounds();
+
+        return behaviour;
+    }
+
+    private GameObject SpawnSmoke(Vector3 position)
+    {
+		// Changes the z so the smoke always appears on top.
+		position.z -= 5.0f;
+
+		// Spawns a smoke prefab in the enemy location.
+		return Instantiate(spawnSmokePrefab, position, transform.rotation);
 	}
 
 	private Vector3 FindValidEnemySpawn(CameraFollowSnap.Bounds areaBounds)
