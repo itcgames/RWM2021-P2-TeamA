@@ -1587,6 +1587,7 @@ MonoBehaviour:
   stackAmount: {fileID: 1021130959}
   itemAmount: {fileID: 608478851}
   bombAmount: {fileID: 608478851}
+  rupeeAmount: {fileID: 603726967}
   useMovement: 0
   cursor: {fileID: 1815309393}
   _inventory: {fileID: 0}
@@ -2150,13 +2151,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.454902, g: 0.08235294, b: 0.08235294, a: 1}
+  m_Color: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: c7ddf95f58d448f4aa966fc85b052172, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2206,6 +2207,10 @@ MonoBehaviour:
   hurtPlayerOnCollision: 0
   health: 2
   damageAmount: 1
+  items:
+  - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
+  - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
+  - {fileID: 2647169056960781635, guid: 940228a441512e842892508508e153ec, type: 3}
 --- !u!4 &1709164249 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1590756327094295977, guid: 30f37926d62f56143b7c78120f5ace8a,

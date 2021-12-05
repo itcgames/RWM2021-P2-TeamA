@@ -19,6 +19,7 @@ public class TestEnemyScript : MonoBehaviour
     public bool hurtPlayerOnCollision;
     public int health;
     public int damageAmount;
+    public GameObject[] items;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,10 +59,7 @@ public class TestEnemyScript : MonoBehaviour
                 }
             }
             transform.localScale = new Vector2(4.0f, 4.0f);
-        }
-       
-
-        
+        }       
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -73,28 +71,35 @@ public class TestEnemyScript : MonoBehaviour
             {
                 Instantiate(destroyParticleEffect);
                 destroyParticleEffect.GetComponent<ParticleSystem>().Play();
-                Destroy(gameObject);               
+                Health h = GetComponent<Health>();
+                if(h)
+                {
+                    h.TakeDamage(10);
+                }
+                //Destroy(gameObject);               
             }
             if(hurtPlayerOnCollision)
             {
-                player.GetComponent<TestPlayer>().TakeDamage(1);
+                //player.GetComponent<TestPlayer>().TakeDamage(1);
                 Debug.Log("Player took damage");
-            }
-            
+            }            
         }
         else if(collision.gameObject.tag == "Sword")
-        {
-           
+        {          
             Destroy(collision.gameObject);
             health -= damageAmount;
-            if(health <= 0)
+            Health h = GetComponent<Health>();
+            if (h)
+            {
+                h.TakeDamage(damageAmount);
+            }
+            if (health <= 0)
             {
                 GameObject particleEffect = Instantiate(destroyParticleEffect);
                 particleEffect.transform.position = transform.position;
                 particleEffect.GetComponent<ParticleSystem>().Play();
-                Destroy(gameObject);
-            }
-                            
+                //Destroy(gameObject);
+            }                          
         }
     }
 
@@ -103,5 +108,24 @@ public class TestEnemyScript : MonoBehaviour
         GameObject particleEffect = Instantiate(destroyParticleEffect);
         particleEffect.transform.position = transform.position;
         particleEffect.GetComponent<ParticleSystem>().Play();
+    }
+
+    public void PlaceItem()
+    {
+        if (items == null) return;
+        int numberOfItems = items.Length;
+
+        if(numberOfItems > 0)
+        {
+            int probability = Random.Range(0, 100);
+            if(probability > 49)//50 % chance to drop something
+            {
+                int item = Random.Range(0, items.Length);
+                GameObject i = Instantiate(items[item]);
+                i.transform.position = gameObject.transform.position;
+                i.GetComponent<TestItem>().prefab = Instantiate(items[item]);
+                i.GetComponent<TestItem>().prefab.SetActive(false);
+            }          
+        }
     }
 }

@@ -61,17 +61,21 @@ public class OctorokTests
 		Health playerHealth = playerObj.GetComponent<Health>();
 		Assert.IsNotNull(playerHealth);
 		float healthValue = playerHealth.GetHealth();
-
+		TestPlayer tPlayer = playerObj.GetComponent<TestPlayer>();
+		Assert.IsNotNull(tPlayer);
 		// Spawns an Octorok and moves it to the player.
 		GameObject octorok = SpawnOctorok();
+		yield return new WaitForSeconds(1.3f);
+		playerObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
 		octorok.transform.position = playerObj.transform.position;
 
 		// Waits for the collision method to be called.
-		yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(1.5f);
 
 		// Cancels the flash animation to speed up the test.
 		playerHealth.StopAllCoroutines();
 
+		Assert.AreEqual(playerObj.transform.position, octorok.transform.position);
 		// Checks the health has decreased.
 		Assert.Less(playerHealth.GetHealth(), healthValue);
 	}

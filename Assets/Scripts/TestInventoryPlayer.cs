@@ -12,6 +12,8 @@ public class TestInventoryPlayer : MonoBehaviour
     public Text itemAmount;
     public Text bombAmount;
     private int _bombAmount = 0;
+    public Text rupeeAmount;
+    private int _rupeeAmount = 0;
     public bool useMovement;
     public GameObject cursor;
     [HideInInspector]
@@ -36,6 +38,11 @@ public class TestInventoryPlayer : MonoBehaviour
     void Start()
     {
         bombAmount.text = "x" + _bombAmount;
+        if(rupeeAmount != null)
+        {
+            rupeeAmount.text = "x" + _rupeeAmount;
+        }
+        
         _playerAnimator = GetComponent<Animator>();
         _inventoryAnimator = panel.GetComponent<Animator>();
         _showInventory = false;
@@ -415,5 +422,15 @@ public class TestInventoryPlayer : MonoBehaviour
     {
         _bombAmount += amount;
         bombAmount.text = "x" + _bombAmount;
+    }
+
+    public void AddRupee(int amount)
+    {
+        if (rupeeAmount != null)
+        {
+            _rupeeAmount += amount;
+            rupeeAmount.text = "x" + _rupeeAmount;
+        }
+        
     }
 }

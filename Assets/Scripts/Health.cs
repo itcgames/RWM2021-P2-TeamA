@@ -29,9 +29,25 @@ public class Health : MonoBehaviour
             _health -= damage;
             lastHitTime = Time.time;
 
+            if(gameObject.tag == "Player")
+            {
+                TestPlayer tPlayer = gameObject.GetComponent<TestPlayer>();
+                tPlayer.TakeDamage(1);
+            }
+
             // If the health is zero, destroys the object, otherwise flashes.
             if (_health <= 0.0f)
+            {
                 Destroy(gameObject);
+                if(gameObject.tag == "Enemy")
+                {
+                    TestEnemyScript script = gameObject.GetComponent<TestEnemyScript>();
+                    if(script != null)
+                    {
+                        script.PlaceItem();
+                    }
+                }
+            }                
             else
                 StartCoroutine(CooldownFlash());
         }
