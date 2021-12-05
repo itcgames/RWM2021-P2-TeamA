@@ -110,8 +110,16 @@ public class OctorokBehaviour : EnemyBehaviour
         {
             // Gets the player's health component and damages it if it exists.
             Health health = collision.GetComponent<Health>();
+            TestPlayer player = collision.GetComponent<TestPlayer>();
             if (health)
+            {
                 health.TakeDamage(0.5f);
+            }
+                
+            if(player)
+            {
+                player.TakeDamage(1);
+            }
         }
     }
 }

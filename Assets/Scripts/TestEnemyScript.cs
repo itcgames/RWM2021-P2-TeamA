@@ -17,6 +17,8 @@ public class TestEnemyScript : MonoBehaviour
     public Vector2 direction;
     public GameObject destroyParticleEffect;
     public bool hurtPlayerOnCollision;
+    public int health;
+    public int damageAmount;
     // Start is called before the first frame update
     void Start()
     {
@@ -82,11 +84,17 @@ public class TestEnemyScript : MonoBehaviour
         }
         else if(collision.gameObject.tag == "Sword")
         {
-            GameObject particleEffect = Instantiate(destroyParticleEffect);
-            particleEffect.transform.position = transform.position;
-            particleEffect.GetComponent<ParticleSystem>().Play();
+           
             Destroy(collision.gameObject);
-            Destroy(gameObject);            
+            health -= damageAmount;
+            if(health <= 0)
+            {
+                GameObject particleEffect = Instantiate(destroyParticleEffect);
+                particleEffect.transform.position = transform.position;
+                particleEffect.GetComponent<ParticleSystem>().Play();
+                Destroy(gameObject);
+            }
+                            
         }
     }
 

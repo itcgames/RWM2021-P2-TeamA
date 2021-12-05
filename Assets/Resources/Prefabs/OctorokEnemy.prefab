@@ -238,3 +238,5 @@ MonoBehaviour:
   destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
     type: 3}
   hurtPlayerOnCollision: 0
+  health: 2
+  damageAmount: 1

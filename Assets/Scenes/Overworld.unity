@@ -2204,6 +2204,8 @@ MonoBehaviour:
   destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
     type: 3}
   hurtPlayerOnCollision: 0
+  health: 2
+  damageAmount: 1
 --- !u!4 &1709164249 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1590756327094295977, guid: 30f37926d62f56143b7c78120f5ace8a,
@@ -2853,5 +2855,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: OctorokEnemy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5308113394664408341, guid: cd6215b988f350e44b248e09583c62b0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd6215b988f350e44b248e09583c62b0, type: 3}
