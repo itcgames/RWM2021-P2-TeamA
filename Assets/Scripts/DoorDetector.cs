@@ -11,6 +11,8 @@ public class DoorDetector : MonoBehaviour
     public CrossFade crossFade;
     public EntityManager entityManager;
 
+    public string levelTo;
+
     private bool _switching = false;
 
     private void Awake()
@@ -28,6 +30,10 @@ public class DoorDetector : MonoBehaviour
 
         if (entityManager)
             OnEnteredCallbacks.Add(entityManager.OnAreaChanged);
+
+        // Disables the level to switch to if it exists.
+        GameObject level = GameObject.Find(levelTo);
+        if (level) level.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
