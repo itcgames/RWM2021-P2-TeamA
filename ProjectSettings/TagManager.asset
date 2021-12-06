@@ -10,6 +10,7 @@ TagManager:
   - Sword
   - Enemy
   - SpawnSmoke
+  - Projectile
   layers:
   - Default
   - TransparentFX

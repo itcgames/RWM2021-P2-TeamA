@@ -28,13 +28,15 @@ public class EntityManager : MonoBehaviour
 
 	private void OnCameraBeginMovement()
 	{
-		// Gets all the items and entities in the scene.
+		// Gets all the items, enemies, and projectiles in the scene.
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+		GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
 
-		// Destroys all retrieved items and enemies.
+		// Destroys all retrieved items, enemies, and projectiles.
 		foreach (GameObject item in items) Destroy(item);
 		foreach (GameObject enemy in enemies) Destroy(enemy);
+		foreach (GameObject projectile in projectiles) Destroy(projectile);
 
 		// Disables player controller functionality.
 		if (playerController)
