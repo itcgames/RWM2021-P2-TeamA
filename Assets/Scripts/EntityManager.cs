@@ -21,12 +21,12 @@ public class EntityManager : MonoBehaviour
 	{
 		if (cameraMover)
 		{
-			cameraMover.BeginMovementCallbacks.Add(OnCameraBeginMovement);
+			cameraMover.BeginMovementCallbacks.Add(OnAreaChanged);
 			cameraMover.EndMovementCallbacks.Add(OnCameraMovementFinished);
 		}
 	}
 
-	private void OnCameraBeginMovement()
+	public void OnAreaChanged()
 	{
 		// Gets all the items, enemies, and projectiles in the scene.
 		GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
@@ -47,12 +47,16 @@ public class EntityManager : MonoBehaviour
 			playerRigidbody.velocity = Vector2.zero;
 	}
 
-	private void OnCameraMovementFinished()
-	{
+	public void UnpausePlayer()
+    {
 		// Enables player controller functionality.
 		if (playerController)
 			playerController.enabled = true;
+	}
 
+	private void OnCameraMovementFinished()
+	{
+		UnpausePlayer();
 		StartCoroutine(SpawnEnemies());
 	}
 

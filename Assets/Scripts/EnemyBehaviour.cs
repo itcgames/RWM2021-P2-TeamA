@@ -137,7 +137,9 @@ public class EnemyBehaviour : CharacterBehaviour
             // Gets the player's health component and damages it if it exists.
             Health health = collision.GetComponent<Health>();
             if (health)
+            {
                 health.TakeDamage(0.5f);
+            }
         }
     }
 }

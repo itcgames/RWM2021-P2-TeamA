@@ -38,7 +38,7 @@ public class TestItemSpawner : MonoBehaviour
     public GameObject CreateItem()
     {
         GameObject i = Instantiate(item);
-        i.GetComponent<TestItem>().spawner = gameObject;
+        i.GetComponent<Item>().spawner = gameObject;
         if(items == null)
         {
             items = new List<GameObject>();
