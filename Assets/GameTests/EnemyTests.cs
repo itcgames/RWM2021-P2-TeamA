@@ -138,7 +138,7 @@ public class EnemyTests
 	}
 
 	[UnityTest]
-	public IEnumerator FiresProjectile()
+	public IEnumerator OctorokFiresProjectile()
 	{
 		GameObject octorokObj = SpawnEnemy(_octorokPrefab, "Octorok");
 		EnemyBehaviour octorok = octorokObj.GetComponent<EnemyBehaviour>();
@@ -155,6 +155,35 @@ public class EnemyTests
 			// If the last shot fired happened after the captured time.
 			if (octorok.GetLastShotFiredTime() > lastFireTime)
             {
+				fired = true;
+				break;
+			}
+
+			timeWaited += 1.0f;
+			yield return new WaitForSeconds(1.0f);
+		}
+
+		Assert.IsTrue(fired);
+	}
+
+	[UnityTest]
+	public IEnumerator MoblinFiresProjectile()
+	{
+		GameObject moblinObj = SpawnEnemy(_moblinPrefab, "Moblin");
+		EnemyBehaviour moblin = moblinObj.GetComponent<EnemyBehaviour>();
+
+		// Waits for the octorok to be initialised.
+		yield return new WaitForSeconds(0.1f);
+
+		float timeWaited = 0.0f;
+		float lastFireTime = moblin.GetLastShotFiredTime();
+		bool fired = false;
+
+		while (timeWaited < moblin.maxFireInterval)
+		{
+			// If the last shot fired happened after the captured time.
+			if (moblin.GetLastShotFiredTime() > lastFireTime)
+			{
 				fired = true;
 				break;
 			}
