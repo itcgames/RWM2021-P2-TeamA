@@ -3178,6 +3178,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4992884766273532741, guid: 8459c8c2f612c8f4095337f9a8733f14,
         type: 3}
+      propertyPath: levelTo
+      value: Level 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992884766273532741, guid: 8459c8c2f612c8f4095337f9a8733f14,
+        type: 3}
       propertyPath: crossFade
       value: 
       objectReference: {fileID: 760911114}
