@@ -38,7 +38,7 @@ public class EnemyTests
 	{
 		GameObject octorokObj = SpawnEnemy(_octorokPrefab, "octo");
 
-		TestEnemyScript script = octorokObj.GetComponent<TestEnemyScript>();
+		EnemyScript script = octorokObj.GetComponent<EnemyScript>();
 		GameObject playerObj = GameObject.Find("Player");
 		Assert.IsNotNull(playerObj);
 		Vector3 position = playerObj.transform.position;

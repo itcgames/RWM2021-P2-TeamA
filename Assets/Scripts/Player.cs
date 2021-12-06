@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestPlayer : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public int maxHealth;
     [HideInInspector]

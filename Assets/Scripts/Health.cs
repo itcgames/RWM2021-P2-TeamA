@@ -38,7 +38,7 @@ public class Health : MonoBehaviour
 
             if(gameObject.tag == "Player")
             {
-                TestPlayer tPlayer = gameObject.GetComponent<TestPlayer>();
+                Player tPlayer = gameObject.GetComponent<Player>();
                 tPlayer.TakeDamage(1);
             }
 
@@ -47,7 +47,7 @@ public class Health : MonoBehaviour
             {
                 if (gameObject.tag == "Enemy")
                 {
-                    TestEnemyScript script = gameObject.GetComponent<TestEnemyScript>();
+                    EnemyScript script = gameObject.GetComponent<EnemyScript>();
                     if (script != null)
                     {
                         script.GenerateItemPossibility();

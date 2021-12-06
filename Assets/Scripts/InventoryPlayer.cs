@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestInventoryPlayer : MonoBehaviour
+public class InventoryPlayer : MonoBehaviour
 {
     public GameObject sword;
     public Vector2 speed = new Vector2(20, 20);
@@ -31,7 +31,7 @@ public class TestInventoryPlayer : MonoBehaviour
     [HideInInspector]
     public uint currentItemId = 0;
     private Vector2 _direction = new Vector2(0, 0);
-    private TestPlayer _testPlayer;
+    private Player _testPlayer;
     private Vector2 _lastDirectionToAttack = new Vector2(-1, -1);
     int scaleSize = 5;
     // Start is called before the first frame update
@@ -50,7 +50,7 @@ public class TestInventoryPlayer : MonoBehaviour
         _inventoryAnimator.SetBool("isHidden", _showInventory);
         _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
-        _testPlayer = GetComponentInChildren<TestPlayer>();
+        _testPlayer = GetComponentInChildren<Player>();
         _stackCounter = 0;
         _direction = Vector2.down;
         transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
@@ -202,7 +202,7 @@ public class TestInventoryPlayer : MonoBehaviour
                 }
                 GameObject bomb = Instantiate(Resources.Load<GameObject>("Prefabs/Bomb"));
                 Destroy(bomb.GetComponent<InventoryItem>());
-                Destroy(bomb.GetComponent<TestItem>());
+                Destroy(bomb.GetComponent<Item>());
                 BombScript script = bomb.AddComponent<BombScript>();
                 script.direction = _direction;
                 bomb.transform.position = transform.position;
@@ -249,7 +249,7 @@ public class TestInventoryPlayer : MonoBehaviour
 
             foreach (Collider2D collider in colliders)
             {
-                collider.gameObject.GetComponent<TestEnemyScript>().TakeDamage();
+                collider.gameObject.GetComponent<EnemyScript>().TakeDamage();
                 Destroy(collider.gameObject);
             }
         }

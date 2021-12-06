@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestEnemyScript : MonoBehaviour
+public class EnemyScript : MonoBehaviour
 {
     public Sprite[] sprites;
     public bool usingSprites;
@@ -68,7 +68,7 @@ public class TestEnemyScript : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if(player.GetComponent<TestInventoryPlayer>().IsAttacking())
+            if(player.GetComponent<InventoryPlayer>().IsAttacking())
             {
                 Instantiate(destroyParticleEffect);
                 destroyParticleEffect.GetComponent<ParticleSystem>().Play();
@@ -137,7 +137,7 @@ public class TestEnemyScript : MonoBehaviour
                 int item = Random.Range(0, items.Length);
                 GameObject i = Instantiate(items[item]);
                 i.transform.position = gameObject.transform.position;
-                i.GetComponent<TestItem>().prefab = items[item];
+                i.GetComponent<Item>().prefab = items[item];
             }
         }
     }

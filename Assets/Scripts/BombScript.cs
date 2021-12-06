@@ -30,9 +30,9 @@ public class BombScript : MonoBehaviour
                             .Where(x => x.gameObject.tag != "Item").ToList();
         foreach(Collider2D collider in colliders)
         {
-            if(collider.gameObject.GetComponent<TestEnemyScript>())
+            if(collider.gameObject.GetComponent<EnemyScript>())
             {
-                TestEnemyScript script = collider.gameObject.GetComponent<TestEnemyScript>();
+                EnemyScript script = collider.gameObject.GetComponent<EnemyScript>();
                 if(script.hasShield)
                 {
                     Vector2 enemyDirection = script.direction;
