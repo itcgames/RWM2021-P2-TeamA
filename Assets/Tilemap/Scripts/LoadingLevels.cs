@@ -6,7 +6,7 @@ public class LoadingLevels : MonoBehaviour
     private static int areas = 3; // Change this based on how many saves you have
                                   // (if you only have 1 save you want to load then areas = 1, if you have 2 then areas = 2 etc.)
     private Tilemap[] tilemap = new Tilemap[areas];
-    public Vector2[] locations = new Vector2 [areas];
+    private Vector3[] locations = new Vector3 [areas];
     private const int width = 16, height = 11;
     private const float size = 0.9f;
     string num = "";
@@ -16,9 +16,9 @@ public class LoadingLevels : MonoBehaviour
 
     void Start()
     {
-        locations[0] = new Vector2(-areaSizeX / 2, -areaSizeY / 2);
-        locations[1] = new Vector2(areaSizeX / 2, -areaSizeY / 2);
-        locations[2] = new Vector2(-areaSizeX - (areaSizeX / 2), -areaSizeY / 2);
+        locations[0] = new Vector3(-areaSizeX / 2, -areaSizeY / 2, 2);
+        locations[1] = new Vector3(areaSizeX / 2, -areaSizeY / 2, 2);
+        locations[2] = new Vector3(-areaSizeX - (areaSizeX / 2), -areaSizeY / 2, 2);
 
         for (int i = 0; i < areas; i++)
         {
@@ -30,7 +30,7 @@ public class LoadingLevels : MonoBehaviour
             }
 
             tilemap[i] = new Tilemap(width, height, size, locations[i]);
-            Debug.Log(num);
+            //Debug.Log(num);
 
             tilemap[i].SetTilemapVisual(Instantiate(tilemapVisual, tilemapVisual.transform.position, tilemapVisual.transform.rotation));
             tilemap[i].Load("" + num);
