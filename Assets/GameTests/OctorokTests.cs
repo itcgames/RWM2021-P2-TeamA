@@ -84,12 +84,11 @@ public class OctorokTests
 		Assert.IsNotNull(tPlayer);
 		// Spawns an Octorok and moves it to the player.
 		GameObject octorok = SpawnOctorok();
-		yield return new WaitForSeconds(1.3f);
 		playerObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
 		octorok.transform.position = playerObj.transform.position;
 
 		// Waits for the collision method to be called.
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(0.1f);
 
 		// Cancels the flash animation to speed up the test.
 		playerHealth.StopAllCoroutines();
