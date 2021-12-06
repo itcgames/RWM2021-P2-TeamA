@@ -67,7 +67,7 @@ public class OctorokTests
 		GameObject[] bombItems = GameObject.FindGameObjectsWithTag("Bomb");
 		GameObject[] rupeeItems = GameObject.FindGameObjectsWithTag("Rupee");
 		GameObject[] potionItems = GameObject.FindGameObjectsWithTag("Potion");
-		GameObject[] items = bombItems.Concat(rupeeItems).Concat(rupeeItems).Concat(potionItems).ToArray();
+		GameObject[] items = bombItems.Concat(rupeeItems).Concat(potionItems).ToArray();
 		Assert.AreEqual(1, items.Length);
 	}
 
