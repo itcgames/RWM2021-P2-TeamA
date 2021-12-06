@@ -40,6 +40,12 @@ public class DoorDetector : MonoBehaviour
             OnEnteredCallbacks.Add(entityManager.OnAreaChanged);
 
         GetLevels();
+        StartCoroutine(DeactivateLevels());
+    }
+
+    private IEnumerator DeactivateLevels()
+    {
+        yield return new WaitForSeconds(0.1f);
 
         // Disables all the levels to switch to.
         if (initiallyActive)
