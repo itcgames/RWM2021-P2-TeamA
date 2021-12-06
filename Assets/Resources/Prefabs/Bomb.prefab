@@ -169,6 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
   textureName: Bomb
+  prefab: {fileID: 0}
 --- !u!222 &7213598532898828485
 CanvasRenderer:
   m_ObjectHideFlags: 0

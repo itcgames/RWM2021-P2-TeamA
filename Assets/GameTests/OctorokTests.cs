@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class OctorokTests
 {
@@ -53,6 +54,24 @@ public class OctorokTests
 	}
 
 	[UnityTest]
+	public IEnumerator SpawnItemOnDeath()
+	{
+		GameObject octorokObj = SpawnOctorok();
+
+		TestEnemyScript script = octorokObj.GetComponent<TestEnemyScript>();
+		script.SetProbability(51);
+		script.PlaceItem();
+		script.SetProbability(45);
+		script.PlaceItem();
+		yield return new WaitForSeconds(0.1f);
+		GameObject[] bombItems = GameObject.FindGameObjectsWithTag("Bomb");
+		GameObject[] rupeeItems = GameObject.FindGameObjectsWithTag("Rupee");
+		GameObject[] potionItems = GameObject.FindGameObjectsWithTag("Potion");
+		GameObject[] items = bombItems.Concat(rupeeItems).Concat(potionItems).ToArray();
+		Assert.AreEqual(1, items.Length);
+	}
+
+	[UnityTest]
 	public IEnumerator ThornsDamage()
 	{
 		// Gets the player and player health.
@@ -61,9 +80,11 @@ public class OctorokTests
 		Health playerHealth = playerObj.GetComponent<Health>();
 		Assert.IsNotNull(playerHealth);
 		float healthValue = playerHealth.GetHealth();
-
+		TestPlayer tPlayer = playerObj.GetComponent<TestPlayer>();
+		Assert.IsNotNull(tPlayer);
 		// Spawns an Octorok and moves it to the player.
 		GameObject octorok = SpawnOctorok();
+		playerObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
 		octorok.transform.position = playerObj.transform.position;
 
 		// Waits for the collision method to be called.
@@ -72,6 +93,7 @@ public class OctorokTests
 		// Cancels the flash animation to speed up the test.
 		playerHealth.StopAllCoroutines();
 
+		Assert.AreEqual(playerObj.transform.position, octorok.transform.position);
 		// Checks the health has decreased.
 		Assert.Less(playerHealth.GetHealth(), healthValue);
 	}

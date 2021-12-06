@@ -12,6 +12,8 @@ public class TestInventoryPlayer : MonoBehaviour
     public Text itemAmount;
     public Text bombAmount;
     private int _bombAmount = 0;
+    public Text rupeeAmount;
+    private int _rupeeAmount = 0;
     public bool useMovement;
     public GameObject cursor;
     [HideInInspector]
@@ -31,10 +33,16 @@ public class TestInventoryPlayer : MonoBehaviour
     private Vector2 _direction = new Vector2(0, 0);
     private TestPlayer _testPlayer;
     private Vector2 _lastDirectionToAttack = new Vector2(-1, -1);
+    int scaleSize = 5;
     // Start is called before the first frame update
     void Start()
     {
         bombAmount.text = "x" + _bombAmount;
+        if(rupeeAmount != null)
+        {
+            rupeeAmount.text = "x" + _rupeeAmount;
+        }
+        
         _playerAnimator = GetComponent<Animator>();
         _inventoryAnimator = panel.GetComponent<Animator>();
         _showInventory = false;
@@ -45,6 +53,7 @@ public class TestInventoryPlayer : MonoBehaviour
         _testPlayer = GetComponentInChildren<TestPlayer>();
         _stackCounter = 0;
         _direction = Vector2.down;
+        transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
     }
 
     public bool IsAttacking()
@@ -58,13 +67,16 @@ public class TestInventoryPlayer : MonoBehaviour
         {
             float xInput = Input.GetAxis("Horizontal");
             float yInput = Input.GetAxis("Vertical");
-            Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
-            movement *= Time.deltaTime;
-            transform.Translate(movement);
+            if(useMovement)
+            {
+                Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
+                movement *= Time.deltaTime;
+                transform.Translate(movement);
+            }
             if (xInput > 0)
             {
                 _direction = Vector2.right;
-                transform.localScale = new Vector3(15,15,15);
+                transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
                 _playerAnimator.SetBool("MoveRight", true);
                 _playerAnimator.SetBool("MoveLeft", false);
                 _playerAnimator.SetBool("MoveUp", false);
@@ -73,7 +85,7 @@ public class TestInventoryPlayer : MonoBehaviour
             else if (xInput < 0)
             {
                 _direction = Vector2.left;
-                transform.localScale = new Vector3(-15, 15, 15);
+                transform.localScale = new Vector3(-scaleSize, scaleSize, scaleSize);
                 _playerAnimator.SetBool("MoveRight", false);
                 _playerAnimator.SetBool("MoveLeft", true);
                 _playerAnimator.SetBool("MoveUp", false);
@@ -237,7 +249,7 @@ public class TestInventoryPlayer : MonoBehaviour
 
             foreach (Collider2D collider in colliders)
             {
-                collider.gameObject.GetComponent<TestEnemyScript>().PlayParticleEffect();
+                collider.gameObject.GetComponent<TestEnemyScript>().TakeDamage();
                 Destroy(collider.gameObject);
             }
         }
@@ -410,5 +422,15 @@ public class TestInventoryPlayer : MonoBehaviour
     {
         _bombAmount += amount;
         bombAmount.text = "x" + _bombAmount;
+    }
+
+    public void AddRupee(int amount)
+    {
+        if (rupeeAmount != null)
+        {
+            _rupeeAmount += amount;
+            rupeeAmount.text = "x" + _rupeeAmount;
+        }
+        
     }
 }
