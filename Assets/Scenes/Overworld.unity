@@ -476,12 +476,12 @@ PrefabInstance:
     - target: {fileID: 1590756327094295977, guid: 30f37926d62f56143b7c78120f5ace8a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.27
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1590756327094295977, guid: 30f37926d62f56143b7c78120f5ace8a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.98
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1590756327094295977, guid: 30f37926d62f56143b7c78120f5ace8a,
         type: 3}
@@ -1586,7 +1586,7 @@ MonoBehaviour:
   speed: {x: 20, y: 20}
   stackAmount: {fileID: 1021130959}
   itemAmount: {fileID: 608478851}
-  bombAmount: {fileID: 608478851}
+  bombAmount: {fileID: 1508154083}
   rupeeAmount: {fileID: 603726967}
   useMovement: 0
   cursor: {fileID: 1815309393}
@@ -2800,6 +2800,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1430904067}
     m_Modifications:
+    - target: {fileID: 5160097212952252223, guid: cd6215b988f350e44b248e09583c62b0,
+        type: 3}
+      propertyPath: _health
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8066728499407963528, guid: cd6215b988f350e44b248e09583c62b0,
         type: 3}
       propertyPath: m_RootOrder

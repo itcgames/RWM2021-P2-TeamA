@@ -249,7 +249,7 @@ public class TestInventoryPlayer : MonoBehaviour
 
             foreach (Collider2D collider in colliders)
             {
-                collider.gameObject.GetComponent<TestEnemyScript>().PlayParticleEffect();
+                collider.gameObject.GetComponent<TestEnemyScript>().TakeDamage();
                 Destroy(collider.gameObject);
             }
         }

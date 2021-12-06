@@ -20,6 +20,7 @@ public class TestEnemyScript : MonoBehaviour
     public int health;
     public int damageAmount;
     public GameObject[] items;
+    private int probability;
     // Start is called before the first frame update
     void Start()
     {
@@ -74,7 +75,7 @@ public class TestEnemyScript : MonoBehaviour
                 Health h = GetComponent<Health>();
                 if(h)
                 {
-                    h.TakeDamage(10);
+                    h.TakeDamage(1);
                 }
                 //Destroy(gameObject);               
             }
@@ -110,6 +111,24 @@ public class TestEnemyScript : MonoBehaviour
         particleEffect.GetComponent<ParticleSystem>().Play();
     }
 
+    public void TakeDamage()
+    {
+        health -= damageAmount;
+        Health h = GetComponent<Health>();
+        if (h)
+        {
+            h.TakeDamage(damageAmount);
+        }
+        if (h.GetHealth() <= 0)
+        {
+            GameObject particleEffect = Instantiate(destroyParticleEffect);
+            particleEffect.transform.position = transform.position;
+            particleEffect.GetComponent<ParticleSystem>().Play();
+            //PlaceItem();
+            //Destroy(gameObject);
+        }
+    }
+
     public void PlaceItem()
     {
         if (items == null) return;
@@ -117,15 +136,26 @@ public class TestEnemyScript : MonoBehaviour
 
         if(numberOfItems > 0)
         {
-            int probability = Random.Range(0, 100);
+            
             if(probability > 49)//50 % chance to drop something
             {
                 int item = Random.Range(0, items.Length);
                 GameObject i = Instantiate(items[item]);
                 i.transform.position = gameObject.transform.position;
-                i.GetComponent<TestItem>().prefab = Instantiate(items[item]);
-                i.GetComponent<TestItem>().prefab.SetActive(false);
-            }          
+                i.GetComponent<TestItem>().prefab = items[item];
+            }
+            
+            //i.GetComponent<TestItem>().prefab.SetActive(false);
         }
+    }
+
+    public void GenerateItemPossibility()
+    {
+        probability = Random.Range(1, 100);
+    }
+
+    public void SetProbability(int possibility)
+    {
+        probability = possibility;
     }
 }

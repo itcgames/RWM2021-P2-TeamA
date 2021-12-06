@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class OctorokTests
 {
@@ -50,6 +51,24 @@ public class OctorokTests
 		healthComponent.TakeDamage(1.0f);
 		yield return new WaitForSeconds(0.1f);
 		Assert.IsNull(GameObject.Find("Octorok"));
+	}
+
+	[UnityTest]
+	public IEnumerator SpawnItemOnDeath()
+	{
+		GameObject octorokObj = SpawnOctorok();
+
+		TestEnemyScript script = octorokObj.GetComponent<TestEnemyScript>();
+		script.SetProbability(51);
+		script.PlaceItem();
+		script.SetProbability(45);
+		script.PlaceItem();
+		yield return new WaitForSeconds(0.1f);
+		GameObject[] bombItems = GameObject.FindGameObjectsWithTag("Bomb");
+		GameObject[] rupeeItems = GameObject.FindGameObjectsWithTag("Rupee");
+		GameObject[] potionItems = GameObject.FindGameObjectsWithTag("Potion");
+		GameObject[] items = bombItems.Concat(rupeeItems).Concat(rupeeItems).Concat(potionItems).ToArray();
+		Assert.AreEqual(1, items.Length);
 	}
 
 	[UnityTest]
