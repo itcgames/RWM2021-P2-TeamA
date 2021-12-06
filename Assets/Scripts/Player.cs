@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestPlayer : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public int maxHealth;
     [HideInInspector]
@@ -44,6 +44,11 @@ public class TestPlayer : MonoBehaviour
     public void HealPlayerToFull()
     {
         _health = maxHealth;
+        Health h = gameObject.GetComponent<Health>();
+        if(h)
+        {
+            h.HealToFull();
+        }
         foreach (Image heart in hearts)
         {
             heart.sprite = fullHeart;

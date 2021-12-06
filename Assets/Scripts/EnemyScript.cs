@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestEnemyScript : MonoBehaviour
+public class EnemyScript : MonoBehaviour
 {
     public Sprite[] sprites;
     public bool usingSprites;
@@ -68,7 +68,7 @@ public class TestEnemyScript : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if(player.GetComponent<TestInventoryPlayer>().IsAttacking())
+            if(player.GetComponent<InventoryPlayer>().IsAttacking())
             {
                 Instantiate(destroyParticleEffect);
                 destroyParticleEffect.GetComponent<ParticleSystem>().Play();
@@ -76,12 +76,10 @@ public class TestEnemyScript : MonoBehaviour
                 if(h)
                 {
                     h.TakeDamage(1);
-                }
-                //Destroy(gameObject);               
+                }               
             }
             if(hurtPlayerOnCollision)
             {
-                //player.GetComponent<TestPlayer>().TakeDamage(1);
                 Debug.Log("Player took damage");
             }            
         }
@@ -99,7 +97,6 @@ public class TestEnemyScript : MonoBehaviour
                 GameObject particleEffect = Instantiate(destroyParticleEffect);
                 particleEffect.transform.position = transform.position;
                 particleEffect.GetComponent<ParticleSystem>().Play();
-                //Destroy(gameObject);
             }                          
         }
     }
@@ -124,8 +121,6 @@ public class TestEnemyScript : MonoBehaviour
             GameObject particleEffect = Instantiate(destroyParticleEffect);
             particleEffect.transform.position = transform.position;
             particleEffect.GetComponent<ParticleSystem>().Play();
-            //PlaceItem();
-            //Destroy(gameObject);
         }
     }
 
@@ -142,10 +137,8 @@ public class TestEnemyScript : MonoBehaviour
                 int item = Random.Range(0, items.Length);
                 GameObject i = Instantiate(items[item]);
                 i.transform.position = gameObject.transform.position;
-                i.GetComponent<TestItem>().prefab = items[item];
+                i.GetComponent<Item>().prefab = items[item];
             }
-            
-            //i.GetComponent<TestItem>().prefab.SetActive(false);
         }
     }
 
