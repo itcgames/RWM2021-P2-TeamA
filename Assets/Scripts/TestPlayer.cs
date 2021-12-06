@@ -44,6 +44,11 @@ public class TestPlayer : MonoBehaviour
     public void HealPlayerToFull()
     {
         _health = maxHealth;
+        Health h = gameObject.GetComponent<Health>();
+        if(h)
+        {
+            h.HealToFull();
+        }
         foreach (Image heart in hearts)
         {
             heart.sprite = fullHeart;

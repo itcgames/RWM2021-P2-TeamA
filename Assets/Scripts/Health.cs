@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    private float _maxHealth;
     [SerializeField]
     private float _health = 1.0f;
 
@@ -14,7 +15,13 @@ public class Health : MonoBehaviour
 
     private void Start()
     {
+        _maxHealth = _health;
         lastHitTime = Time.time - damageCooldown;
+    }
+
+    public void HealToFull()
+    {
+        _health = _maxHealth;
     }
 
     public float GetHealth()

@@ -142,10 +142,10 @@ public class EnemyBehaviour : CharacterBehaviour
                 health.TakeDamage(0.5f);
             }
                 
-            if(player)
-            {
-                player.TakeDamage(1);
-            }
+            //if(player)
+            //{
+            //    player.TakeDamage(1);
+            //}
         }
     }
 }
