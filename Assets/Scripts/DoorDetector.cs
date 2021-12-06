@@ -8,11 +8,19 @@ public class DoorDetector : MonoBehaviour
 
     public List<OnEntered> OnEnteredCallbacks { get; set; }
 
+    // Whether or not this door is active on scene load.
+    public bool initiallyActive = false;
+
     public CrossFade crossFade;
     public EntityManager entityManager;
+    public Player player;
+    public Vector3 movePlayerTo = Vector3.zero;
 
-    public string levelTo;
+    public List<string> levelsFrom = new List<string>();
+    public List<string> levelsTo = new List<string>();
 
+    private List<GameObject> levelsToDisable = new List<GameObject>();
+    private List<GameObject> levelsToEnable = new List<GameObject>();
     private bool _switching = false;
 
     private void Awake()
@@ -31,9 +39,29 @@ public class DoorDetector : MonoBehaviour
         if (entityManager)
             OnEnteredCallbacks.Add(entityManager.OnAreaChanged);
 
-        // Disables the level to switch to if it exists.
-        GameObject level = GameObject.Find(levelTo);
-        if (level) level.SetActive(false);
+        GetLevels();
+
+        // Disables all the levels to switch to.
+        if (initiallyActive)
+            foreach (GameObject level in levelsToEnable)
+                level.SetActive(false);
+    }
+
+    private void GetLevels()
+    {
+        // Gets a reference to all the levels to switch from.
+        foreach (string levelFrom in levelsFrom)
+        {
+            GameObject level = GameObject.Find(levelFrom);
+            if (level) levelsToDisable.Add(level);
+        }
+
+        // Gets a reference to all the levels to switch to.
+        foreach (string levelTo in levelsTo)
+        {
+            GameObject level = GameObject.Find(levelTo);
+            if (level) levelsToEnable.Add(level);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -53,12 +81,23 @@ public class DoorDetector : MonoBehaviour
         if (_switching)
         {
             _switching = false;
-
-            // TODO: Add scene switching functionality.
-
+            SwitchLevelVisibilities();
             crossFade.FadeFromBlack();
         }
         else if (entityManager)
             entityManager.UnpausePlayer();
+    }
+
+    private void SwitchLevelVisibilities()
+    {
+        // Disables the levels from.
+        foreach (GameObject level in levelsToDisable)
+            level.SetActive(false);
+
+        // Enables the levels to.
+        foreach (GameObject level in levelsToEnable)
+            level.SetActive(true);
+
+        if (player) player.transform.position = movePlayerTo;
     }
 }
