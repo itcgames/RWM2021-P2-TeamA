@@ -76,12 +76,10 @@ public class TestEnemyScript : MonoBehaviour
                 if(h)
                 {
                     h.TakeDamage(1);
-                }
-                //Destroy(gameObject);               
+                }               
             }
             if(hurtPlayerOnCollision)
             {
-                //player.GetComponent<TestPlayer>().TakeDamage(1);
                 Debug.Log("Player took damage");
             }            
         }
@@ -99,7 +97,6 @@ public class TestEnemyScript : MonoBehaviour
                 GameObject particleEffect = Instantiate(destroyParticleEffect);
                 particleEffect.transform.position = transform.position;
                 particleEffect.GetComponent<ParticleSystem>().Play();
-                //Destroy(gameObject);
             }                          
         }
     }
@@ -124,8 +121,6 @@ public class TestEnemyScript : MonoBehaviour
             GameObject particleEffect = Instantiate(destroyParticleEffect);
             particleEffect.transform.position = transform.position;
             particleEffect.GetComponent<ParticleSystem>().Play();
-            //PlaceItem();
-            //Destroy(gameObject);
         }
     }
 
@@ -144,8 +139,6 @@ public class TestEnemyScript : MonoBehaviour
                 i.transform.position = gameObject.transform.position;
                 i.GetComponent<TestItem>().prefab = items[item];
             }
-            
-            //i.GetComponent<TestItem>().prefab.SetActive(false);
         }
     }
 
