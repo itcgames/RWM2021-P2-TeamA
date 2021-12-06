@@ -36,7 +36,7 @@ public class LoadingLevels : MonoBehaviour
             level.name = "Level " + i.ToString();
 
             tilemap[i].SetTilemapVisual(level);
-            tilemap[i].Load("" + num);
+            tilemap[i].Load(num);
         }
     }
 }
