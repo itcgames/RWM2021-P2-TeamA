@@ -823,7 +823,7 @@ PrefabInstance:
     - target: {fileID: 1100192191775746516, guid: 8459c8c2f612c8f4095337f9a8733f14,
         type: 3}
       propertyPath: m_Name
-      value: DoorDetector
+      value: CaveDoor
       objectReference: {fileID: 0}
     - target: {fileID: 4042357986143562016, guid: 8459c8c2f612c8f4095337f9a8733f14,
         type: 3}
@@ -833,12 +833,12 @@ PrefabInstance:
     - target: {fileID: 4042357986143562016, guid: 8459c8c2f612c8f4095337f9a8733f14,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.1
+      value: -3.15
       objectReference: {fileID: 0}
     - target: {fileID: 4042357986143562016, guid: 8459c8c2f612c8f4095337f9a8733f14,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4704001
+      value: 3.6
       objectReference: {fileID: 0}
     - target: {fileID: 4042357986143562016, guid: 8459c8c2f612c8f4095337f9a8733f14,
         type: 3}
