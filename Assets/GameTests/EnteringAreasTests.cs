@@ -9,20 +9,13 @@ public class EnteringAreasTests
 {
     // For the DoorDetectsThePlayer test.
     bool doorEntered = false;
-
-    private void OnDoorEntered()
-    {
-        doorEntered = true;
-    }
-
+    private void OnDoorEntered() => doorEntered = true;
 
     [SetUp]
     public void Setup()
     {
         SceneManager.LoadScene("Overworld", LoadSceneMode.Single);
     }
-
-    
 
     [UnityTest]
     public IEnumerator DoorDetectsThePlayer()
@@ -37,9 +30,13 @@ public class EnteringAreasTests
         DoorDetector door = doorObj.GetComponent<DoorDetector>();
         Assert.IsNotNull(door);
 
+        // Attaches the callback to the door.
         Assert.IsFalse(doorEntered);
         door.OnEnteredCallbacks.Add(OnDoorEntered);
 
-        yield return null;
+        // Move the player to the door and checks that the door has been entered.
+        playerObj.transform.position = doorObj.transform.position;
+        yield return new WaitForSeconds(0.1f);
+        Assert.IsTrue(doorEntered);
     }
 }
