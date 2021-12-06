@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    private float _maxHealth;
     [SerializeField]
     private float _health = 1.0f;
 
@@ -14,7 +15,13 @@ public class Health : MonoBehaviour
 
     private void Start()
     {
+        _maxHealth = _health;
         lastHitTime = Time.time - damageCooldown;
+    }
+
+    public void HealToFull()
+    {
+        _health = _maxHealth;
     }
 
     public float GetHealth()
@@ -29,9 +36,27 @@ public class Health : MonoBehaviour
             _health -= damage;
             lastHitTime = Time.time;
 
+            if(gameObject.tag == "Player")
+            {
+                Player tPlayer = gameObject.GetComponent<Player>();
+                tPlayer.TakeDamage(1);
+            }
+
             // If the health is zero, destroys the object, otherwise flashes.
             if (_health <= 0.0f)
+            {
+                if (gameObject.tag == "Enemy")
+                {
+                    EnemyScript script = gameObject.GetComponent<EnemyScript>();
+                    if (script != null)
+                    {
+                        script.GenerateItemPossibility();
+                        script.PlaceItem();
+                    }
+                }
                 Destroy(gameObject);
+                
+            }                
             else
                 StartCoroutine(CooldownFlash());
         }

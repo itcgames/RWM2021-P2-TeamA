@@ -27,7 +27,7 @@ public class ShowPanel : MonoBehaviour
 
     private void Start()
     {
-        TestInventoryPlayer script = GetComponentInParent<TestInventoryPlayer>();
+        InventoryPlayer script = GetComponentInParent<InventoryPlayer>();
         NumberPerRow = script._maxItemsPerRow;
         NumberOfColumns = script._maxItemsPerColumn;
         _itemPosition = new Vector2(-180f, 35f);
@@ -80,8 +80,8 @@ public class ShowPanel : MonoBehaviour
         {
             Destroy(_activeItem);
         }
-        Vector2 cursorLocation = GetComponentInParent<TestInventoryPlayer>()._cursorLocationInInventory;
-        int currentItem = (int)(cursorLocation.x + (cursorLocation.y * GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow));
+        Vector2 cursorLocation = GetComponentInParent<InventoryPlayer>()._cursorLocationInInventory;
+        int currentItem = (int)(cursorLocation.x + (cursorLocation.y * GetComponentInParent<InventoryPlayer>()._maxItemsPerRow));
         _currentIndex = currentItem;
         Debug.Log("Current item: " + currentItem);
         _activeItem = Instantiate(_itemImages[_currentlySelectedPage][currentItem]);
@@ -137,11 +137,11 @@ public class ShowPanel : MonoBehaviour
     }
     public void MoveUp()
     {
-        _currentIndex -= (int)GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow;
+        _currentIndex -= (int)GetComponentInParent<InventoryPlayer>()._maxItemsPerRow;
     }
     public void MoveDown()
     {
-        _currentIndex += (int)GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow;
+        _currentIndex += (int)GetComponentInParent<InventoryPlayer>()._maxItemsPerRow;
     }
 
     public bool IsItemRight()
@@ -151,12 +151,12 @@ public class ShowPanel : MonoBehaviour
 
     public bool IsItemDown()
     {
-        return _itemImages[_currentlySelectedPage].Count > _currentIndex + (int)GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow;
+        return _itemImages[_currentlySelectedPage].Count > _currentIndex + (int)GetComponentInParent<InventoryPlayer>()._maxItemsPerRow;
     }
 
     public bool IsItemUp()
     {
-        return _currentIndex - (int)GetComponentInParent<TestInventoryPlayer>()._maxItemsPerRow > 0;
+        return _currentIndex - (int)GetComponentInParent<InventoryPlayer>()._maxItemsPerRow > 0;
     }
 
     public int TotalPages()
