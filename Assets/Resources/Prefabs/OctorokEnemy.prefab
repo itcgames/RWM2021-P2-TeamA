@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 8066728499407963528}
   - component: {fileID: 4759321764708349179}
   - component: {fileID: 7265532476658444446}
-  - component: {fileID: 3732280998422759147}
+  - component: {fileID: 7198756412686012348}
   - component: {fileID: 5160097212952252223}
   - component: {fileID: 5308113394664408341}
   m_Layer: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   _timeToFullStop: 0
   TileSize: 1
   SecondsPerTile: 0.5
---- !u!114 &3732280998422759147
+--- !u!114 &7198756412686012348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,12 +192,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8066728499407963535}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf2cbd53550878646a8a3170a1f9dc2b, type: 3}
+  m_Script: {fileID: 11500000, guid: cf7b6792ea94f1b4d85fdcd3c848e901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 5318055879694016786, guid: f7c30acb86b2c264ab97521a288425d5,
     type: 3}
-  maxFireInterval: 5
+  maxFireInterval: 10
   projectileSpeed: 5
 --- !u!114 &5160097212952252223
 MonoBehaviour:

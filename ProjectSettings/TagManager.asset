@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - SpawnSmoke
   - Rupee
+  - Projectile
   layers:
   - Default
   - TransparentFX

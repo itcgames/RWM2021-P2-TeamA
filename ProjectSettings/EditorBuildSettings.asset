@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Overworld.unity
     guid: 647ebda4eefb2a84a92580ea2b33e505
   - enabled: 1
-    path: Assets/Scenes/InventoryTestScene.unity
-    guid: 5b4cd63d3ae953e43a7576a61fb55ae9
-  - enabled: 1
     path: Assets/Scenes/ItemTestScene.unity
     guid: a8858f9101baf70499af3f4375aca4ec
+  - enabled: 1
+    path: Assets/Scenes/InventoryTestScene.unity
+    guid: 5b4cd63d3ae953e43a7576a61fb55ae9
   m_configObjects: {}
