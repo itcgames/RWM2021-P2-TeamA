@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Item
+  - Bomb
+  - Potion
+  - Sword
+  - Enemy
+  - SpawnSmoke
   layers:
   - Default
   - TransparentFX
@@ -14,7 +19,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Items
   - 
   - 
   - 
