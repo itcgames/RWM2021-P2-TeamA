@@ -9,7 +9,7 @@ namespace Tests
 {
     public class ItemTests
     {
-        TestInventoryPlayer testInventory;
+        InventoryPlayer testInventory;
         ShowPanel showPanel;
         TestItemSpawner spawner;
         GameObject playerObj;
@@ -26,7 +26,7 @@ namespace Tests
         public IEnumerator ItemNotSpawnedAtPlayer()
         {
             playerObj = GameObject.Find("Player");
-            testInventory = playerObj.GetComponent<TestInventoryPlayer>();
+            testInventory = playerObj.GetComponent<InventoryPlayer>();
             showPanel = playerObj.GetComponent<ShowPanel>();
             
             var spawnerObj = GameObject.Find("BombSpawner");
@@ -44,7 +44,7 @@ namespace Tests
         public IEnumerator ItemGoesToCorrectSpawnLocation()
         {
             playerObj = GameObject.Find("Player");
-            testInventory = playerObj.GetComponent<TestInventoryPlayer>();
+            testInventory = playerObj.GetComponent<InventoryPlayer>();
             showPanel = playerObj.GetComponent<ShowPanel>();
             var spawnerObj = GameObject.Find("BombSpawner");
             Assert.IsNotNull(spawnerObj);

@@ -29,8 +29,8 @@ public class EnemySpawner : MonoBehaviour
     public GameObject CreateItem()
     {
         GameObject i = Instantiate(item);
-        i.GetComponent<TestEnemyScript>().player = player;
-        i.GetComponent<TestEnemyScript>().destroyParticleEffect = destroyParticleEffect;
+        i.GetComponent<EnemyScript>().player = player;
+        i.GetComponent<EnemyScript>().destroyParticleEffect = destroyParticleEffect;
         i.transform.localScale = new Vector3(12, 12, 12);
         foreach (Transform trans in spawnLocations)
         {

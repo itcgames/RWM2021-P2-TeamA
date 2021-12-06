@@ -9,7 +9,7 @@ namespace Tests
 {
     public class InventoryTests
     {
-        TestInventoryPlayer testInventory;
+        InventoryPlayer testInventory;
         ShowPanel showPanel;
         TestItemSpawner spawner;
         GameObject playerObj;
@@ -33,7 +33,7 @@ namespace Tests
             yield return new WaitForSeconds(0.2f);
             Assert.IsNotNull(playerObj);
 
-            testInventory = playerObj.GetComponent<TestInventoryPlayer>();
+            testInventory = playerObj.GetComponent<InventoryPlayer>();
             showPanel = playerObj.GetComponent<ShowPanel>();
             Assert.IsNotNull(testInventory);
             Assert.IsNotNull(showPanel);
@@ -61,7 +61,7 @@ namespace Tests
             yield return new WaitForSeconds(0.2f);
             GameObject item = Resources.Load<GameObject>("Prefabs/DefaultItem");
             playerObj = GameObject.Find("Player");
-            testInventory = playerObj.GetComponent<TestInventoryPlayer>();
+            testInventory = playerObj.GetComponent<InventoryPlayer>();
             showPanel = playerObj.GetComponent<ShowPanel>();
             int amountOfItems = (int)((testInventory._maxItemsPerColumn * testInventory._maxItemsPerRow) * 1.5);
             Assert.IsNotNull(item);

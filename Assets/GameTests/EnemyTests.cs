@@ -4,6 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class EnemyTests
 {
@@ -30,6 +31,29 @@ public class EnemyTests
 		// Checks that the Octorok is within the bounds again next frame.
 		yield return null;
 		Assert.LessOrEqual(octorok.transform.position.x, areaBounds.right);
+	}
+
+	[UnityTest]
+	public IEnumerator SpawnItemOnDeath()
+	{
+		GameObject octorokObj = SpawnEnemy(_octorokPrefab, "octo");
+
+		EnemyScript script = octorokObj.GetComponent<EnemyScript>();
+		GameObject playerObj = GameObject.Find("Player");
+		Assert.IsNotNull(playerObj);
+		Vector3 position = playerObj.transform.position;
+		playerObj.transform.position += new Vector3(5, 5, 0);
+		script.SetProbability(51);
+		script.PlaceItem();
+		script.SetProbability(45);
+		script.PlaceItem();
+		yield return new WaitForSeconds(0.1f);
+		GameObject[] bombItems = GameObject.FindGameObjectsWithTag("Bomb");
+		GameObject[] rupeeItems = GameObject.FindGameObjectsWithTag("Rupee");
+		GameObject[] potionItems = GameObject.FindGameObjectsWithTag("Potion");
+		GameObject[] items = bombItems.Concat(rupeeItems).Concat(potionItems).ToArray();
+		Assert.AreEqual(1, items.Length);
+		playerObj.transform.position = position;
 	}
 
 	[UnityTest]
