@@ -19,7 +19,7 @@ public class LoadingLevels : MonoBehaviour
         locations[0] = new Vector3(-areaSizeX / 2, -areaSizeY / 2, 2);
         locations[1] = new Vector3(areaSizeX / 2, -areaSizeY / 2, 2);
         locations[2] = new Vector3(-areaSizeX - (areaSizeX / 2), -areaSizeY / 2, 2);
-        locations[3] = new Vector3(-areaSizeX / 2 - (3 * size), (areaSizeY / 2) - (2 * size), 2);
+        locations[3] = new Vector3(-areaSizeX / 2, -areaSizeY / 2, 2);
 
         for (int i = 0; i < areas; i++)
         {

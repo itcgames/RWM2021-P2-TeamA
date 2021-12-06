@@ -80,4 +80,39 @@ public class EnteringAreasTests
         // Checks the cross fade is transparent.
         Assert.AreEqual(crossFadeImage.color.a, 0.0f);
     }
+
+    [UnityTest]
+    public IEnumerator AreaVisibilitiesSwitch()
+    {
+        // Gets the player object and script.
+        GameObject playerObj = GameObject.Find("Player");
+        Assert.IsNotNull(playerObj);
+
+        // Gets the door object.
+        GameObject doorObj = GameObject.Find("CaveDoor");
+        Assert.IsNotNull(doorObj);
+
+        // Gets the crossFade object, script, and image.
+        GameObject crossFadeObj = GameObject.Find("CrossFade");
+        Assert.IsNotNull(crossFadeObj);
+        CrossFade crossFade = crossFadeObj.GetComponent<CrossFade>();
+        Assert.IsNotNull(crossFade);
+
+        // Gets the first level.
+        GameObject firstLevel = GameObject.Find("Level 1");
+        Assert.IsNotNull(firstLevel);
+        Assert.IsTrue(firstLevel.activeSelf);
+
+        // Move the player to the door and waits for the fade to elapse.
+        playerObj.transform.position = doorObj.transform.position;
+        yield return new WaitForSeconds(crossFade.secondsToFade * 2.0f + 0.1f);
+
+        // Checks that the first level is no longer active.
+        Assert.IsFalse(firstLevel.activeSelf);
+
+        // Gets the third level (the level faded to) and checks that it's active.
+        GameObject thirdLevel = GameObject.Find("Level 3");
+        Assert.IsNotNull(thirdLevel);
+        Assert.IsTrue(thirdLevel.activeSelf);
+    }
 }
