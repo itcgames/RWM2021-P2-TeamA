@@ -294,6 +294,7 @@ MonoBehaviour:
   target: {fileID: 1709164249}
   boundaryOffset: {x: 0.5, y: 0.5}
   secondsPerPan: 1
+  movingSpeed: 0.5
 --- !u!1001 &168672299
 PrefabInstance:
   m_ObjectHideFlags: 0

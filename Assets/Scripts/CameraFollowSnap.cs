@@ -18,6 +18,7 @@ public class CameraFollowSnap : MonoBehaviour
     public Transform target;
     public Vector2 boundaryOffset = Vector2.zero;
     public float secondsPerPan = 0.5f;
+    public float movingSpeed = 0.2f;
 
     // Public Property.
     public Vector2 HalfAreaSize { get; private set; }
@@ -51,15 +52,16 @@ public class CameraFollowSnap : MonoBehaviour
 
     void Update()
     {
+        transform.position += Vector3.right * Time.deltaTime * movingSpeed;
         // If neither the camera nor target are null.
-        if (target && HalfAreaSize != Vector2.zero)
-        {
-            // If not panning.
-            if (_panStartSeconds == -1.0f)
-                CheckTargetBounds();
-            else
-                InterpolatePosition();
-        }
+        //if (target && HalfAreaSize != Vector2.zero)
+        //{
+        //    // If not panning.
+        //    if (_panStartSeconds == -1.0f)
+        //        CheckTargetBounds();
+        //    else
+        //        InterpolatePosition();
+        //}
     }
 
     private void CheckTargetBounds()
