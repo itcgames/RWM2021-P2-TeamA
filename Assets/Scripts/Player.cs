@@ -13,11 +13,21 @@ public class Player : MonoBehaviour
     public Sprite fullHeart;
     //public bool UseHealth;
 
+    [System.Serializable]
+    public class GameState
+    {
+        public int completion_time;
+        public int level;
+    }
 
 
     private void Start()
     {
         _health = maxHealth;
+
+        GameState data = new GameState { completion_time = 2000, level = 7 };
+        string jsonData = jsonData = JsonUtility.ToJson(data);
+        StartCoroutine(AnalyticsManager.PostMethod(jsonData));
     }
 
 
