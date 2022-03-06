@@ -266,7 +266,7 @@ public class InventoryPlayer : MonoBehaviour
 
             foreach (Collider2D collider in colliders)
             {
-                collider.gameObject.GetComponent<EnemyScript>().TakeDamage();
+                collider.gameObject.GetComponent<Health>().TakeDamage(1.0f, "melee weapon");
                 Destroy(collider.gameObject);
             }
         }

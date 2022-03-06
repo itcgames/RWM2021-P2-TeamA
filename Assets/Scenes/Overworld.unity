@@ -2800,6 +2800,7 @@ MonoBehaviour:
   - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
   - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
   - {fileID: 2647169056960781635, guid: 940228a441512e842892508508e153ec, type: 3}
+  enemyType: Octorok
 --- !u!4 &1709164249 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1590756327094295977, guid: 30f37926d62f56143b7c78120f5ace8a,
@@ -3503,6 +3504,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625182050676219112, guid: 8c1874096000d4f499336f99b5cc410c,
+        type: 3}
+      propertyPath: enemyType
+      value: Moblin
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c1874096000d4f499336f99b5cc410c, type: 3}

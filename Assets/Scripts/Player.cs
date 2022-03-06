@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,13 +23,25 @@ public class Player : MonoBehaviour
         public string deviceUniqueIdentifier;
     }
 
+    public class GameStart
+    {
+        public string deviceUniqueIdentifier;
+        public DateTime dateTime;
+        public int eventId;
+    }
+
+    public class GameEnd
+    {
+        public string deviceUniqueIdentifier;
+        public DateTime timeEnded;
+        public int eventId;
+    }
 
     private void Start()
     {
         _health = maxHealth;
-
-        GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Game Start", deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
-        string jsonData = JsonUtility.ToJson(data);
+        GameStart gameStart = new GameStart { dateTime = DateTime.UtcNow, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 0 };
+        string jsonData = JsonUtility.ToJson(gameStart);
         StartCoroutine(AnalyticsManager.PostMethod(jsonData));
     }
 
@@ -77,9 +90,8 @@ public class Player : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-
-        GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Game End", deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
-        string jsonData = JsonUtility.ToJson(data);
+        GameEnd gameEnd = new GameEnd { timeEnded = DateTime.UtcNow, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
+        string jsonData = JsonUtility.ToJson(gameEnd);
         StartCoroutine(AnalyticsManager.PostMethod(jsonData));
     }
 }
