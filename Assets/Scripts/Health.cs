@@ -13,6 +13,16 @@ public class Health : MonoBehaviour
 
     private float lastHitTime = 0.0f;
 
+    [System.Serializable]
+    public class GameState
+    {
+        public int completion_time;
+        public int level;
+        public string eventName;
+        public string deviceUniqueIdentifier;
+    }
+
+
     private void Start()
     {
         _maxHealth = _health;
@@ -45,6 +55,15 @@ public class Health : MonoBehaviour
             // If the health is zero, destroys the object, otherwise flashes.
             if (_health <= 0.0f)
             {
+                string eventName = (gameObject.tag == "Player") ? "Player Died" : "Enemy Died";
+                if(eventName != "Player Died")
+                {
+                    GameState data = new GameState { completion_time = 2000, level = 7, eventName = eventName, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
+                    string jsonData = JsonUtility.ToJson(data);
+                    StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+                }
+
+
                 if (gameObject.tag == "Enemy")
                 {
                     EnemyScript script = gameObject.GetComponent<EnemyScript>();
