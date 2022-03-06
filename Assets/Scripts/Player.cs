@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
         public int completion_time;
         public int level;
         public string eventName;
+        public string deviceUniqueIdentifier;
     }
 
 
@@ -26,7 +27,7 @@ public class Player : MonoBehaviour
     {
         _health = maxHealth;
 
-        GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Game Start" };
+        GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Game Start", deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
         string jsonData = JsonUtility.ToJson(data);
         StartCoroutine(AnalyticsManager.PostMethod(jsonData));
     }
@@ -44,7 +45,7 @@ public class Player : MonoBehaviour
                 heart.sprite = fadedHeart;
             }
 
-            GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Player Death" };
+            GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Player Death", deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
             string jsonData = JsonUtility.ToJson(data);
             StartCoroutine(AnalyticsManager.PostMethod(jsonData));
         }
@@ -72,5 +73,13 @@ public class Player : MonoBehaviour
     public bool IsAtFullHealth()
     {
         return _health == maxHealth;
+    }
+
+    private void OnApplicationQuit()
+    {
+
+        GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Game End", deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
+        string jsonData = JsonUtility.ToJson(data);
+        StartCoroutine(AnalyticsManager.PostMethod(jsonData));
     }
 }

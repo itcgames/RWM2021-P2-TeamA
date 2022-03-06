@@ -6,6 +6,15 @@ using UnityEngine.UI;
 
 public class InventoryPlayer : MonoBehaviour
 {
+    [System.Serializable]
+    public class GameState
+    {
+        public int completion_time;
+        public int level;
+        public string eventName;
+        public string deviceUniqueIdentifier;
+    }
+
     public GameObject sword;
     public Vector2 speed = new Vector2(20, 20);
     public Text stackAmount;
@@ -150,6 +159,10 @@ public class InventoryPlayer : MonoBehaviour
                     {
                         _showPanel.SetCurrentItemToHidden();
                     }
+
+                    GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Potion used", deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
+                    string jsonData = JsonUtility.ToJson(data);
+                    StartCoroutine(AnalyticsManager.PostMethod(jsonData));
                 }
             }
 
@@ -208,6 +221,10 @@ public class InventoryPlayer : MonoBehaviour
                 bomb.transform.position = transform.position;
                 _bombAmount--;
                 bombAmount.text = "x" + _bombAmount;
+
+                GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Bomb used", deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
+                string jsonData = JsonUtility.ToJson(data);
+                StartCoroutine(AnalyticsManager.PostMethod(jsonData));
             }
         }
     }
@@ -314,6 +331,10 @@ public class InventoryPlayer : MonoBehaviour
             _showPanel.SetActiveItem();
             _stackCounter++;
         }
+
+        GameState data = new GameState { completion_time = 2000, level = 7, eventName = itemName + " added to inventory with amount of: " + amount, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
+        string jsonData = JsonUtility.ToJson(data);
+        StartCoroutine(AnalyticsManager.PostMethod(jsonData));
     }
 
     public void MoveLeftInInventory()
