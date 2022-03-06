@@ -13,14 +13,22 @@ public class EnemyScript : MonoBehaviour
     private SpriteRenderer _sprite;
     public GameObject player;
     public bool hasShield;
-    [HideInInspector]
-    public Vector2 direction;
     public GameObject destroyParticleEffect;
     public bool hurtPlayerOnCollision;
     public int health;
     public int damageAmount;
     public GameObject[] items;
+    public string enemyType;
     private int probability;
+
+    [System.Serializable]
+    public class KillOccurs
+    {
+        public string weaponUsed;
+        public string enemyType;
+        public int eventId = 2;
+        public string deviceUniqueIdentifier;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -29,75 +37,56 @@ public class EnemyScript : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
         }
 
-
         if(usingSprites)
         {
             _sprite = GetComponent<SpriteRenderer>();
             _sprite.sprite = sprites[leftSprite];
-            direction = Vector2.left;
             if (hasShield)
             {
                 int pickedDirection = Random.Range(1, 4);
                 if (pickedDirection == leftSprite)
                 {
                     _sprite.sprite = sprites[leftSprite];
-                    direction = Vector2.left;
                 }
                 else if (pickedDirection == rightSprite)
                 {
                     _sprite.sprite = sprites[rightSprite];
-                    direction = Vector2.right;
                 }
                 else if (pickedDirection == upSprite)
                 {
                     _sprite.sprite = sprites[upSprite];
-                    direction = Vector2.up;
                 }
                 else if (pickedDirection == downSprite)
                 {
                     _sprite.sprite = sprites[downSprite];
-                    direction = Vector2.down;
                 }
             }
             transform.localScale = new Vector2(4.0f, 4.0f);
         }       
     }
 
+    /// <summary>
+    /// Used to send data to the server to say how the enemy was killed as well as what type of enemy was killed
+    /// </summary>
+    /// <param name="weaponUsed"></param>
+    public void OnKillOccurs(string weaponUsed)
+    {
+        KillOccurs killOccurs = new KillOccurs { weaponUsed = weaponUsed, enemyType = enemyType, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 2 };
+        string jsonData = JsonUtility.ToJson(killOccurs);
+        StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Sword")
         {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if(player.GetComponent<InventoryPlayer>().IsAttacking())
-            {
-                Instantiate(destroyParticleEffect);
-                destroyParticleEffect.GetComponent<ParticleSystem>().Play();
-                Health h = GetComponent<Health>();
-                if(h)
-                {
-                    h.TakeDamage(1);
-                }               
-            }
-            if(hurtPlayerOnCollision)
-            {
-                Debug.Log("Player took damage");
-            }            
-        }
-        else if(collision.gameObject.tag == "Sword")
-        {          
             Destroy(collision.gameObject);
             health -= damageAmount;
             Health h = GetComponent<Health>();
             if (h)
             {
-                h.TakeDamage(damageAmount);
+                h.TakeDamage(damageAmount, "Ranged Weapon");
             }
-            if (health <= 0)
-            {
-                GameObject particleEffect = Instantiate(destroyParticleEffect);
-                particleEffect.transform.position = transform.position;
-                particleEffect.GetComponent<ParticleSystem>().Play();
-            }                          
         }
     }
 
@@ -108,22 +97,6 @@ public class EnemyScript : MonoBehaviour
         particleEffect.GetComponent<ParticleSystem>().Play();
     }
 
-    public void TakeDamage()
-    {
-        health -= damageAmount;
-        Health h = GetComponent<Health>();
-        if (h)
-        {
-            h.TakeDamage(damageAmount);
-        }
-        if (h.GetHealth() <= 0)
-        {
-            GameObject particleEffect = Instantiate(destroyParticleEffect);
-            particleEffect.transform.position = transform.position;
-            particleEffect.GetComponent<ParticleSystem>().Play();
-        }
-    }
-
     public void PlaceItem()
     {
         if (items == null) return;
@@ -131,8 +104,7 @@ public class EnemyScript : MonoBehaviour
 
         if(numberOfItems > 0)
         {
-            
-            if(probability > 49)//50 % chance to drop something
+            if(probability > 30)
             {
                 int item = Random.Range(0, items.Length);
                 GameObject i = Instantiate(items[item]);
