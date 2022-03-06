@@ -12,16 +12,6 @@ public class Player : MonoBehaviour
     public Image[] hearts;
     public Sprite fadedHeart;
     public Sprite fullHeart;
-    //public bool UseHealth;
-
-    [System.Serializable]
-    public class GameState
-    {
-        public int completion_time;
-        public int level;
-        public string eventName;
-        public string deviceUniqueIdentifier;
-    }
 
     [System.Serializable]
     public class GameStart

@@ -16,7 +16,8 @@ public class EnemyBehaviour : CharacterBehaviour
     private float _lastMovementChange;
     private float _lastShotFired;
 
-    private Vector2 _direction = Vector2.right;
+    [HideInInspector]
+    public Vector2 _direction = Vector2.right;
     private Animator _animator;
     private SpriteRenderer _sprite;
 

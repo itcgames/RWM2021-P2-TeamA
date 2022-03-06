@@ -7,14 +7,6 @@ using UnityEngine.UI;
 public class InventoryPlayer : MonoBehaviour
 {
     [System.Serializable]
-    public class GameState
-    {
-        public int completion_time;
-        public int level;
-        public string eventName;
-        public string deviceUniqueIdentifier;
-    }
-
     public class ItemPickedUp
     {
         public string deviceUniqueIdentifier;
@@ -22,6 +14,7 @@ public class InventoryPlayer : MonoBehaviour
         public string typeOfItem;
     }
 
+    [System.Serializable]
     public class ItemUsed
     {
         public string deviceUniqueIdentifier;
@@ -174,8 +167,8 @@ public class InventoryPlayer : MonoBehaviour
                         _showPanel.SetCurrentItemToHidden();
                     }
 
-                    GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Potion used", deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
-                    string jsonData = JsonUtility.ToJson(data);
+                    ItemUsed itemUsed = new ItemUsed { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 5, typeOfItem = "Potion" };
+                    string jsonData = JsonUtility.ToJson(itemUsed);
                     StartCoroutine(AnalyticsManager.PostMethod(jsonData));
                 }
             }
@@ -236,8 +229,8 @@ public class InventoryPlayer : MonoBehaviour
                 _bombAmount--;
                 bombAmount.text = "x" + _bombAmount;
 
-                GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Bomb used", deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
-                string jsonData = JsonUtility.ToJson(data);
+                ItemUsed itemUsed = new ItemUsed { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 5, typeOfItem = "Bomb" }; ;
+                string jsonData = JsonUtility.ToJson(itemUsed);
                 StartCoroutine(AnalyticsManager.PostMethod(jsonData));
             }
         }
@@ -345,8 +338,8 @@ public class InventoryPlayer : MonoBehaviour
             _stackCounter++;
         }
 
-        GameState data = new GameState { completion_time = 2000, level = 7, eventName = itemName + " added to inventory with amount of: " + amount, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
-        string jsonData = JsonUtility.ToJson(data);
+        ItemPickedUp itemPickedUp = new ItemPickedUp { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 4, typeOfItem = itemName };
+        string jsonData = JsonUtility.ToJson(itemPickedUp);
         StartCoroutine(AnalyticsManager.PostMethod(jsonData));
     }
 

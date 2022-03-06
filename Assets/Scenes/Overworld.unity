@@ -3505,6 +3505,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1249158498440036800, guid: 8c1874096000d4f499336f99b5cc410c,
+        type: 3}
+      propertyPath: enemyType
+      value: Moblin
+      objectReference: {fileID: 0}
     - target: {fileID: 5625182050676219112, guid: 8c1874096000d4f499336f99b5cc410c,
         type: 3}
       propertyPath: enemyType
@@ -3523,6 +3528,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _health
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7198756412686012348, guid: cd6215b988f350e44b248e09583c62b0,
+        type: 3}
+      propertyPath: enemyType
+      value: Octorok
       objectReference: {fileID: 0}
     - target: {fileID: 8066728499407963528, guid: cd6215b988f350e44b248e09583c62b0,
         type: 3}

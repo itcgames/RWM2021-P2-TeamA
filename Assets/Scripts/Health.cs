@@ -13,16 +13,6 @@ public class Health : MonoBehaviour
 
     private float lastHitTime = 0.0f;
 
-    [System.Serializable]
-    public class GameState
-    {
-        public int completion_time;
-        public int level;
-        public string eventName;
-        public string deviceUniqueIdentifier;
-    }
-
-
     private void Start()
     {
         _maxHealth = _health;
