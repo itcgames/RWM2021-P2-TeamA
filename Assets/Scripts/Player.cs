@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     {
         public int completion_time;
         public int level;
+        public string eventName;
     }
 
 
@@ -25,8 +26,8 @@ public class Player : MonoBehaviour
     {
         _health = maxHealth;
 
-        GameState data = new GameState { completion_time = 2000, level = 7 };
-        string jsonData = jsonData = JsonUtility.ToJson(data);
+        GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Game Start" };
+        string jsonData = JsonUtility.ToJson(data);
         StartCoroutine(AnalyticsManager.PostMethod(jsonData));
     }
 
@@ -42,13 +43,16 @@ public class Player : MonoBehaviour
             {
                 heart.sprite = fadedHeart;
             }
+
+            GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Player Death" };
+            string jsonData = JsonUtility.ToJson(data);
+            StartCoroutine(AnalyticsManager.PostMethod(jsonData));
         }
         else
         {
             _health -= damage;
             hearts[_health].sprite = fadedHeart;
         }
-
     }
 
     public void HealPlayerToFull()
