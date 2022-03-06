@@ -54,7 +54,7 @@ public class Projectile : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             // Deals damage to the collider if it has a health component.
-            collision.GetComponent<Health>()?.TakeDamage(damage);
+            collision.GetComponent<Health>()?.TakeDamage(damage, "projectile", "projectile");
             Destroy(gameObject);
         }
     }

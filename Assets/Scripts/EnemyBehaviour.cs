@@ -21,6 +21,7 @@ public class EnemyBehaviour : CharacterBehaviour
     private SpriteRenderer _sprite;
 
     bool _canAnimate = false;
+    public string enemyType;
 
     // For testing purposes.
     public float GetLastShotFiredTime()
@@ -138,7 +139,7 @@ public class EnemyBehaviour : CharacterBehaviour
             Health health = collision.GetComponent<Health>();
             if (health)
             {
-                health.TakeDamage(0.5f);
+                health.TakeDamage(0.5f, "melee", enemyType);
             }
         }
     }

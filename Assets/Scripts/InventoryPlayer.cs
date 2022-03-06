@@ -15,6 +15,20 @@ public class InventoryPlayer : MonoBehaviour
         public string deviceUniqueIdentifier;
     }
 
+    public class ItemPickedUp
+    {
+        public string deviceUniqueIdentifier;
+        public int eventId;
+        public string typeOfItem;
+    }
+
+    public class ItemUsed
+    {
+        public string deviceUniqueIdentifier;
+        public int eventId;
+        public string typeOfItem;
+    }
+
     public GameObject sword;
     public Vector2 speed = new Vector2(20, 20);
     public Text stackAmount;
@@ -267,7 +281,6 @@ public class InventoryPlayer : MonoBehaviour
             foreach (Collider2D collider in colliders)
             {
                 collider.gameObject.GetComponent<Health>().TakeDamage(1.0f, "melee weapon");
-                Destroy(collider.gameObject);
             }
         }
     }

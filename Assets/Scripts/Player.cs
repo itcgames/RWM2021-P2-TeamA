@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
         public string deviceUniqueIdentifier;
     }
 
+    [System.Serializable]
     public class GameStart
     {
         public string deviceUniqueIdentifier;
@@ -30,10 +31,21 @@ public class Player : MonoBehaviour
         public int eventId;
     }
 
+    [System.Serializable]
     public class GameEnd
     {
         public string deviceUniqueIdentifier;
         public DateTime timeEnded;
+        public int eventId;
+    }
+
+    [System.Serializable]
+    public class PlayerDeath
+    {
+        public string deviceUniqueIdentifier;
+        public string enemyType;
+        public string weaponUsed;
+        public DateTime timeOfDeath;
         public int eventId;
     }
 
@@ -47,7 +59,7 @@ public class Player : MonoBehaviour
 
 
     // Start is called before the first frame update
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, string weaponUsed = "", string enemyType = "")
     {
         if (damage < 0) return;
         if(damage >= _health)
@@ -58,8 +70,8 @@ public class Player : MonoBehaviour
                 heart.sprite = fadedHeart;
             }
 
-            GameState data = new GameState { completion_time = 2000, level = 7, eventName = "Player Death", deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
-            string jsonData = JsonUtility.ToJson(data);
+            PlayerDeath playerDeath = new PlayerDeath { enemyType = enemyType, weaponUsed = weaponUsed, timeOfDeath = DateTime.UtcNow, eventId = 3, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
+            string jsonData = JsonUtility.ToJson(playerDeath);
             StartCoroutine(AnalyticsManager.PostMethod(jsonData));
         }
         else

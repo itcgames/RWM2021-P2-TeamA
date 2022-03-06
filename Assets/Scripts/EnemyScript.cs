@@ -39,7 +39,6 @@ public class EnemyScript : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
         }
 
-
         if(usingSprites)
         {
             _sprite = GetComponent<SpriteRenderer>();
