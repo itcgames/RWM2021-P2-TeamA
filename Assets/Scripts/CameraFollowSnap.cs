@@ -53,15 +53,6 @@ public class CameraFollowSnap : MonoBehaviour
     void Update()
     {
         transform.position += Vector3.right * Time.deltaTime * movingSpeed;
-        // If neither the camera nor target are null.
-        //if (target && HalfAreaSize != Vector2.zero)
-        //{
-        //    // If not panning.
-        //    if (_panStartSeconds == -1.0f)
-        //        CheckTargetBounds();
-        //    else
-        //        InterpolatePosition();
-        //}
     }
 
     private void CheckTargetBounds()
