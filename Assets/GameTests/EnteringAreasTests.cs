@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TopdownCharacterController;
 
 public class EnteringAreasTests
 {
@@ -47,8 +48,6 @@ public class EnteringAreasTests
         // Gets the player object and script.
         GameObject playerObj = GameObject.Find("Player");
         Assert.IsNotNull(playerObj);
-        var player = playerObj.GetComponent<TopdownCharacterController>();
-        Assert.IsNotNull(player);
 
         // Gets the door object.
         GameObject doorObj = GameObject.Find("CaveDoor");
@@ -67,7 +66,7 @@ public class EnteringAreasTests
         yield return new WaitForSeconds(crossFade.secondsToFade);
 
         // Checks that the player controller is disabled.
-        Assert.IsFalse(player.enabled);
+        Assert.IsFalse(playerObj.activeSelf);
 
         // Checks the cross fade is at least nearly black.
         Assert.Greater(crossFadeImage.color.a, 0.9f);
@@ -75,7 +74,7 @@ public class EnteringAreasTests
         yield return new WaitForSeconds(crossFade.secondsToFade + 0.1f);
 
         // Checks that the player controller is enabled again.
-        Assert.IsTrue(player.enabled);
+        Assert.IsTrue(playerObj.activeSelf);
 
         // Checks the cross fade is transparent.
         Assert.AreEqual(crossFadeImage.color.a, 0.0f);

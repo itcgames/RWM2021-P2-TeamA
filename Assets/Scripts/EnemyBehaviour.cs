@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehaviour : CharacterBehaviour
+public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
 {
     public CameraFollowSnap.Bounds AreaBounds { get; set; }
 
@@ -47,7 +47,7 @@ public class EnemyBehaviour : CharacterBehaviour
         {
             // Reset and pick a new action.
             _lastMovementChange = Time.time;
-            Controller.ClearPersistentInput();
+            Movement.ClearPersistentInput();
 
             TakeRandomAction();
             ChanceToFireProjectile();
@@ -87,20 +87,20 @@ public class EnemyBehaviour : CharacterBehaviour
         switch (action)
         {
             case 1:
-                Controller.MoveLeft(true);
+                Movement.MoveLeft(true);
                 _direction = Vector2.left;
 
                 break;
             case 2:
-                Controller.MoveRight(true);
+                Movement.MoveRight(true);
                 _direction = Vector2.right;
                 break;
             case 3:
-                Controller.MoveDown(true);
+                Movement.MoveDown(true);
                 _direction = Vector2.down;
                 break;
             case 4:
-                Controller.MoveUp(true);
+                Movement.MoveUp(true);
                 _direction = Vector2.up;
                 break;
         }

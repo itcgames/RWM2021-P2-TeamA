@@ -13,7 +13,7 @@ public class EntityManager : MonoBehaviour
 	[Header("References")]
 	public GameObject spawnSmokePrefab;
 	public CameraFollowSnap cameraMover;
-	public TopdownCharacterController playerController;
+	public GameObject player;
 	public Rigidbody2D playerRigidbody;
 
 	// Start is called before the first frame update
@@ -39,8 +39,8 @@ public class EntityManager : MonoBehaviour
 		foreach (GameObject projectile in projectiles) Destroy(projectile);
 
 		// Disables player controller functionality.
-		if (playerController)
-			playerController.enabled = false;
+		if (player)
+			player.SetActive(false);
 
 		// Clears any player velocity.
 		if (playerRigidbody)
@@ -50,8 +50,8 @@ public class EntityManager : MonoBehaviour
 	public void UnpausePlayer()
     {
 		// Enables player controller functionality.
-		if (playerController)
-			playerController.enabled = true;
+		if (player)
+			player.SetActive(true);
 	}
 
 	private void OnCameraMovementFinished()
