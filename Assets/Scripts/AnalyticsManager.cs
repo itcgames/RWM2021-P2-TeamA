@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class AnalyticsManager : MonoBehaviour
 {
-    private const string SERVER_URL = "http://localhost:5000/upload_data";
+    private const string SERVER_URL = "http://44.202.60.121/upload_data";
 
     public static IEnumerator PostMethod(string jsonData)
     {
