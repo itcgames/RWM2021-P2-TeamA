@@ -16,11 +16,13 @@ public class EnemyBehaviour : CharacterBehaviour
     private float _lastMovementChange;
     private float _lastShotFired;
 
-    private Vector2 _direction = Vector2.right;
+    [HideInInspector]
+    public Vector2 _direction = Vector2.right;
     private Animator _animator;
     private SpriteRenderer _sprite;
 
     bool _canAnimate = false;
+    public string enemyType;
 
     // For testing purposes.
     public float GetLastShotFiredTime()
@@ -138,7 +140,7 @@ public class EnemyBehaviour : CharacterBehaviour
             Health health = collision.GetComponent<Health>();
             if (health)
             {
-                health.TakeDamage(0.5f);
+                health.TakeDamage(0.5f, "melee", enemyType);
             }
         }
     }

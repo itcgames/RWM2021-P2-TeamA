@@ -45,7 +45,7 @@ public class EnemyTests
 		playerObj.transform.position += new Vector3(5, 5, 0);
 		script.SetProbability(51);
 		script.PlaceItem();
-		script.SetProbability(45);
+		script.SetProbability(29);
 		script.PlaceItem();
 		yield return new WaitForSeconds(0.1f);
 		GameObject[] bombItems = GameObject.FindGameObjectsWithTag("Bomb");

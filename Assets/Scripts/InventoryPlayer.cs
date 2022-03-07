@@ -6,6 +6,22 @@ using UnityEngine.UI;
 
 public class InventoryPlayer : MonoBehaviour
 {
+    [System.Serializable]
+    public class ItemPickedUp
+    {
+        public string deviceUniqueIdentifier;
+        public int eventId;
+        public string typeOfItem;
+    }
+
+    [System.Serializable]
+    public class ItemUsed
+    {
+        public string deviceUniqueIdentifier;
+        public int eventId;
+        public string typeOfItem;
+    }
+
     public GameObject sword;
     public Vector2 speed = new Vector2(20, 20);
     public Text stackAmount;
@@ -150,6 +166,10 @@ public class InventoryPlayer : MonoBehaviour
                     {
                         _showPanel.SetCurrentItemToHidden();
                     }
+
+                    ItemUsed itemUsed = new ItemUsed { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 5, typeOfItem = "Potion" };
+                    string jsonData = JsonUtility.ToJson(itemUsed);
+                    StartCoroutine(AnalyticsManager.PostMethod(jsonData));
                 }
             }
 
@@ -208,6 +228,10 @@ public class InventoryPlayer : MonoBehaviour
                 bomb.transform.position = transform.position;
                 _bombAmount--;
                 bombAmount.text = "x" + _bombAmount;
+
+                ItemUsed itemUsed = new ItemUsed { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 5, typeOfItem = "Bomb" }; ;
+                string jsonData = JsonUtility.ToJson(itemUsed);
+                StartCoroutine(AnalyticsManager.PostMethod(jsonData));
             }
         }
     }
@@ -249,8 +273,7 @@ public class InventoryPlayer : MonoBehaviour
 
             foreach (Collider2D collider in colliders)
             {
-                collider.gameObject.GetComponent<EnemyScript>().TakeDamage();
-                Destroy(collider.gameObject);
+                collider.gameObject.GetComponent<Health>().TakeDamage(1.0f, "melee weapon");
             }
         }
     }
@@ -314,6 +337,10 @@ public class InventoryPlayer : MonoBehaviour
             _showPanel.SetActiveItem();
             _stackCounter++;
         }
+
+        ItemPickedUp itemPickedUp = new ItemPickedUp { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 4, typeOfItem = itemName };
+        string jsonData = JsonUtility.ToJson(itemPickedUp);
+        StartCoroutine(AnalyticsManager.PostMethod(jsonData));
     }
 
     public void MoveLeftInInventory()

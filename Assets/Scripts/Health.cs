@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
         return _health;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, string weaponUsed="", string enemyType="")
     {
         if (lastHitTime + damageCooldown < Time.time)
         {
@@ -39,7 +39,7 @@ public class Health : MonoBehaviour
             if(gameObject.tag == "Player")
             {
                 Player tPlayer = gameObject.GetComponent<Player>();
-                tPlayer.TakeDamage(1);
+                tPlayer.TakeDamage(1, weaponUsed, enemyType);
             }
 
             // If the health is zero, destroys the object, otherwise flashes.
@@ -52,6 +52,8 @@ public class Health : MonoBehaviour
                     {
                         script.GenerateItemPossibility();
                         script.PlaceItem();
+                        script.OnKillOccurs(weaponUsed);
+                        script.PlayParticleEffect();
                     }
                 }
                 Destroy(gameObject);
