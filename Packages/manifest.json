@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.michaelrryan.topdowncharactercontroller": "https://github.com/itcgames/RWM-CharacterController.git?path=/Packages/com.michaelrryan.topdowncharactercontroller#v0.4.0",
+    "com.michaelrryan.topdowncharactercontroller": "https://github.com/itcgames/RWM-CharacterController.git?path=/Packages/com.michaelrryan.topdowncharactercontroller#v1.0.0",
     "com.unity.2d.animation": "3.2.11",
     "com.unity.2d.pixel-perfect": "2.1.0",
     "com.unity.2d.psdimporter": "2.1.8",
