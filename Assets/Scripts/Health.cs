@@ -44,21 +44,7 @@ public class Health : MonoBehaviour
 
             // If the health is zero, destroys the object, otherwise flashes.
             if (_health <= 0.0f)
-            {
-                if (gameObject.tag == "Enemy")
-                {
-                    EnemyScript script = gameObject.GetComponent<EnemyScript>();
-                    if (script != null)
-                    {
-                        script.GenerateItemPossibility();
-                        script.PlaceItem();
-                        script.OnKillOccurs(weaponUsed);
-                        script.PlayParticleEffect();
-                    }
-                }
-                Destroy(gameObject);
-                
-            }                
+                Destroy(gameObject);            
             else
                 StartCoroutine(CooldownFlash());
         }

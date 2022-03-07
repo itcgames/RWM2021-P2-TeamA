@@ -195,6 +195,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112254799}
   m_CullTransparentMesh: 0
+--- !u!1 &117053033 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1706092740}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &117053034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117053033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4ee195c9603b141b77b7cc19fef929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 146270866}
+--- !u!114 &117053035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117053033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 651d5ba02a6654d4b8ff0de18d328770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 939425631}
+  hasShield: 0
+  destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
+    type: 3}
+  hurtPlayerOnCollision: 0
+  health: 2
+  damageAmount: 1
+  items:
+  - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
+  - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
+  - {fileID: 2647169056960781635, guid: 940228a441512e842892508508e153ec, type: 3}
+  enemyType: Octorok
+--- !u!114 &117053044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117053033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7b6792ea94f1b4d85fdcd3c848e901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxFireInterval: 10
+  enemyType: Octorok
 --- !u!1 &146270864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,7 +1610,7 @@ MonoBehaviour:
   spawnSmokePrefab: {fileID: 4884333843683855636, guid: a301724edd45d8a458c929fa7bb73940,
     type: 3}
   cameraMover: {fileID: 146270868}
-  player: {fileID: 0}
+  player: {fileID: 1456271049}
   playerRigidbody: {fileID: 2092942534}
 --- !u!4 &836570715
 Transform:
@@ -2817,12 +2874,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651d5ba02a6654d4b8ff0de18d328770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites: []
-  usingSprites: 0
-  leftSprite: 0
-  rightSprite: 0
-  upSprite: 0
-  downSprite: 0
   player: {fileID: 939425631}
   hasShield: 0
   destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
@@ -2842,10 +2893,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3185323800256694134, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 5118876742396447839, guid: 06f14580b09a33b42980c3f5f0050b97,
+        type: 3}
     - target: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
         type: 3}
       propertyPath: m_Name
-      value: SampleEnemy
+      value: Octorok
       objectReference: {fileID: 0}
     - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
         type: 3}
@@ -2897,7 +2954,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7165220772935675395, guid: a41ea72aabc996449a2533d3ae648c5e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a41ea72aabc996449a2533d3ae648c5e, type: 3}
 --- !u!4 &1709164249 stripped
 Transform:

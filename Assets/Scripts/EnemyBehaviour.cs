@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
 {
-    public CameraFollowSnap.Bounds AreaBounds { get; set; }
-
-    public GameObject projectilePrefab;
     public float maxFireInterval = 10.0f;
-    public float projectileSpeed = 5.0f;
 
     public const float TIME_BETWEEN_ACTIONS = 1.0f;
 
@@ -16,12 +12,6 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
     private float _lastMovementChange;
     private float _lastShotFired;
 
-    [HideInInspector]
-    public Vector2 _direction = Vector2.right;
-    private Animator _animator;
-    private SpriteRenderer _sprite;
-
-    bool _canAnimate = false;
     public string enemyType;
 
     // For testing purposes.
@@ -33,12 +23,11 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
     new void Start()
     {
         base.Start();
+
+        Health.DeathCallbacks.Add(OnDeath);
+
         _lastMovementChange = Time.time - TIME_BETWEEN_ACTIONS;
         _lastShotFired = Time.time;
-
-        _animator = GetComponentInChildren<Animator>();
-        _sprite = GetComponentInChildren<SpriteRenderer>();
-        if (_animator && _sprite) _canAnimate = true;
     }
 
     void Update()
@@ -52,16 +41,10 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
             TakeRandomAction();
             ChanceToFireProjectile();
         }
-
-        // Keeps to the area bounds.
-        StayWithinBoundary();
     }
 
     private void ChanceToFireProjectile()
     {
-        // Breaks from the function immediately if no projectile is set.
-        if (!projectilePrefab) return;
-
         // Works out the chance to fire. Get's closer to 100% as time without
         //      firing increases.
         float timeSinceLastShot = Time.time - _lastShotFired;
@@ -70,12 +53,7 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
         if (Random.Range(0, shotChance) == 0)
         {
             _lastShotFired = Time.time; // Resets the fired time.
-
-            // Instantiates the projectile and fires it in the last movement direction.
-            GameObject proj = Instantiate(projectilePrefab,
-                transform.position, Quaternion.identity);
-
-            proj.GetComponent<Projectile>()?.Fire(_direction * projectileSpeed, AreaBounds);
+            RangedAttack.Fire(Movement.Direction);
         }
     }
 
@@ -88,48 +66,17 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
         {
             case 1:
                 Movement.MoveLeft(true);
-                _direction = Vector2.left;
-
                 break;
             case 2:
                 Movement.MoveRight(true);
-                _direction = Vector2.right;
                 break;
             case 3:
                 Movement.MoveDown(true);
-                _direction = Vector2.down;
                 break;
             case 4:
                 Movement.MoveUp(true);
-                _direction = Vector2.up;
                 break;
         }
-
-        if (_canAnimate)
-        {
-            _animator.SetBool("IsVertical", _direction.y != 0.0f);
-            _sprite.flipY = _direction.y > 0.0f;
-            _sprite.flipX = _direction.x > 0.0f;
-        }
-    }
-
-    private void StayWithinBoundary()
-    {
-        Vector3 newPosition = transform.position;
-
-        // Keep to the horizontal bounds.
-        if (transform.position.x > AreaBounds.right)
-            newPosition.x = AreaBounds.right;
-        else if (transform.position.x < AreaBounds.left)
-            newPosition.x = AreaBounds.left;
-
-        // Keep to the vertical bounds.
-        if (transform.position.y > AreaBounds.top)
-            newPosition.y = AreaBounds.top;
-        else if (transform.position.y < AreaBounds.bottom)
-            newPosition.y = AreaBounds.bottom;
-
-        transform.position = new Vector3(newPosition.x, newPosition.y);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -142,6 +89,18 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
             {
                 health.TakeDamage(0.5f, "melee", enemyType);
             }
+        }
+    }
+
+    private void OnDeath(string weaponName)
+    {
+        EnemyScript script = gameObject.GetComponent<EnemyScript>();
+        if (script != null)
+        {
+            script.GenerateItemPossibility();
+            script.PlaceItem();
+            script.OnKillOccurs(weaponName);
+            script.PlayParticleEffect();
         }
     }
 }

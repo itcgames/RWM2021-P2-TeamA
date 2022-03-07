@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public Sprite[] sprites;
-    public bool usingSprites;
-    public int leftSprite;
-    public int rightSprite;
-    public int upSprite;
-    public int downSprite;
-    private SpriteRenderer _sprite;
     public GameObject player;
     public bool hasShield;
     public GameObject destroyParticleEffect;
@@ -35,34 +28,7 @@ public class EnemyScript : MonoBehaviour
         if(player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
-        }
-
-        if(usingSprites)
-        {
-            _sprite = GetComponent<SpriteRenderer>();
-            _sprite.sprite = sprites[leftSprite];
-            if (hasShield)
-            {
-                int pickedDirection = Random.Range(1, 4);
-                if (pickedDirection == leftSprite)
-                {
-                    _sprite.sprite = sprites[leftSprite];
-                }
-                else if (pickedDirection == rightSprite)
-                {
-                    _sprite.sprite = sprites[rightSprite];
-                }
-                else if (pickedDirection == upSprite)
-                {
-                    _sprite.sprite = sprites[upSprite];
-                }
-                else if (pickedDirection == downSprite)
-                {
-                    _sprite.sprite = sprites[downSprite];
-                }
-            }
-            transform.localScale = new Vector2(4.0f, 4.0f);
-        }       
+        }   
     }
 
     /// <summary>

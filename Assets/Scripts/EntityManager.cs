@@ -127,14 +127,6 @@ public class EntityManager : MonoBehaviour
             return null;
         }
 
-        // Sets the bounds to the passed value if not null.
-        if (bounds != null)
-            behaviour.AreaBounds = bounds.Value;
-
-        // Else sets the bounds from the camera mover if not null.
-        else if (cameraMover)
-            behaviour.AreaBounds = cameraMover.GetBounds();
-
         return behaviour;
     }
 

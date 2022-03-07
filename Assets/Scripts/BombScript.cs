@@ -36,7 +36,7 @@ public class BombScript : MonoBehaviour
                 EnemyBehaviour enemyBehaviour = collider.GetComponent<EnemyBehaviour>();
                 if(script.hasShield)
                 {
-                    Vector2 enemyDirection = enemyBehaviour._direction;
+                    Vector2 enemyDirection = enemyBehaviour.Movement.Direction;
                     if(direction == Vector2.up && enemyDirection != Vector2.down)
                     {
                         Destroy(collider.gameObject);
