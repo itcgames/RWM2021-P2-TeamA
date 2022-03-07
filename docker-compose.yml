@@ -1,0 +1,31 @@
+version: "3.3"
+
+services:
+
+  game_analytics:
+    build:
+      context: .
+      dockerfile: PythonDockerfile
+    ports:
+      - "80:5000"
+    tty: true
+    volumes:
+      - ./:/app
+    networks:
+      - net
+
+  mongo:
+    image: mongo:4.2.2
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=test
+      - MONGO_INITDB_ROOT_PASSWORD=test
+    networks:
+      - net
+    volumes:
+      - ./mongo_db_data_container:/data/db
+
+networks:
+  net:
+    driver: bridge
