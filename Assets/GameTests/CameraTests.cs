@@ -29,6 +29,29 @@ public class CameraTests
         yield return null;
     }
 
+    [UnityTest]
+    public IEnumerator PlayerStaysInFrame()
+    {
+        var cameraObj = GameObject.Find("Main Camera");
+
+        Vector3 camInitPos = cameraObj.transform.position;
+
+        var playerObj = GameObject.Find("Player");
+        var playerMoved = camInitPos + Vector3.left * cameraObj.GetComponent<CameraFollowSnap>().HalfAreaSize.x;
+        playerObj.transform.position = camInitPos + Vector3.left * cameraObj.GetComponent<CameraFollowSnap>().HalfAreaSize.x;
+        yield return new WaitForSeconds(0.25f);
+        Assert.AreNotEqual(playerMoved, playerObj.transform.position);
+    }
+
+    [UnityTest]
+    public IEnumerator CameraMovesRight()
+    {
+        var cameraObj = GameObject.Find("Main Camera");
+        Vector3 camInitPos = cameraObj.transform.position;
+        yield return new WaitForSeconds(0.5f);
+        Assert.AreNotEqual(camInitPos, cameraObj.transform.position);
+    }
+
     //[UnityTest]
     //public IEnumerator CameraPansWhenTargetOutsideBounds()
     //{
