@@ -20,7 +20,10 @@ public class EndPointController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Kachow");
         Application.Quit();
+        if (UnityEditor.EditorApplication.isPlaying)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
     }
 }
