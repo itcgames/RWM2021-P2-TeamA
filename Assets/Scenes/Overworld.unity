@@ -294,6 +294,7 @@ MonoBehaviour:
   target: {fileID: 1709164249}
   boundaryOffset: {x: 0.5, y: 0.5}
   secondsPerPan: 1
+  movingSpeed: 0.5
 --- !u!1001 &168672299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1923,6 +1924,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &939425640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939425631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4ee195c9603b141b77b7cc19fef929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 146270866}
 --- !u!1 &960450235
 GameObject:
   m_ObjectHideFlags: 0
