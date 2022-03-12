@@ -71,13 +71,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void HealPlayerToFull()
+    public bool HealPlayerToFull()
     {
         _health = maxHealth;
         Health h = gameObject.GetComponent<Health>();
         if(h)
         {
-            h.HealToFull();
+            return h.HealToFull();
+        }
+        else
+        {
+            return false;
         }
         foreach (Image heart in hearts)
         {

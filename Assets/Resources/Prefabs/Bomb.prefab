@@ -23,7 +23,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3915669694047256133
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33,15 +33,15 @@ RectTransform:
   m_GameObject: {fileID: 388625722569042784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1.7958366}
-  m_LocalScale: {x: 5.9875, y: 7.3408117, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.04, y: 0.0877419}
-  m_SizeDelta: {x: 0.16, y: 0.16}
+  m_AnchoredPosition: {x: 700.48, y: 1009.6}
+  m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &388625722569042786
 SpriteRenderer:
@@ -105,9 +105,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16cb5fa1dfed5624e98ace8b49ee7c4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemTag: Item
-  maxItemsPerStack: 4
-  isStackable: 1
+  _itemTag: Bomb
+  _description: 
+  _displayNumberOfItems: 0
+  _maxItemsPerStack: 4
+  _isStackable: 1
+  _sprite: {fileID: 21300000, guid: 558ebef5fff546a4abb89cea205c8374, type: 3}
+  loadingErrors: 
+  savingErrors: 
+  fileTypeOfSprite: .png
+  canvas: {fileID: 0}
+  equippableItem: 1
 --- !u!50 &388625722569042797
 Rigidbody2D:
   serializedVersion: 4
@@ -170,6 +178,8 @@ MonoBehaviour:
   spawner: {fileID: 0}
   textureName: Bomb
   prefab: {fileID: 0}
+  damageCooldown: 5
+  numberOfFlashes: 20
 --- !u!222 &7213598532898828485
 CanvasRenderer:
   m_ObjectHideFlags: 0
