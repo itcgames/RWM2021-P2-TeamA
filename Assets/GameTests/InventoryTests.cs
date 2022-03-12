@@ -64,29 +64,19 @@ namespace Tests
             testInventory = playerObj.GetComponent<InventoryPlayer>();
             int amountOfItems = (int)((testInventory._maxItemsPerColumn * testInventory._maxItemsPerRow) * 1.5);
             Assert.IsNotNull(item);
+            testInventory.OpenInventoryNoAnimation();
             for (int i = 0; i < amountOfItems; i++)
             {
                 testInventory.AddObjectToInventory(item, "item", 1);
             }
-
+            
             Assert.AreEqual(amountOfItems, testInventory.GetNumberOfItems());
             testInventory.MoveLeftInInventory();
-
+            Assert.AreEqual(0, testInventory.GetCurrentIndex());
             testInventory.MoveRightInInventory();
-
+            Assert.AreEqual(1, testInventory.GetCurrentIndex());
             testInventory.MoveLeftInInventory();
-
-            testInventory.MoveDownInInventory();
-
-            testInventory.MoveUpInInventory();
-
-            for(int i = 0; i < testInventory._maxItemsPerRow; i++)
-            {
-                testInventory.MoveRightInInventory();
-            }
-
-            testInventory.MoveDownInInventory();
-
+            Assert.AreEqual(0, testInventory.GetCurrentIndex());
             yield return null;
         }
     }

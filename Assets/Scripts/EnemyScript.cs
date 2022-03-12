@@ -104,17 +104,14 @@ public class EnemyScript : MonoBehaviour
 
         if(numberOfItems > 0)
         {
-            //if(probability > 30)
-            //{
-            //    int item = Random.Range(0, items.Length);
-            //    GameObject i = Instantiate(items[item]);
-            //    i.transform.position = gameObject.transform.position;
-            //    i.GetComponent<Item>().prefab = items[item];
-            //}
-            GameObject i = Instantiate(items[1]);
-            i.transform.position = gameObject.transform.position;
-            i.GetComponent<Item>().prefab = items[1];
-            i.SetActive(true);
+            if (probability > 30)
+            {
+                int item = Random.Range(0, items.Length);
+                GameObject i = Instantiate(items[item]);
+                i.transform.position = gameObject.transform.position;
+                i.GetComponent<Item>().prefab = items[item];
+                i.SetActive(true);
+            }
         }
     }
 

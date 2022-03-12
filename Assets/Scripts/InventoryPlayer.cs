@@ -177,7 +177,7 @@ public class InventoryPlayer : MonoBehaviour
 
     void PlaceBomb()
     {
-        if (Input.GetKeyDown(KeyCode.B) && _inventory.Items != null)
+        if (Input.GetKeyDown(KeyCode.B) && _inventory.EquippedItems != null)
         {
             if(_inventory.GetCurrentlySelectedEquippable().gameObject.tag == "Bomb")
             {
@@ -323,6 +323,11 @@ public class InventoryPlayer : MonoBehaviour
         _inventory.GoToNextItem();
     }
 
+    public void OpenInventoryNoAnimation()
+    {
+        _inventory.OpenInventory();
+    }
+
     public void MoveDownInInventory()
     {
         _inventory.GoToItemBelow();
@@ -352,58 +357,71 @@ public class InventoryPlayer : MonoBehaviour
     {
         if (collision.gameObject.tag == "Potion")
         {
-            GameObject item = Instantiate(collision.gameObject);
-            if (item.GetComponent<SpriteRenderer>() != null)
-            {
-                Destroy(item.GetComponent<SpriteRenderer>());
-            }
-            if (item.GetComponent<Rigidbody2D>() != null)
-            {
-                Destroy(item.GetComponent<Rigidbody2D>());
-            }
-            if (item.GetComponent<BoxCollider2D>() != null)
-            {
-                Destroy(item.GetComponent<BoxCollider2D>());
-            }
-            item.GetComponent<InventoryItem>().canvas = canvas;
+            GameObject item = SetUpItem(collision.gameObject);
             _inventory.AddItem(item, 1);
             Destroy(collision.gameObject);
             item.SetActive(false);
-
-            ItemPickedUp itemPickedUp = new ItemPickedUp { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 4, typeOfItem = item.GetComponent<InventoryItem>().Name };
-            string jsonData = JsonUtility.ToJson(itemPickedUp);
-            StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+            SendAddedItemData(item.GetComponent<InventoryItem>().Name);
         }
         else if(collision.gameObject.tag == "Bomb")
         {
-            GameObject item = Instantiate(collision.gameObject);
-            if (item.GetComponent<SpriteRenderer>() != null)
-            {
-                Destroy(item.GetComponent<SpriteRenderer>());
-            }
-            if (item.GetComponent<Rigidbody2D>() != null)
-            {
-                Destroy(item.GetComponent<Rigidbody2D>());
-            }
-            if (item.GetComponent<BoxCollider2D>() != null)
-            {
-                Destroy(item.GetComponent<BoxCollider2D>());
-            }
-            item.GetComponent<InventoryItem>().canvas = canvas;
+            GameObject item = SetUpItem(collision.gameObject);
             _inventory.AddItemToEquippable(item, 1);
             Destroy(collision.gameObject);
             item.SetActive(false);
-
-            ItemPickedUp itemPickedUp = new ItemPickedUp { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 4, typeOfItem = item.GetComponent<InventoryItem>().Name };
-            string jsonData = JsonUtility.ToJson(itemPickedUp);
-            StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+            SendAddedItemData(item.GetComponent<InventoryItem>().Name);
+        }
+        else if(collision.gameObject.tag == "Rupee")
+        {
+            AddRupee(1);
+            Destroy(collision.gameObject);
         }
     }
 
+    GameObject SetUpItem(GameObject item)
+    {
+        GameObject newItem = Instantiate(item.gameObject);
+        if (newItem.GetComponent<SpriteRenderer>() != null)
+        {
+            Destroy(newItem.GetComponent<SpriteRenderer>());
+        }
+        if (newItem.GetComponent<Rigidbody2D>() != null)
+        {
+            Destroy(newItem.GetComponent<Rigidbody2D>());
+        }
+        if (newItem.GetComponent<BoxCollider2D>() != null)
+        {
+            Destroy(newItem.GetComponent<BoxCollider2D>());
+        }
+        newItem.GetComponent<InventoryItem>().canvas = canvas;
+        return newItem;
+    }
 
+    private void SendAddedItemData(string itemName)
+    {
+        ItemPickedUp itemPickedUp = new ItemPickedUp { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 4, typeOfItem = itemName };
+        string jsonData = JsonUtility.ToJson(itemPickedUp);
+        StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+    }
 
     public int GetNumberOfItems()
     {
-        return _inventory.Items.Count;
+        if(_inventory.Items != null)
+            return _inventory.Items.Count;
+        return 0;
+    }
+
+    public int GetNumberOfEquippables()
+    {
+        if(_inventory.EquippedItems != null)
+            return _inventory.EquippedItems.Count;
+        return 0;
+    }
+
+    public int GetCurrentIndex()
+    {
+        if (_inventory.Items != null)
+            return _inventory.ActiveItemIndex;
+        return -1;
     }
 }
