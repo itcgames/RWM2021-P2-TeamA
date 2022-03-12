@@ -399,4 +399,11 @@ public class InventoryPlayer : MonoBehaviour
             StartCoroutine(AnalyticsManager.PostMethod(jsonData));
         }
     }
+
+
+
+    public int GetNumberOfItems()
+    {
+        return _inventory.Items.Count;
+    }
 }
