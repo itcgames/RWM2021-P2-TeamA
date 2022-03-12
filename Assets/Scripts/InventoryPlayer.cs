@@ -150,7 +150,7 @@ public class InventoryPlayer : MonoBehaviour
 
     void MoveInInventory()
     {
-        if(_inventory.IsOpen)
+        if(_inventory.IsOpen && _inventory.Items != null && _inventory.Items.Count > 0)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
@@ -187,6 +187,7 @@ public class InventoryPlayer : MonoBehaviour
                 Destroy(bomb.GetComponent<Item>());
                 BombScript script = bomb.AddComponent<BombScript>();
                 script.timeToDetonate = 1.5f;
+                script.InitialiseBasics(transform.position);
                 StartCoroutine(script.DetonateBomb());
                 script.direction = _direction;
                 bomb.transform.position = transform.position;
@@ -357,7 +358,7 @@ public class InventoryPlayer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Potion")
+        if (collision.gameObject.tag == "Potion" && collision.gameObject.GetComponent<InventoryItem>() != null)
         {
             GameObject item = SetUpItem(collision.gameObject);
             _inventory.AddItem(item, 1);
@@ -365,13 +366,14 @@ public class InventoryPlayer : MonoBehaviour
             item.SetActive(false);
             SendAddedItemData(item.GetComponent<InventoryItem>().Name);
         }
-        else if(collision.gameObject.tag == "Bomb")
+        else if(collision.gameObject.tag == "Bomb" && collision.gameObject.GetComponent<InventoryItem>() != null)
         {
             GameObject item = SetUpItem(collision.gameObject);
             _inventory.AddItemToEquippable(item, 1);
             Destroy(collision.gameObject);
             item.SetActive(false);
             SendAddedItemData(item.GetComponent<InventoryItem>().Name);
+            AddBomb(1);
         }
         else if(collision.gameObject.tag == "Rupee")
         {

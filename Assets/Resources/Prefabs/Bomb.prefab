@@ -177,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
   textureName: Bomb
-  prefab: {fileID: 0}
+  prefab: {fileID: 388625722569042784}
   damageCooldown: 5
   numberOfFlashes: 20
 --- !u!222 &7213598532898828485
