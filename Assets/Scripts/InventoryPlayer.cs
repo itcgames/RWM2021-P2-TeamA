@@ -186,6 +186,8 @@ public class InventoryPlayer : MonoBehaviour
                 Destroy(bomb.GetComponent<InventoryItem>());
                 Destroy(bomb.GetComponent<Item>());
                 BombScript script = bomb.AddComponent<BombScript>();
+                script.timeToDetonate = 1.5f;
+                StartCoroutine(script.DetonateBomb());
                 script.direction = _direction;
                 bomb.transform.position = transform.position;
                 _bombAmount--;

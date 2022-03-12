@@ -14,7 +14,7 @@ public class BombScript : MonoBehaviour
         StartCoroutine(DetonateBomb());
     }
 
-    private IEnumerator DetonateBomb()
+    public IEnumerator DetonateBomb()
     {
         yield return new WaitForSeconds(timeToDetonate);
         ParticleSystem particles = GetComponentInParent<ParticleSystem>();
