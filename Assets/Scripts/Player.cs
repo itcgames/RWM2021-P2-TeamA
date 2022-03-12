@@ -73,20 +73,25 @@ public class Player : MonoBehaviour
 
     public bool HealPlayerToFull()
     {
+        bool succeeded = false;
         _health = maxHealth;
         Health h = gameObject.GetComponent<Health>();
         if(h)
         {
-            return h.HealToFull();
+            succeeded = h.HealToFull();
         }
         else
         {
-            return false;
+            succeeded = false;
         }
-        foreach (Image heart in hearts)
+        if(succeeded)
         {
-            heart.sprite = fullHeart;
+            foreach (Image heart in hearts)
+            {
+                heart.sprite = fullHeart;
+            }
         }
+        return succeeded;
     }
 
     public bool IsAtFullHealth()

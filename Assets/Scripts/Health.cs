@@ -21,8 +21,12 @@ public class Health : MonoBehaviour
 
     public bool HealToFull()
     {
-        _health = _maxHealth;
-        return true;
+        if(_health < _maxHealth)
+        {
+            _health = _maxHealth;
+            return true;
+        }
+        return false;
     }
 
     public float GetHealth()
