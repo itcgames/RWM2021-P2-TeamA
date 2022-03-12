@@ -114,6 +114,7 @@ public class EnemyScript : MonoBehaviour
             GameObject i = Instantiate(items[1]);
             i.transform.position = gameObject.transform.position;
             i.GetComponent<Item>().prefab = items[1];
+            i.SetActive(true);
         }
     }
 

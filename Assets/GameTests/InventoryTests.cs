@@ -67,7 +67,7 @@ namespace Tests
             Assert.IsNotNull(item);
             for (int i = 0; i < amountOfItems; i++)
             {
-                testInventory.AddObjectToInventory(item, "Bomb", "item", 1);
+                testInventory.AddObjectToInventory(item, "item", 1);
             }
             Assert.AreEqual(0, showPanel._currentlySelectedPage);
             Assert.AreEqual(0, showPanel.CurrentIndex);

@@ -34,9 +34,7 @@ public class InventoryPlayer : MonoBehaviour
     public GameObject cursor;
     [HideInInspector]
     public Inventory _inventory;
-    private ShowPanel _showPanel;
     private bool _showInventory;
-    private int _stackCounter;
     private Animator _inventoryAnimator;
     private Animator _playerAnimator;
     public GameObject panel;
@@ -50,6 +48,7 @@ public class InventoryPlayer : MonoBehaviour
     private Player _testPlayer;
     private Vector2 _lastDirectionToAttack = new Vector2(-1, -1);
     int scaleSize = 5;
+    public Canvas canvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,10 +63,8 @@ public class InventoryPlayer : MonoBehaviour
         _showInventory = false;
         _inventoryAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
         _inventoryAnimator.SetBool("isHidden", _showInventory);
-        _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
         _testPlayer = GetComponentInChildren<Player>();
-        _stackCounter = 0;
         _direction = Vector2.down;
         transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
     }
@@ -301,7 +298,7 @@ public class InventoryPlayer : MonoBehaviour
         return s;
     }
 
-    public void AddObjectToInventory(GameObject itemObject, string texture, string itemName, uint amount)
+    public void AddObjectToInventory(GameObject itemObject, string itemName, uint amount)
     {
         if(itemName != "Bomb")
         {
@@ -349,6 +346,57 @@ public class InventoryPlayer : MonoBehaviour
             _rupeeAmount += amount;
             rupeeAmount.text = "x" + _rupeeAmount;
         }
-        
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Potion")
+        {
+            GameObject item = Instantiate(collision.gameObject);
+            if (item.GetComponent<SpriteRenderer>() != null)
+            {
+                Destroy(item.GetComponent<SpriteRenderer>());
+            }
+            if (item.GetComponent<Rigidbody2D>() != null)
+            {
+                Destroy(item.GetComponent<Rigidbody2D>());
+            }
+            if (item.GetComponent<BoxCollider2D>() != null)
+            {
+                Destroy(item.GetComponent<BoxCollider2D>());
+            }
+            item.GetComponent<InventoryItem>().canvas = canvas;
+            _inventory.AddItem(item, 1);
+            Destroy(collision.gameObject);
+            item.SetActive(false);
+
+            ItemPickedUp itemPickedUp = new ItemPickedUp { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 4, typeOfItem = item.GetComponent<InventoryItem>().Name };
+            string jsonData = JsonUtility.ToJson(itemPickedUp);
+            StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+        }
+        else if(collision.gameObject.tag == "Bomb")
+        {
+            GameObject item = Instantiate(collision.gameObject);
+            if (item.GetComponent<SpriteRenderer>() != null)
+            {
+                Destroy(item.GetComponent<SpriteRenderer>());
+            }
+            if (item.GetComponent<Rigidbody2D>() != null)
+            {
+                Destroy(item.GetComponent<Rigidbody2D>());
+            }
+            if (item.GetComponent<BoxCollider2D>() != null)
+            {
+                Destroy(item.GetComponent<BoxCollider2D>());
+            }
+            item.GetComponent<InventoryItem>().canvas = canvas;
+            _inventory.AddItemToEquippable(item, 1);
+            Destroy(collision.gameObject);
+            item.SetActive(false);
+
+            ItemPickedUp itemPickedUp = new ItemPickedUp { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 4, typeOfItem = item.GetComponent<InventoryItem>().Name };
+            string jsonData = JsonUtility.ToJson(itemPickedUp);
+            StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+        }
     }
 }

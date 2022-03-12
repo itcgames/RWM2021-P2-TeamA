@@ -57,36 +57,35 @@ public class Item : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             uint amount = 1;
-            if (tag == "Bomb")
-            {
-                amount = 4;
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
-                player.GetComponent<InventoryPlayer>().AddBomb((int)amount);
-            }
-            if(tag == "Potion")
-            {
-                amount = 2;
-            }
-            if(spawner != null)
-            {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryPlayer>()
-                .AddObjectToInventory(spawner.GetComponent<TestItemSpawner>().item, textureName, gameObject.GetComponent<InventoryItem>().Name, amount);
-            }
-            else
-            {
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
-                InventoryPlayer testInventory = player.GetComponent<InventoryPlayer>();
-                if(tag != "Rupee")
-                {
-                    testInventory.AddObjectToInventory(prefab, textureName, gameObject.GetComponent<InventoryItem>().Name, amount);
-                }
-                else
-                {
-                    player.GetComponent<InventoryPlayer>().AddRupee(1);
-                }
-            }
-            Debug.Log("Item: " + Name + " Amount Added: " + amount);
-            Destroy(this.gameObject);
+            //if (tag == "Bomb")
+            //{
+            //    amount = 4;
+            //    GameObject player = GameObject.FindGameObjectWithTag("Player");
+            //    player.GetComponent<InventoryPlayer>().AddBomb((int)amount);
+            //}
+            //if(tag == "Potion")
+            //{
+            //    amount = 2;
+            //}
+            //if(spawner != null)
+            //{
+            //    GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryPlayer>()
+            //    .AddObjectToInventory(spawner.GetComponent<TestItemSpawner>().item, textureName, gameObject.GetComponent<InventoryItem>().Name, amount);
+            //}
+            //else
+            //{
+            //    GameObject player = GameObject.FindGameObjectWithTag("Player");
+            //    InventoryPlayer testInventory = player.GetComponent<InventoryPlayer>();
+            //    if(tag != "Rupee")
+            //    {
+            //        testInventory.AddObjectToInventory(prefab, textureName, gameObject.GetComponent<InventoryItem>().Name, amount);
+            //    }
+            //    else
+            //    {
+            //        player.GetComponent<InventoryPlayer>().AddRupee(1);
+            //    }
+            //}
+            //Destroy(this.gameObject);
         }
     }    
 }
