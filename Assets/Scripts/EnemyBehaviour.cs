@@ -85,19 +85,6 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
         }
     }
 
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Player"))
-    //    {
-    //        // Gets the player's health component and damages it if it exists.
-    //        Health health = collision.GetComponent<Health>();
-    //        if (health)
-    //        {
-    //            health.TakeDamage(0.5f, "melee", enemyType);
-    //        }
-    //    }
-    //}
-
     private void OnDeath(Dictionary<string, string> damageInfo)
     {
         EnemyScript script = gameObject.GetComponent<EnemyScript>();
