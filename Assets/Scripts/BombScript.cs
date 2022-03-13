@@ -69,6 +69,7 @@ public class BombScript : MonoBehaviour
         }
         
         yield return new WaitForSeconds(particles.duration);
+        Debug.Log("Destroy Bomb");
         Destroy(gameObject);
     }
 }

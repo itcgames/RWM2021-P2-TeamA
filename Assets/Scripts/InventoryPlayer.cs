@@ -213,15 +213,7 @@ public class InventoryPlayer : MonoBehaviour
         Move();
         if (Input.GetKeyDown(KeyCode.I))
         {
-            OpenInventory();
-            if(_inventory.IsOpen)
-            {
-                _inventory.CloseInventory();
-            }
-            else
-            {
-                _inventory.OpenInventory();
-            }
+            OpenInventoryWithAnimation();
         }
         if(_inventory.IsOpen)
         {
@@ -270,6 +262,19 @@ public class InventoryPlayer : MonoBehaviour
                     _lastDirectionToAttack = _direction;
                 }
             }
+        }
+    }
+
+    public void OpenInventoryWithAnimation()
+    {
+        OpenInventory();
+        if (_inventory.IsOpen)
+        {
+            _inventory.CloseInventory();
+        }
+        else
+        {
+            _inventory.OpenInventory();
         }
     }
 
@@ -368,12 +373,19 @@ public class InventoryPlayer : MonoBehaviour
         }
         else if(collision.gameObject.tag == "Bomb" && collision.gameObject.GetComponent<InventoryItem>() != null)
         {
-            GameObject item = SetUpItem(collision.gameObject);
-            _inventory.AddItemToEquippable(item, 1);
-            Destroy(collision.gameObject);
-            item.SetActive(false);
-            SendAddedItemData(item.GetComponent<InventoryItem>().Name);
-            AddBomb(1);
+            Item i = collision.gameObject.GetComponent<Item>();
+            if(i != null && !i.Collected)
+            {
+                i.Collect();
+                GameObject item = SetUpItem(collision.gameObject);
+                item.GetComponent<Item>().Collect();
+                _inventory.AddItemToEquippable(item, 1);
+                Destroy(collision.gameObject);
+                item.SetActive(false);
+                SendAddedItemData(item.GetComponent<InventoryItem>().Name);
+                AddBomb(1);
+            }
+
         }
         else if(collision.gameObject.tag == "Rupee")
         {
