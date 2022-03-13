@@ -166,11 +166,11 @@
       }
     },
     "rwm.inventory": {
-      "version": "https://github.com/itcgames/RWM-InventorySystem.git?path=/Packages/rwm.inventory#v1.0.0",
+      "version": "https://github.com/itcgames/RWM-InventorySystem.git?path=/Packages/rwm.inventory#v1.0.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "619d66e3421ff78d2ecfc111dd883b2441ae5f03"
+      "hash": "2f95f2acfc477f726aebf51a226cc7cc642256f6"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
