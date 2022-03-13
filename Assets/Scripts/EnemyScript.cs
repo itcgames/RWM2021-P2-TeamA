@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public GameObject player;
     public bool hasShield;
     public GameObject destroyParticleEffect;
     public bool hurtPlayerOnCollision;
-    public int health;
-    public int damageAmount;
     public GameObject[] items;
     public string enemyType;
     private int probability;
@@ -22,14 +19,6 @@ public class EnemyScript : MonoBehaviour
         public int eventId = 2;
         public string deviceUniqueIdentifier;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        if(player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-        }   
-    }
 
     /// <summary>
     /// Used to send data to the server to say how the enemy was killed as well as what type of enemy was killed
@@ -40,20 +29,6 @@ public class EnemyScript : MonoBehaviour
         KillOccurs killOccurs = new KillOccurs { weaponUsed = weaponUsed, enemyType = enemyType, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 2 };
         string jsonData = JsonUtility.ToJson(killOccurs);
         StartCoroutine(AnalyticsManager.PostMethod(jsonData));
-    }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Sword")
-        {
-            Destroy(collision.gameObject);
-            health -= damageAmount;
-            Health h = GetComponent<Health>();
-            if (h)
-            {
-                h.TakeDamage(damageAmount, "Ranged Weapon");
-            }
-        }
     }
 
     public void PlayParticleEffect()

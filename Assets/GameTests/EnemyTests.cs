@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using TopdownCharacterController;
 
 public class EnemyTests
 {
@@ -113,7 +114,7 @@ public class EnemyTests
 	public IEnumerator OctorokDealsThornsDamage()
 	{
 		Health playerHealth = GetPlayersHealthComponent();
-		float healthValue = playerHealth.GetHealth();
+		float healthValue = playerHealth.HP;
 
 		// Spawns an Octorok and moves it to the player.
 		GameObject octorok = SpawnEnemy(_octorokPrefab, "Octorok");
@@ -126,14 +127,14 @@ public class EnemyTests
 		playerHealth.StopAllCoroutines();
 
 		// Checks the health has decreased.
-		Assert.Less(playerHealth.GetHealth(), healthValue);
+		Assert.Less(playerHealth.HP, healthValue);
 	}
 
 	[UnityTest]
 	public IEnumerator MoblinDealsThornsDamage()
 	{
 		Health playerHealth = GetPlayersHealthComponent();
-		float healthValue = playerHealth.GetHealth();
+		float healthValue = playerHealth.HP;
 
 		// Spawns a Moblin and moves it to the player.
 		GameObject moblin = SpawnEnemy(_octorokPrefab, "Moblin");
@@ -146,7 +147,7 @@ public class EnemyTests
 		playerHealth.StopAllCoroutines();
 
 		// Checks the health has decreased.
-		Assert.Less(playerHealth.GetHealth(), healthValue);
+		Assert.Less(playerHealth.HP, healthValue);
 	}
 
 	private Health GetPlayersHealthComponent()

@@ -26,6 +26,12 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
 
         Health.DeathCallbacks.Add(OnDeath);
 
+        MeleeAttack.AttackInfo.Add("weapon_name", "melee");
+        MeleeAttack.AttackInfo.Add("enemy_type", enemyType);
+
+        RangedAttack.AttackInfo.Add("weapon_name", "rock");
+        RangedAttack.AttackInfo.Add("enemy_type", enemyType);
+
         _lastMovementChange = Time.time - TIME_BETWEEN_ACTIONS;
         _lastShotFired = Time.time;
     }
@@ -79,18 +85,18 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            // Gets the player's health component and damages it if it exists.
-            Health health = collision.GetComponent<Health>();
-            if (health)
-            {
-                health.TakeDamage(0.5f, "melee", enemyType);
-            }
-        }
-    }
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Player"))
+    //    {
+    //        // Gets the player's health component and damages it if it exists.
+    //        Health health = collision.GetComponent<Health>();
+    //        if (health)
+    //        {
+    //            health.TakeDamage(0.5f, "melee", enemyType);
+    //        }
+    //    }
+    //}
 
     private void OnDeath(Dictionary<string, string> damageInfo)
     {

@@ -47,7 +47,7 @@ public class InventoryPlayer : MonoBehaviour
     [HideInInspector]
     public uint currentItemId = 0;
     private Vector2 _direction = new Vector2(0, 0);
-    private Player _testPlayer;
+    private PlayerBehaviour _playerBehaviour;
 
     void Start()
     {
@@ -64,7 +64,7 @@ public class InventoryPlayer : MonoBehaviour
         _inventoryAnimator.SetBool("isHidden", _showInventory);
         _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
-        _testPlayer = GetComponentInChildren<Player>();
+        _playerBehaviour = GetComponentInChildren<PlayerBehaviour>();
         _stackCounter = 0;
         _direction = Vector2.down;
     }
@@ -93,7 +93,7 @@ public class InventoryPlayer : MonoBehaviour
         if (_inventory.Items[_showPanel.CurrentIndex].gameObject.tag == "Potion")
         {
             Debug.Log("trying to use potion");
-            if (_testPlayer._health < _testPlayer.maxHealth)
+            if (_playerBehaviour.Health.HP < _playerBehaviour.maxHealth)
             {
                 InventoryItem item = _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>();
                 if (item.NumberOfItems > 0)
@@ -101,7 +101,7 @@ public class InventoryPlayer : MonoBehaviour
                     int newAmount = (int)item.NumberOfItems - 1;
                     _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems = (uint)newAmount;
                     PotionScript script = _inventory.Items[_showPanel.CurrentIndex].GetComponent<PotionScript>();
-                    _testPlayer.HealPlayerToFull();
+                    _playerBehaviour.HealToFull();
                     if (item.NumberOfItems == 0 && script.IsRedPotion)
                     {
                         item.NumberOfItems = 1;
