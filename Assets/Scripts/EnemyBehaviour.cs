@@ -92,14 +92,15 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
         }
     }
 
-    private void OnDeath(string weaponName)
+    private void OnDeath(Dictionary<string, string> damageInfo)
     {
         EnemyScript script = gameObject.GetComponent<EnemyScript>();
         if (script != null)
         {
             script.GenerateItemPossibility();
             script.PlaceItem();
-            script.OnKillOccurs(weaponName);
+            if (damageInfo.ContainsKey("weapon_name"))
+                script.OnKillOccurs(damageInfo["weapon_name"]);
             script.PlayParticleEffect();
         }
     }

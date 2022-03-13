@@ -231,7 +231,7 @@ MonoBehaviour:
   destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
     type: 3}
   hurtPlayerOnCollision: 0
-  health: 2
+  health: 1
   damageAmount: 1
   items:
   - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
@@ -659,6 +659,63 @@ PrefabInstance:
     - {fileID: 1590756327094295974, guid: 30f37926d62f56143b7c78120f5ace8a, type: 3}
     - {fileID: 1590756327094295975, guid: 30f37926d62f56143b7c78120f5ace8a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 30f37926d62f56143b7c78120f5ace8a, type: 3}
+--- !u!1 &213609641 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1423760517}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &213609642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213609641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7b6792ea94f1b4d85fdcd3c848e901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxFireInterval: 10
+  enemyType: Octorok
+--- !u!114 &213609643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213609641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 651d5ba02a6654d4b8ff0de18d328770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 939425631}
+  hasShield: 0
+  destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
+    type: 3}
+  hurtPlayerOnCollision: 0
+  health: 1
+  damageAmount: 1
+  items:
+  - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
+  - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
+  - {fileID: 2647169056960781635, guid: 940228a441512e842892508508e153ec, type: 3}
+  enemyType: Octorok
+--- !u!114 &213609644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213609641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4ee195c9603b141b77b7cc19fef929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 146270866}
 --- !u!1 &240637224
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,6 +868,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 316789012}
   m_CullTransparentMesh: 0
+--- !u!1001 &321059025
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3185323800256694134, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 5118876742396447839, guid: 06f14580b09a33b42980c3f5f0050b97,
+        type: 3}
+    - target: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_Name
+      value: Octorok (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7165220772935675395, guid: a41ea72aabc996449a2533d3ae648c5e, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: a41ea72aabc996449a2533d3ae648c5e, type: 3}
 --- !u!1001 &327478738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1704,6 +1832,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864926573}
   m_CullTransparentMesh: 0
+--- !u!1001 &881579289
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3185323800256694134, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 5118876742396447839, guid: 06f14580b09a33b42980c3f5f0050b97,
+        type: 3}
+    - target: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_Name
+      value: Octorok (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7165220772935675395, guid: a41ea72aabc996449a2533d3ae648c5e, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: a41ea72aabc996449a2533d3ae648c5e, type: 3}
 --- !u!1 &897950940
 GameObject:
   m_ObjectHideFlags: 0
@@ -2135,6 +2334,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096089453}
   m_CullTransparentMesh: 0
+--- !u!1 &1273750330 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
+    type: 3}
+  m_PrefabInstance: {fileID: 321059025}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1273750331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273750330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7b6792ea94f1b4d85fdcd3c848e901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxFireInterval: 10
+  enemyType: Octorok
+--- !u!114 &1273750332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273750330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 651d5ba02a6654d4b8ff0de18d328770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 939425631}
+  hasShield: 0
+  destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
+    type: 3}
+  hurtPlayerOnCollision: 0
+  health: 1
+  damageAmount: 1
+  items:
+  - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
+  - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
+  - {fileID: 2647169056960781635, guid: 940228a441512e842892508508e153ec, type: 3}
+  enemyType: Octorok
+--- !u!114 &1273750333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273750330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4ee195c9603b141b77b7cc19fef929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 146270866}
 --- !u!1 &1277902257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2417,6 +2673,77 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8459c8c2f612c8f4095337f9a8733f14, type: 3}
+--- !u!1001 &1423760517
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3185323800256694134, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 5118876742396447839, guid: 06f14580b09a33b42980c3f5f0050b97,
+        type: 3}
+    - target: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_Name
+      value: Octorok (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465775711578076072, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7165220772935675395, guid: a41ea72aabc996449a2533d3ae648c5e, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: a41ea72aabc996449a2533d3ae648c5e, type: 3}
 --- !u!1 &1430904066
 GameObject:
   m_ObjectHideFlags: 0
@@ -3130,6 +3457,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753459885}
   m_CullTransparentMesh: 0
+--- !u!1 &1754742796 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
+    type: 3}
+  m_PrefabInstance: {fileID: 881579289}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1754742797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754742796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7b6792ea94f1b4d85fdcd3c848e901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxFireInterval: 10
+  enemyType: Octorok
+--- !u!114 &1754742798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754742796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 651d5ba02a6654d4b8ff0de18d328770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 939425631}
+  hasShield: 0
+  destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
+    type: 3}
+  hurtPlayerOnCollision: 0
+  health: 1
+  damageAmount: 1
+  items:
+  - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
+  - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
+  - {fileID: 2647169056960781635, guid: 940228a441512e842892508508e153ec, type: 3}
+  enemyType: Octorok
+--- !u!114 &1754742799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754742796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4ee195c9603b141b77b7cc19fef929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 146270866}
 --- !u!1001 &1755144444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3201,6 +3585,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508253132367048024, guid: 30f37926d62f56143b7c78120f5ace8a,
+        type: 3}
+      propertyPath: weaponName
+      value: Sword
       objectReference: {fileID: 0}
     - target: {fileID: 4449338863367465953, guid: 30f37926d62f56143b7c78120f5ace8a,
         type: 3}

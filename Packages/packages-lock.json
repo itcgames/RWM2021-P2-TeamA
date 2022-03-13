@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.michaelrryan.topdowncharactercontroller": {
-      "version": "https://github.com/itcgames/RWM-CharacterController.git?path=/Packages/com.michaelrryan.topdowncharactercontroller#v1.0.0",
+      "version": "https://github.com/itcgames/RWM-CharacterController.git?path=/Packages/com.michaelrryan.topdowncharactercontroller#v1.1.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "9bb58189dcc918c9efec1f6ec2a33254497ab02c"
+      "hash": "d120edd5a15ff0835d7a78a6f1e4704a30ee3de0"
     },
     "com.unity.2d.animation": {
       "version": "3.2.11",

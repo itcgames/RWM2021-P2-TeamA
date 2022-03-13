@@ -61,7 +61,7 @@ public class BombScript : MonoBehaviour
                 }
             }
         }
-        yield return new WaitForSeconds(particles.duration);
+        yield return new WaitForSeconds(particles.main.duration);
         Destroy(gameObject);
     }
 }

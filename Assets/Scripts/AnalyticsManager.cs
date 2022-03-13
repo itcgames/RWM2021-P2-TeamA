@@ -27,5 +27,9 @@ public class AnalyticsManager : MonoBehaviour
                     Debug.Log("Error sending data to the server: Error " + request.responseCode);
             }
         }
+        else
+        {
+            Debug.Log("Mock sent the following: " + jsonData);
+        }
     }
 }
