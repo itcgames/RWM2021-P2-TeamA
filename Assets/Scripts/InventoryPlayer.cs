@@ -34,9 +34,7 @@ public class InventoryPlayer : MonoBehaviour
     public GameObject cursor;
     [HideInInspector]
     public Inventory _inventory;
-    private ShowPanel _showPanel;
     private bool _showInventory;
-    private int _stackCounter;
     private Animator _inventoryAnimator;
     private Animator _playerAnimator;
     public GameObject panel;
@@ -48,7 +46,10 @@ public class InventoryPlayer : MonoBehaviour
     public uint currentItemId = 0;
     private Vector2 _direction = new Vector2(0, 0);
     private PlayerBehaviour _playerBehaviour;
-
+    private Vector2 _lastDirectionToAttack = new Vector2(-1, -1);
+    int scaleSize = 5;
+    public Canvas canvas;
+    // Start is called before the first frame update
     void Start()
     {
         bombAmount.text = "x" + _bombAmount;
@@ -62,10 +63,8 @@ public class InventoryPlayer : MonoBehaviour
         _showInventory = false;
         _inventoryAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
         _inventoryAnimator.SetBool("isHidden", _showInventory);
-        _showPanel = GetComponentInChildren<ShowPanel>();
         _inventory = GetComponentInChildren<Inventory>();
         _playerBehaviour = GetComponentInChildren<PlayerBehaviour>();
-        _stackCounter = 0;
         _direction = Vector2.down;
     }
 
@@ -90,88 +89,56 @@ public class InventoryPlayer : MonoBehaviour
 
     void UsePotion()
     {
-        if (_inventory.Items[_showPanel.CurrentIndex].gameObject.tag == "Potion")
+        if(_inventory.GetCurrentlySelectedObject().gameObject.tag == "Potion")
         {
-            Debug.Log("trying to use potion");
-            if (_playerBehaviour.Health.HP < _playerBehaviour.maxHealth)
-            {
-                InventoryItem item = _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>();
-                if (item.NumberOfItems > 0)
-                {
-                    int newAmount = (int)item.NumberOfItems - 1;
-                    _inventory.Items[_showPanel.CurrentIndex].GetComponent<InventoryItem>().NumberOfItems = (uint)newAmount;
-                    PotionScript script = _inventory.Items[_showPanel.CurrentIndex].GetComponent<PotionScript>();
-                    _playerBehaviour.HealToFull();
-                    if (item.NumberOfItems == 0 && script.IsRedPotion)
-                    {
-                        item.NumberOfItems = 1;
-                        script.IsBluePotion = true;
-                        script.IsRedPotion = false;
-                        _showPanel.SetCurrentItemToBluePotion();
-
-                    }
-                    else if (item.NumberOfItems == 0 && script.IsBluePotion)
-                    {
-                        _showPanel.SetCurrentItemToHidden();
-                    }
-
-                    ItemUsed itemUsed = new ItemUsed { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 5, typeOfItem = "Potion" };
-                    string jsonData = JsonUtility.ToJson(itemUsed);
-                    StartCoroutine(AnalyticsManager.PostMethod(jsonData));
-                }
-            }
-
+            _inventory.UseItem();
+            ItemUsed itemUsed = new ItemUsed { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 5, typeOfItem = "Potion" };
+            string jsonData = JsonUtility.ToJson(itemUsed);
+            StartCoroutine(AnalyticsManager.PostMethod(jsonData));
         }
     }
 
     void MoveInInventory()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if(_inventory.IsOpen && _inventory.Items != null && _inventory.Items.Count > 0)
         {
-            MoveUpInInventory();
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            MoveDownInInventory();
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            MoveLeftInInventory();
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            MoveRightInInventory();
-        }
-        else if (Input.GetKeyDown(KeyCode.Return))
-        {
-            UsePotion();
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                MoveUpInInventory();
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                MoveDownInInventory();
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                MoveLeftInInventory();
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                MoveRightInInventory();
+            }
+            else if (Input.GetKeyDown(KeyCode.Return))
+            {
+                UsePotion();
+            }
         }
     }
 
     void PlaceBomb()
     {
-        if (Input.GetKeyDown(KeyCode.B) && _inventory.Items != null)
+        if (Input.GetKeyDown(KeyCode.B) && _inventory.EquippedItems != null)
         {
-            List<GameObject> bombs = _inventory.Items.FindAll(x => x.tag == "Bomb");
-            bombs = bombs.Where(x => x.GetComponent<InventoryItem>().NumberOfItems > 0).ToList();
-            if (bombs.Count > 0)
+            if(_inventory.GetCurrentlySelectedEquippable().gameObject.tag == "Bomb")
             {
-                bombs[0].GetComponent<InventoryItem>().NumberOfItems--;
-                if (bombs[0].GetComponent<InventoryItem>().NumberOfItems == 0)
-                {
-                    foreach (GameObject item in _inventory.Items)
-                    {
-                        if (item.GetComponent<InventoryItem>().NumberOfItems == 0)
-                        {
-                            _showPanel.SetCurrentItemToHidden();
-                            break;
-                        }
-                    }
-                }
+                _inventory.UseEquippable();
                 GameObject bomb = Instantiate(Resources.Load<GameObject>("Prefabs/Bomb"));
                 Destroy(bomb.GetComponent<InventoryItem>());
                 Destroy(bomb.GetComponent<Item>());
                 BombScript script = bomb.AddComponent<BombScript>();
+                script.timeToDetonate = 1.5f;
+                script.InitialiseBasics(transform.position);
+                StartCoroutine(script.DetonateBomb());
                 script.direction = _direction;
                 bomb.transform.position = transform.position;
                 _bombAmount--;
@@ -195,9 +162,9 @@ public class InventoryPlayer : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            OpenInventory();
+            OpenInventoryWithAnimation();
         }
-        if(_showInventory)
+        if(_inventory.IsOpen)
         {
             MoveInInventory();
         }
@@ -207,16 +174,29 @@ public class InventoryPlayer : MonoBehaviour
         }
     }
 
-    public void AddObjectToInventory(GameObject itemObject, string texture, string itemName, uint amount)
+    public void OpenInventoryWithAnimation()
     {
-        _inventory.AddItem(itemObject, amount); 
-        if(_inventory.Items.Count > _stackCounter)
+        OpenInventory();
+        if (_inventory.IsOpen)
         {
-            _showPanel.AddItemImage(texture, itemName);
-            _showPanel.SetActiveItem();
-            _stackCounter++;
+            _inventory.CloseInventory();
         }
+        else
+        {
+            _inventory.OpenInventory();
+        }
+    }
 
+    public void AddObjectToInventory(GameObject itemObject, string itemName, uint amount)
+    {
+        if(itemName != "Bomb")
+        {
+            _inventory.AddItem(itemObject, amount);
+        }
+        else
+        {
+            _inventory.AddItemToEquippable(itemObject, amount);
+        }
         ItemPickedUp itemPickedUp = new ItemPickedUp { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 4, typeOfItem = itemName };
         string jsonData = JsonUtility.ToJson(itemPickedUp);
         StartCoroutine(AnalyticsManager.PostMethod(jsonData));
@@ -224,104 +204,27 @@ public class InventoryPlayer : MonoBehaviour
 
     public void MoveLeftInInventory()
     {
-        if (_showPanel.CurrentIndex > 0 && _showPanel.CurrentIndex < _maxItemsPerRow ||
-            _showPanel.CurrentIndex > _maxItemsPerRow)
-        {
-            _showPanel.MoveLeft();
-            _cursorLocationInInventory.x--;
-            cursor.transform.position += new Vector3(-45, 0, 0);
-            _showPanel.SetActiveItem();
-            return;
-        }
-        if(_showPanel.CurrentIndex == 0 && _showPanel.IsMorePagesToLeft())
-        {
-            _cursorLocationInInventory = new Vector2(_maxItemsPerRow - 1, 0);
-            cursor.transform.position += new Vector3(45 * (_maxItemsPerRow - 1), 0, 0);
-            _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() - 1);
-            _showPanel.SetActiveItem();
-        }
-        else if(_showPanel.CurrentIndex == _maxItemsPerRow && _showPanel.IsMorePagesToLeft())
-        {
-            _cursorLocationInInventory = new Vector2(_maxItemsPerRow - 1, 1);
-            cursor.transform.position += new Vector3(45 * (_maxItemsPerRow - 1), 0, 0);
-            _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() - 1);
-            _showPanel.SetActiveItem();
-        }
+        _inventory.GoToPreviousItem();
     }
 
     public void MoveRightInInventory()
     {
-        if(_showPanel.CurrentIndex < (_maxItemsPerRow - 1) || (_cursorLocationInInventory.y == 1 && _showPanel.CurrentIndex < _maxItemsPerRow * _maxItemsPerColumn - 1))
-        {
-            if(_showPanel.IsItemRight())
-            {
-                _showPanel.MoveRight();
-                _cursorLocationInInventory.x++;
-                cursor.transform.position += new Vector3(45, 0, 0);
-                _showPanel.SetActiveItem();
-                return;
-            }
-        }
+        _inventory.GoToNextItem();
+    }
 
-        if (_cursorLocationInInventory.y == 0 && _showPanel.CurrentIndex == _maxItemsPerRow - 1)
-        {
-            if (_showPanel.IsMorePagesToRight())
-            {
-                _cursorLocationInInventory = new Vector2(0, 0);
-                cursor.transform.position -= new Vector3(45 * (_maxItemsPerRow - 1), 0, 0);
-                _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() + 1);
-                _showPanel.SetActiveItem();
-            }
-        }
-        else if(_cursorLocationInInventory.y == 1 && _showPanel.CurrentIndex == _maxItemsPerRow * _maxItemsPerColumn - 1)
-        {
-            if (_showPanel.IsMorePagesToRight())
-            {
-                if(_showPanel.NumberOfItemsOnPage(_showPanel.GetCurrentlySelectedPage() + 1) > _maxItemsPerRow)
-                {
-                    _cursorLocationInInventory = new Vector2(0, 1);
-                    cursor.transform.position -= new Vector3(45 * (_maxItemsPerRow - 1), 0, 0);
-                }
-                else
-                {
-                    _cursorLocationInInventory = new Vector2(0, 0);
-                    cursor.transform.position -= new Vector3(45 * (_maxItemsPerRow - 1), -55, 0);
-                }
-                               
-                _showPanel.UpdateCurrentlySelectedPage((uint)_showPanel.GetCurrentlySelectedPage() + 1);
-                _showPanel.SetActiveItem();
-            }
-        }
+    public void OpenInventoryNoAnimation()
+    {
+        _inventory.OpenInventory();
     }
 
     public void MoveDownInInventory()
     {
-        if (_cursorLocationInInventory.y < (_maxItemsPerColumn - 1))
-        {
-            if(_showPanel.IsItemDown())
-            {
-                _showPanel.MoveDown();
-                _cursorLocationInInventory.y++;
-                cursor.transform.position += new Vector3(0, -55, 0);
-                _showPanel.SetActiveItem();
-            }           
-        }
+        _inventory.GoToItemBelow();
     }
 
     public void MoveUpInInventory()
     {
-        if(_cursorLocationInInventory.y > 0)
-        {
-            _showPanel.MoveUp();
-            _cursorLocationInInventory.y--;
-            cursor.transform.position += new Vector3(0, 55, 0);
-            _showPanel.SetActiveItem();
-        }
-    }
-
-    public uint GetAmountOfItemAtPosition(int index)
-    {
-        return _inventory.Items[index].GetComponent<InventoryItem>().NumberOfItems;
+        _inventory.GoToItemAbove();
     }
 
     public void AddBomb(int amount)
@@ -337,6 +240,85 @@ public class InventoryPlayer : MonoBehaviour
             _rupeeAmount += amount;
             rupeeAmount.text = "x" + _rupeeAmount;
         }
-        
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Potion" && collision.gameObject.GetComponent<InventoryItem>() != null)
+        {
+            GameObject item = SetUpItem(collision.gameObject);
+            _inventory.AddItem(item, 1);
+            Destroy(collision.gameObject);
+            item.SetActive(false);
+            SendAddedItemData(item.GetComponent<InventoryItem>().Name);
+        }
+        else if(collision.gameObject.tag == "Bomb" && collision.gameObject.GetComponent<InventoryItem>() != null)
+        {
+            Item i = collision.gameObject.GetComponent<Item>();
+            if(i != null && !i.Collected)
+            {
+                i.Collect();
+                GameObject item = SetUpItem(collision.gameObject);
+                item.GetComponent<Item>().Collect();
+                _inventory.AddItemToEquippable(item, 1);
+                Destroy(collision.gameObject);
+                item.SetActive(false);
+                SendAddedItemData(item.GetComponent<InventoryItem>().Name);
+                AddBomb(1);
+            }
+
+        }
+        else if(collision.gameObject.tag == "Rupee")
+        {
+            AddRupee(1);
+            Destroy(collision.gameObject);
+        }
+    }
+
+    GameObject SetUpItem(GameObject item)
+    {
+        GameObject newItem = Instantiate(item.gameObject);
+        if (newItem.GetComponent<SpriteRenderer>() != null)
+        {
+            Destroy(newItem.GetComponent<SpriteRenderer>());
+        }
+        if (newItem.GetComponent<Rigidbody2D>() != null)
+        {
+            Destroy(newItem.GetComponent<Rigidbody2D>());
+        }
+        if (newItem.GetComponent<BoxCollider2D>() != null)
+        {
+            Destroy(newItem.GetComponent<BoxCollider2D>());
+        }
+        newItem.GetComponent<InventoryItem>().canvas = canvas;
+        return newItem;
+    }
+
+    private void SendAddedItemData(string itemName)
+    {
+        ItemPickedUp itemPickedUp = new ItemPickedUp { deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 4, typeOfItem = itemName };
+        string jsonData = JsonUtility.ToJson(itemPickedUp);
+        StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+    }
+
+    public int GetNumberOfItems()
+    {
+        if(_inventory.Items != null)
+            return _inventory.Items.Count;
+        return 0;
+    }
+
+    public int GetNumberOfEquippables()
+    {
+        if(_inventory.EquippedItems != null)
+            return _inventory.EquippedItems.Count;
+        return 0;
+    }
+
+    public int GetCurrentIndex()
+    {
+        if (_inventory.Items != null)
+            return _inventory.ActiveItemIndex;
+        return -1;
     }
 }

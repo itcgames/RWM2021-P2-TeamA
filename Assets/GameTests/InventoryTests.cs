@@ -62,36 +62,21 @@ namespace Tests
             GameObject item = Resources.Load<GameObject>("Prefabs/DefaultItem");
             playerObj = GameObject.Find("Player");
             testInventory = playerObj.GetComponent<InventoryPlayer>();
-            showPanel = playerObj.GetComponent<ShowPanel>();
             int amountOfItems = (int)((testInventory._maxItemsPerColumn * testInventory._maxItemsPerRow) * 1.5);
             Assert.IsNotNull(item);
+            testInventory.OpenInventoryNoAnimation();
             for (int i = 0; i < amountOfItems; i++)
             {
-                testInventory.AddObjectToInventory(item, "Bomb", "item", 1);
+                testInventory.AddObjectToInventory(item, "item", 1);
             }
-            Assert.AreEqual(0, showPanel._currentlySelectedPage);
-            Assert.AreEqual(0, showPanel.CurrentIndex);
-            Assert.AreEqual(2, showPanel.TotalPages());
-            Assert.AreEqual(amountOfItems, showPanel.TotalItems());
+            
+            Assert.AreEqual(amountOfItems, testInventory.GetNumberOfItems());
             testInventory.MoveLeftInInventory();
-            Assert.AreEqual(0, showPanel.CurrentIndex);
-            Assert.AreEqual(0, showPanel._currentlySelectedPage);
+            Assert.AreEqual(0, testInventory.GetCurrentIndex());
             testInventory.MoveRightInInventory();
-            Assert.AreEqual(1, showPanel.CurrentIndex);
+            Assert.AreEqual(1, testInventory.GetCurrentIndex());
             testInventory.MoveLeftInInventory();
-            Assert.AreEqual(0, showPanel.CurrentIndex);
-            testInventory.MoveDownInInventory();
-            Assert.AreEqual(testInventory._maxItemsPerRow, showPanel.CurrentIndex);
-            testInventory.MoveUpInInventory();
-            Assert.AreEqual(0, showPanel.CurrentIndex);
-            for(int i = 0; i < testInventory._maxItemsPerRow; i++)
-            {
-                testInventory.MoveRightInInventory();
-            }
-            Assert.AreEqual(1, showPanel._currentlySelectedPage);
-            Assert.AreEqual(0, showPanel.CurrentIndex);
-            testInventory.MoveDownInInventory();
-            Assert.AreEqual(0, showPanel.CurrentIndex);
+            Assert.AreEqual(0, testInventory.GetCurrentIndex());
             yield return null;
         }
     }

@@ -10,19 +10,23 @@ public class BombScript : MonoBehaviour
     public int radius;
     void Start()
     {
-        timeToDetonate = 1.5f;
-        StartCoroutine(DetonateBomb());
     }
 
-    private IEnumerator DetonateBomb()
+    public void InitialiseBasics(Vector2 position)
+    {
+        transform.position = position;
+        gameObject.AddComponent<ParticleSystem>();
+        gameObject.SetActive(true);
+    }
+
+    public IEnumerator DetonateBomb()
     {
         yield return new WaitForSeconds(timeToDetonate);
-        ParticleSystem particles = GetComponentInParent<ParticleSystem>();
+        ParticleSystem particles = gameObject.GetComponent<ParticleSystem>();
         particles.Play();
-        SpriteRenderer sprite = GetComponentInParent<SpriteRenderer>();
-        sprite.enabled = false;
         Collider2D[] collider2Ds;
-        
+        SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
+        sprite.enabled = false;
         collider2Ds = Physics2D.OverlapCircleAll(transform.position, 5.0f);
         List<Collider2D> colliders = collider2Ds.ToList();
         colliders = colliders.Where(x => x.gameObject.tag != "Player")
@@ -57,7 +61,6 @@ public class BombScript : MonoBehaviour
                 else
                 {
                     Destroy(collider.gameObject);
-                    Debug.Log("Enemy withing blast radius of bomb");
                 }
             }
         }
