@@ -10,8 +10,6 @@ public class BombScript : MonoBehaviour
     public int radius;
     void Start()
     {
-        //timeToDetonate = 1.5f;
-        //StartCoroutine(DetonateBomb());
     }
 
     public void InitialiseBasics(Vector2 position)
@@ -63,13 +61,11 @@ public class BombScript : MonoBehaviour
                 else
                 {
                     Destroy(collider.gameObject);
-                    Debug.Log("Enemy withing blast radius of bomb");
                 }
             }
         }
         
         yield return new WaitForSeconds(particles.duration);
-        Debug.Log("Destroy Bomb");
         Destroy(gameObject);
     }
 }

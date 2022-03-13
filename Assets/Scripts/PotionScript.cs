@@ -24,7 +24,6 @@ public class PotionScript : MonoBehaviour
 
     bool HealPlayer()
     {
-        Debug.Log("Healing player");
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Player script = player.GetComponent<Player>();
         return script.HealPlayerToFull();
