@@ -151,7 +151,7 @@ RectTransform:
   m_LocalScale: {x: 0.825, y: 0.64999, z: 1}
   m_Children: []
   m_Father: {fileID: 831596068}
-  m_RootOrder: 18
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -226,13 +226,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651d5ba02a6654d4b8ff0de18d328770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 939425631}
   hasShield: 0
   destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
     type: 3}
   hurtPlayerOnCollision: 0
-  health: 1
-  damageAmount: 1
   items:
   - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
   - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
@@ -691,13 +688,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651d5ba02a6654d4b8ff0de18d328770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 939425631}
   hasShield: 0
   destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
     type: 3}
   hurtPlayerOnCollision: 0
-  health: 1
-  damageAmount: 1
   items:
   - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
   - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
@@ -746,7 +740,7 @@ RectTransform:
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 831596068}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -881,6 +875,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5118876742396447839, guid: 06f14580b09a33b42980c3f5f0050b97,
         type: 3}
+    - target: {fileID: 4729026703532950361, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: ThornsDamage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
         type: 3}
       propertyPath: m_Name
@@ -1540,7 +1539,7 @@ RectTransform:
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 831596068}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1629,10 +1628,10 @@ RectTransform:
   - {fileID: 603726966}
   - {fileID: 207771768}
   - {fileID: 1508154082}
+  - {fileID: 112254800}
   - {fileID: 240637225}
   - {fileID: 1096089454}
   - {fileID: 665080685}
-  - {fileID: 112254800}
   - {fileID: 1277902258}
   - {fileID: 1304010956}
   - {fileID: 960450236}
@@ -1738,7 +1737,7 @@ MonoBehaviour:
   spawnSmokePrefab: {fileID: 4884333843683855636, guid: a301724edd45d8a458c929fa7bb73940,
     type: 3}
   cameraMover: {fileID: 146270868}
-  player: {fileID: 1456271049}
+  player: {fileID: 0}
   playerRigidbody: {fileID: 2092942534}
 --- !u!4 &836570715
 Transform:
@@ -1845,6 +1844,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5118876742396447839, guid: 06f14580b09a33b42980c3f5f0050b97,
         type: 3}
+    - target: {fileID: 4729026703532950361, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: ThornsDamage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
         type: 3}
       propertyPath: m_Name
@@ -2084,17 +2088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c09b4f1f80c890418658bdc21a75b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 6
-  _health: 0
-  hearts:
-  - {fileID: 240637226}
-  - {fileID: 1096089455}
-  - {fileID: 665080686}
-  - {fileID: 1277902259}
-  - {fileID: 1304010957}
-  - {fileID: 960450237}
-  fadedHeart: {fileID: 21300000, guid: 5fd5b0cd2e8c56a478fc6dc8f3c5999f, type: 3}
-  fullHeart: {fileID: 21300000, guid: d6b8676fdae598a46a90a7e935f9a15c, type: 3}
 --- !u!114 &939425640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2290,7 +2283,7 @@ RectTransform:
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 831596068}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2366,13 +2359,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651d5ba02a6654d4b8ff0de18d328770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 939425631}
   hasShield: 0
   destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
     type: 3}
   hurtPlayerOnCollision: 0
-  health: 1
-  damageAmount: 1
   items:
   - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
   - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
@@ -2686,6 +2676,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5118876742396447839, guid: 06f14580b09a33b42980c3f5f0050b97,
         type: 3}
+    - target: {fileID: 4729026703532950361, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: ThornsDamage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
         type: 3}
       propertyPath: m_Name
@@ -2784,6 +2779,28 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1755144444}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1456271054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456271049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5c1ebd275413449a62c426d352a287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 6
+  hearts:
+  - {fileID: 240637226}
+  - {fileID: 1096089455}
+  - {fileID: 665080686}
+  - {fileID: 1277902259}
+  - {fileID: 1304010957}
+  - {fileID: 960450237}
+  fadedHeart: {fileID: 21300000, guid: 5fd5b0cd2e8c56a478fc6dc8f3c5999f, type: 3}
+  fullHeart: {fileID: 21300000, guid: d6b8676fdae598a46a90a7e935f9a15c, type: 3}
 --- !u!114 &1456271060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2797,29 +2814,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 146270866}
---- !u!114 &1456271061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456271049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c09b4f1f80c890418658bdc21a75b9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 6
-  _health: 0
-  hearts:
-  - {fileID: 240637226}
-  - {fileID: 1096089455}
-  - {fileID: 665080686}
-  - {fileID: 1277902259}
-  - {fileID: 1304010957}
-  - {fileID: 960450237}
-  fadedHeart: {fileID: 21300000, guid: 5fd5b0cd2e8c56a478fc6dc8f3c5999f, type: 3}
-  fullHeart: {fileID: 21300000, guid: d6b8676fdae598a46a90a7e935f9a15c, type: 3}
 --- !u!114 &1456271062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3201,13 +3195,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651d5ba02a6654d4b8ff0de18d328770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 939425631}
   hasShield: 0
   destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
     type: 3}
   hurtPlayerOnCollision: 0
-  health: 2
-  damageAmount: 1
   items:
   - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
   - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
@@ -3226,6 +3217,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5118876742396447839, guid: 06f14580b09a33b42980c3f5f0050b97,
         type: 3}
+    - target: {fileID: 4729026703532950361, guid: a41ea72aabc996449a2533d3ae648c5e,
+        type: 3}
+      propertyPath: ThornsDamage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8465775711578076068, guid: a41ea72aabc996449a2533d3ae648c5e,
         type: 3}
       propertyPath: m_Name
@@ -3489,13 +3485,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651d5ba02a6654d4b8ff0de18d328770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 939425631}
   hasShield: 0
   destroyParticleEffect: {fileID: 7269311498592443313, guid: a5cf8b5031deca6499811fa8f8bd8723,
     type: 3}
   hurtPlayerOnCollision: 0
-  health: 1
-  damageAmount: 1
   items:
   - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
   - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
@@ -3621,7 +3614,8 @@ PrefabInstance:
       propertyPath: DamageWhitelistTags.Array.data[0]
       value: Enemy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3401940656814232552, guid: 30f37926d62f56143b7c78120f5ace8a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 30f37926d62f56143b7c78120f5ace8a, type: 3}
 --- !u!1 &1815309393
 GameObject:
