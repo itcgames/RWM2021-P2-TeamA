@@ -19,9 +19,14 @@ public class Health : MonoBehaviour
         lastHitTime = Time.time - damageCooldown;
     }
 
-    public void HealToFull()
+    public bool HealToFull()
     {
-        _health = _maxHealth;
+        if(_health < _maxHealth)
+        {
+            _health = _maxHealth;
+            return true;
+        }
+        return false;
     }
 
     public float GetHealth()
