@@ -25,7 +25,9 @@ public class PotionScript : MonoBehaviour
     bool HealPlayer()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        Player script = player.GetComponent<Player>();
-        return script.HealPlayerToFull();
+        PlayerBehaviour script = player.GetComponent<PlayerBehaviour>();
+        float prevHP = script.Health.HP;
+        script.HealToFull();
+        return prevHP < script.maxHealth;
     }
 }
