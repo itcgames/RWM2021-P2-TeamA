@@ -10,6 +10,7 @@ public class Item : MonoBehaviour
     public GameObject prefab;
     public float damageCooldown = 5.0f; // In seconds.
     public int numberOfFlashes = 20;
+    private bool _collected = false;
     public string Name { get
         {
             if (gameObject.GetComponent<InventoryItem>() == null) return "Rupee";
@@ -17,10 +18,17 @@ public class Item : MonoBehaviour
         } 
     }
 
+    public bool Collected { get => _collected; }
+
     private void Start()
     {
         StartCoroutine(DestroyItem());
         StartCoroutine(CooldownFlash());
+    }
+
+    public void Collect()
+    {
+        _collected = true;
     }
 
     private IEnumerator CooldownFlash()
@@ -48,45 +56,7 @@ public class Item : MonoBehaviour
     private IEnumerator DestroyItem()
     {
         yield return new WaitForSeconds(5.0f);
-        Destroy(gameObject);
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            uint amount = 1;
-            if (tag == "Bomb")
-            {
-                amount = 4;
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
-                player.GetComponent<InventoryPlayer>().AddBomb((int)amount);
-            }
-            if(tag == "Potion")
-            {
-                amount = 2;
-            }
-            if(spawner != null)
-            {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<InventoryPlayer>()
-                .AddObjectToInventory(spawner.GetComponent<TestItemSpawner>().item, textureName, gameObject.GetComponent<InventoryItem>().Name, amount);
-            }
-            else
-            {
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
-                InventoryPlayer testInventory = player.GetComponent<InventoryPlayer>();
-                if(tag != "Rupee")
-                {
-                    testInventory.AddObjectToInventory(prefab, textureName, gameObject.GetComponent<InventoryItem>().Name, amount);
-                }
-                else
-                {
-                    player.GetComponent<InventoryPlayer>().AddRupee(1);
-                }
-            }
-            Debug.Log("Item: " + Name + " Amount Added: " + amount);
-            Destroy(this.gameObject);
-        }
-    }    
+        if(!_collected)
+            Destroy(gameObject);
+    }   
 }

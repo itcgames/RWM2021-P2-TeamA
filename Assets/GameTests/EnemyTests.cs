@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using TopdownCharacterController;
 
 public class EnemyTests
 {
@@ -19,68 +20,71 @@ public class EnemyTests
 		SceneManager.LoadScene("Overworld", LoadSceneMode.Single);
 	}
 
-	[UnityTest]
-	public IEnumerator IsOctorokConfinedToAreaBoundary()
-	{
-		var areaBounds = GetAreaBounds();
+    [UnityTest]
+    public IEnumerator IsOctorokConfinedToAreaBoundary()
+    {
+        var areaBounds = GetAreaBounds();
 
-		// Spawns an Octorok and moves it outside the level bounds.
-		GameObject octorok = SpawnEnemy(_octorokPrefab, "Octorok");
-		octorok.transform.position = new Vector3(areaBounds.right + 10.0f, 0.0f);
+        // Spawns an Octorok and moves it outside the level bounds.
+        GameObject octorok = SpawnEnemy(_octorokPrefab, "Octorok");
+        octorok.transform.position = new Vector3(areaBounds.right + 10.0f, 0.0f);
 
-		// Checks that the Octorok is within the bounds again next frame.
-		yield return null;
-		Assert.LessOrEqual(octorok.transform.position.x, areaBounds.right);
-	}
+        // Checks that the Octorok is within the bounds again next frame.
+        yield return null;
+        Assert.LessOrEqual(octorok.transform.position.x, areaBounds.right);
+    }
 
-	[UnityTest]
+    [UnityTest]
 	public IEnumerator SpawnItemOnDeath()
 	{
 		GameObject octorokObj = SpawnEnemy(_octorokPrefab, "octo");
-
 		EnemyScript script = octorokObj.GetComponent<EnemyScript>();
-		GameObject playerObj = GameObject.Find("Player");
-		Assert.IsNotNull(playerObj);
-		Vector3 position = playerObj.transform.position;
-		playerObj.transform.position += new Vector3(5, 5, 0);
+
 		script.SetProbability(51);
 		script.PlaceItem();
 		script.SetProbability(29);
 		script.PlaceItem();
-		yield return new WaitForSeconds(0.1f);
-		GameObject[] bombItems = GameObject.FindGameObjectsWithTag("Bomb");
-		GameObject[] rupeeItems = GameObject.FindGameObjectsWithTag("Rupee");
-		GameObject[] potionItems = GameObject.FindGameObjectsWithTag("Potion");
-		GameObject[] items = bombItems.Concat(rupeeItems).Concat(potionItems).ToArray();
-		Assert.AreEqual(1, items.Length);
+
+		GameObject playerObj = GameObject.Find("Player");
+		Assert.IsNotNull(playerObj);
+		Vector3 position = playerObj.transform.position;
+		playerObj.transform.position = octorokObj.transform.position;
+
+		yield return new WaitForSeconds(0.3f);
+		InventoryPlayer inventory = playerObj.GetComponent<InventoryPlayer>();
+
+		int count = inventory.GetNumberOfItems() + inventory.GetNumberOfEquippables();
+		Assert.NotZero(count);
+
 		playerObj.transform.position = position;
 	}
 
-	[UnityTest]
-	public IEnumerator IsMoblinConfinedToAreaBoundary()
-	{
-		var areaBounds = GetAreaBounds();
+    //[UnityTest]
+    //public IEnumerator IsMoblinConfinedToAreaBoundary()
+    //{
+    //	var areaBounds = GetAreaBounds();
 
-		// Spawns a Moblin and moves it outside the level bounds.
-		GameObject moblin = SpawnEnemy(_moblinPrefab, "Moblin");
-		moblin.transform.position = new Vector3(areaBounds.right + 10.0f, 0.0f);
+    //	// Spawns a Moblin and moves it outside the level bounds.
+    //	GameObject moblin = SpawnEnemy(_moblinPrefab, "Moblin");
+    //	moblin.transform.position = new Vector3(areaBounds.right + 10.0f, 0.0f);
 
-		// Checks that the Moblin is within the bounds again next frame.
-		yield return null;
-		Assert.LessOrEqual(moblin.transform.position.x, areaBounds.right);
-	}
+    //	// Checks that the Moblin is within the bounds again next frame.
+    //	yield return null;
+    //	Assert.LessOrEqual(moblin.transform.position.x, areaBounds.right);
+    //}
 
-	private CameraFollowSnap.Bounds GetAreaBounds()
+    private CameraFollowSnap.Bounds GetAreaBounds()
     {
-		GameObject cameraObj = GameObject.Find("Main Camera");
-		var camController = cameraObj.GetComponent<CameraFollowSnap>();
-		return camController.GetBounds(); ;
-	}
+        GameObject cameraObj = GameObject.Find("Main Camera");
+        var camController = cameraObj.GetComponent<CameraFollowSnap>();
+        return camController.GetBounds(); ;
+    }
 
-	[UnityTest]
+    [UnityTest]
 	public IEnumerator OctorokDiesOnHit()
 	{
-		GameObject octorokObj = SpawnEnemy(_octorokPrefab, "Octorok");
+		GameObject octorokObj = SpawnEnemy(_octorokPrefab, "TestOctorok");
+		string name = octorokObj.name;
 		yield return null;
 
 		// Gets the Octorok's health component
@@ -90,30 +94,30 @@ public class EnemyTests
 		// Damages the Octorok, waits, checks the Octorok is dead.
 		healthComponent.TakeDamage(1.0f);
 		yield return null;
-		Assert.IsNull(GameObject.Find("Octorok"));
+		Assert.IsNull(GameObject.Find(name));
 	}
 
-	[UnityTest]
-	public IEnumerator MoblinDiesOnTwoHits()
-	{
-		GameObject moblinObj = SpawnEnemy(_moblinPrefab, "Moblin");
-		yield return null;
+	//[UnityTest]
+	//public IEnumerator MoblinDiesOnTwoHits()
+	//{
+	//	GameObject moblinObj = SpawnEnemy(_moblinPrefab, "Moblin");
+	//	yield return null;
 
-		// Gets the Moblin's health component
-		var healthComponent = moblinObj.GetComponent<Health>();
-		Assert.NotNull(healthComponent);
+	//	// Gets the Moblin's health component
+	//	var healthComponent = moblinObj.GetComponent<Health>();
+	//	Assert.NotNull(healthComponent);
 
-		// Damages the Moblin, waits, checks the Moblin is dead.
-		healthComponent.TakeDamage(2.0f);
-		yield return null;
-		Assert.IsNull(GameObject.Find("Moblin"));
-	}
+	//	// Damages the Moblin, waits, checks the Moblin is dead.
+	//	healthComponent.TakeDamage(2.0f);
+	//	yield return null;
+	//	Assert.IsNull(GameObject.Find("Moblin"));
+	//}
 
 	[UnityTest]
 	public IEnumerator OctorokDealsThornsDamage()
 	{
 		Health playerHealth = GetPlayersHealthComponent();
-		float healthValue = playerHealth.GetHealth();
+		float healthValue = playerHealth.HP;
 
 		// Spawns an Octorok and moves it to the player.
 		GameObject octorok = SpawnEnemy(_octorokPrefab, "Octorok");
@@ -126,28 +130,28 @@ public class EnemyTests
 		playerHealth.StopAllCoroutines();
 
 		// Checks the health has decreased.
-		Assert.Less(playerHealth.GetHealth(), healthValue);
+		Assert.Less(playerHealth.HP, healthValue);
 	}
 
-	[UnityTest]
-	public IEnumerator MoblinDealsThornsDamage()
-	{
-		Health playerHealth = GetPlayersHealthComponent();
-		float healthValue = playerHealth.GetHealth();
+	//[UnityTest]
+	//public IEnumerator MoblinDealsThornsDamage()
+	//{
+	//	Health playerHealth = GetPlayersHealthComponent();
+	//	float healthValue = playerHealth.HP;
 
-		// Spawns a Moblin and moves it to the player.
-		GameObject moblin = SpawnEnemy(_octorokPrefab, "Moblin");
-		moblin.transform.position = playerHealth.transform.position;
+	//	// Spawns a Moblin and moves it to the player.
+	//	GameObject moblin = SpawnEnemy(_octorokPrefab, "Moblin");
+	//	moblin.transform.position = playerHealth.transform.position;
 
-		// Waits for the collision method to be called.
-		yield return new WaitForSeconds(0.1f);
+	//	// Waits for the collision method to be called.
+	//	yield return new WaitForSeconds(0.1f);
 
-		// Cancels the flash animation to speed up the test.
-		playerHealth.StopAllCoroutines();
+	//	// Cancels the flash animation to speed up the test.
+	//	playerHealth.StopAllCoroutines();
 
-		// Checks the health has decreased.
-		Assert.Less(playerHealth.GetHealth(), healthValue);
-	}
+	//	// Checks the health has decreased.
+	//	Assert.Less(playerHealth.HP, healthValue);
+	//}
 
 	private Health GetPlayersHealthComponent()
     {
@@ -190,34 +194,34 @@ public class EnemyTests
 		Assert.IsTrue(fired);
 	}
 
-	[UnityTest]
-	public IEnumerator MoblinFiresProjectile()
-	{
-		GameObject moblinObj = SpawnEnemy(_moblinPrefab, "Moblin");
-		EnemyBehaviour moblin = moblinObj.GetComponent<EnemyBehaviour>();
+	//[UnityTest]
+	//public IEnumerator MoblinFiresProjectile()
+	//{
+	//	GameObject moblinObj = SpawnEnemy(_moblinPrefab, "Moblin");
+	//	EnemyBehaviour moblin = moblinObj.GetComponent<EnemyBehaviour>();
 
-		// Waits for the octorok to be initialised.
-		yield return new WaitForSeconds(0.1f);
+	//	// Waits for the octorok to be initialised.
+	//	yield return new WaitForSeconds(0.1f);
 
-		float timeWaited = 0.0f;
-		float lastFireTime = moblin.GetLastShotFiredTime();
-		bool fired = false;
+	//	float timeWaited = 0.0f;
+	//	float lastFireTime = moblin.GetLastShotFiredTime();
+	//	bool fired = false;
 
-		while (timeWaited < moblin.maxFireInterval)
-		{
-			// If the last shot fired happened after the captured time.
-			if (moblin.GetLastShotFiredTime() > lastFireTime)
-			{
-				fired = true;
-				break;
-			}
+	//	while (timeWaited < moblin.maxFireInterval)
+	//	{
+	//		// If the last shot fired happened after the captured time.
+	//		if (moblin.GetLastShotFiredTime() > lastFireTime)
+	//		{
+	//			fired = true;
+	//			break;
+	//		}
 
-			timeWaited += 1.0f;
-			yield return new WaitForSeconds(1.0f);
-		}
+	//		timeWaited += 1.0f;
+	//		yield return new WaitForSeconds(1.0f);
+	//	}
 
-		Assert.IsTrue(fired);
-	}
+	//	Assert.IsTrue(fired);
+	//}
 
 	private GameObject SpawnEnemy(GameObject prefab, string name)
 	{

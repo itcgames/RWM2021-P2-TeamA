@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.michaelrryan.topdowncharactercontroller": {
-      "version": "https://github.com/itcgames/RWM-CharacterController.git?path=/Packages/com.michaelrryan.topdowncharactercontroller#v1.0.0",
+      "version": "https://github.com/itcgames/RWM-CharacterController.git?path=/Packages/com.michaelrryan.topdowncharactercontroller#v1.1.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "9bb58189dcc918c9efec1f6ec2a33254497ab02c"
+      "hash": "d360a3e03f311c7e065814571bccb1f0189da8f9"
     },
     "com.unity.2d.animation": {
       "version": "3.2.11",
@@ -102,7 +102,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.12",
+      "version": "2.0.14",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -166,11 +166,11 @@
       }
     },
     "rwm.inventory": {
-      "version": "https://github.com/itcgames/RWM-InventorySystem.git?path=/Packages/rwm.inventory#v0.2.0",
+      "version": "https://github.com/itcgames/RWM-InventorySystem.git?path=/Packages/rwm.inventory#v1.0.2",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "2eade18ff2b6b49aa4f6a76aec593df272bee787"
+      "hash": "c0baea3b2a4fb635278c076739e61d71cc7be6d2"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

@@ -3,10 +3,11 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using TopdownCharacterController;
 
 public class PlayerTests
 {
-    private TopdownCharacterController player;
+    private CharacterBehaviour player;
 
     [SetUp]
     public void Setup()
@@ -20,7 +21,7 @@ public class PlayerTests
         var playerObj = GameObject.Find("Player");
         Assert.IsNotNull(playerObj);
 
-        player = playerObj.GetComponent<TopdownCharacterController>();
+        player = playerObj.GetComponent<CharacterBehaviour>();
         Assert.IsNotNull(player);
 
         yield return null;
@@ -33,10 +34,10 @@ public class PlayerTests
         //      not null before running checks on it.
         PlayerIsNotNull();
 
-        Assert.IsFalse(player.TilebasedMovement);
-        Assert.IsFalse(player.DiagonalMovementAllowed);
-        Assert.AreEqual(player.TimeToMaxSpeed, 0.0f);
-        Assert.AreEqual(player.TimeToFullStop, 0.0f);
+        Assert.Null(player.TilebasedMovement);
+        Assert.IsFalse(player.TopdownMovement.DiagonalMovementAllowed);
+        Assert.AreEqual(player.TopdownMovement.TimeToMaxSpeed, 0.0f);
+        Assert.AreEqual(player.TopdownMovement.TimeToFullStop, 0.0f);
 
         yield return null;
     }
