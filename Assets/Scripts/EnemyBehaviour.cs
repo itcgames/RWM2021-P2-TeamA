@@ -92,7 +92,7 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
         {
             script.GenerateItemPossibility();
             script.PlaceItem();
-            if (damageInfo.ContainsKey("weapon_name"))
+            if (damageInfo != null && damageInfo.ContainsKey("weapon_name"))
                 script.OnKillOccurs(damageInfo["weapon_name"]);
             script.PlayParticleEffect();
         }
