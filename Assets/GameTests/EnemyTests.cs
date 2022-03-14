@@ -37,22 +37,19 @@ public class EnemyTests
 	public IEnumerator SpawnItemOnDeath()
 	{
 		GameObject octorokObj = SpawnEnemy(_octorokPrefab, "octo");
-
 		EnemyScript script = octorokObj.GetComponent<EnemyScript>();
 		GameObject playerObj = GameObject.Find("Player");
 		Assert.IsNotNull(playerObj);
 		Vector3 position = playerObj.transform.position;
-		playerObj.transform.position += new Vector3(5, 5, 0);
+		playerObj.transform.position = octorokObj.transform.position;
 		script.SetProbability(51);
 		script.PlaceItem();
 		script.SetProbability(29);
 		script.PlaceItem();
-		yield return new WaitForSeconds(0.1f);
-		GameObject[] bombItems = GameObject.FindGameObjectsWithTag("Bomb");
-		GameObject[] rupeeItems = GameObject.FindGameObjectsWithTag("Rupee");
-		GameObject[] potionItems = GameObject.FindGameObjectsWithTag("Potion");
-		GameObject[] items = bombItems.Concat(rupeeItems).Concat(potionItems).ToArray();
-		Assert.AreEqual(1, items.Length);
+		InventoryPlayer inventory = playerObj.GetComponent<InventoryPlayer>();
+		yield return new WaitForSeconds(0.3f);
+		int count = inventory.GetNumberOfItems() + inventory.GetNumberOfEquippables();
+		Assert.NotZero(count);
 		playerObj.transform.position = position;
 	}
 
