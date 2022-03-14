@@ -12,6 +12,10 @@ public class Boundaries : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // If no camera has been set, tries to find one in the scene.
+        if (mainCamera == null)
+            mainCamera = GameObject.Find("Main Camera")?.GetComponent<Camera>();
+
         float cameraHeight = mainCamera.orthographicSize * 2;
         float cameraWidth = cameraHeight * mainCamera.aspect;
         Vector2 cameraSize = new Vector2(cameraWidth, cameraHeight);

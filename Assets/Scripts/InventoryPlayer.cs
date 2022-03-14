@@ -45,7 +45,7 @@ public class InventoryPlayer : MonoBehaviour
     [HideInInspector]
     public uint currentItemId = 0;
     private Vector2 _direction = new Vector2(0, 0);
-    private Player _testPlayer;
+    private PlayerBehaviour _playerBehaviour;
     private Vector2 _lastDirectionToAttack = new Vector2(-1, -1);
     int scaleSize = 5;
     public Canvas canvas;
@@ -64,63 +64,13 @@ public class InventoryPlayer : MonoBehaviour
         _inventoryAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
         _inventoryAnimator.SetBool("isHidden", _showInventory);
         _inventory = GetComponentInChildren<Inventory>();
-        _testPlayer = GetComponentInChildren<Player>();
+        _playerBehaviour = GetComponentInChildren<PlayerBehaviour>();
         _direction = Vector2.down;
-        transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
     }
 
     public bool IsAttacking()
     {
         return _playerAnimator.GetBool("Attack");
-    }
-
-    private void Move()
-    {
-        if(!_inventory.IsOpen)
-        {
-            float xInput = Input.GetAxis("Horizontal");
-            float yInput = Input.GetAxis("Vertical");
-            if(useMovement)
-            {
-                Vector3 movement = new Vector3(speed.x * xInput, speed.y * yInput, 0);
-                movement *= Time.deltaTime;
-                transform.Translate(movement);
-            }
-            if (xInput > 0)
-            {
-                _direction = Vector2.right;
-                transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
-                _playerAnimator.SetBool("MoveRight", true);
-                _playerAnimator.SetBool("MoveLeft", false);
-                _playerAnimator.SetBool("MoveUp", false);
-                _playerAnimator.SetBool("MoveDown", false);
-            }
-            else if (xInput < 0)
-            {
-                _direction = Vector2.left;
-                transform.localScale = new Vector3(-scaleSize, scaleSize, scaleSize);
-                _playerAnimator.SetBool("MoveRight", false);
-                _playerAnimator.SetBool("MoveLeft", true);
-                _playerAnimator.SetBool("MoveUp", false);
-                _playerAnimator.SetBool("MoveDown", false);
-            }
-            if (yInput > 0)
-            {
-                _direction = Vector2.up;
-                _playerAnimator.SetBool("MoveRight", false);
-                _playerAnimator.SetBool("MoveLeft", false);
-                _playerAnimator.SetBool("MoveUp", true);
-                _playerAnimator.SetBool("MoveDown", false);
-            }
-            else if (yInput < 0)
-            {
-                _direction = Vector2.down;
-                _playerAnimator.SetBool("MoveRight", false);
-                _playerAnimator.SetBool("MoveLeft", false);
-                _playerAnimator.SetBool("MoveUp", false);
-                _playerAnimator.SetBool("MoveDown", true);
-            }
-        }
     }
 
     void OpenInventory()
@@ -210,7 +160,6 @@ public class InventoryPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
         if (Input.GetKeyDown(KeyCode.I))
         {
             OpenInventoryWithAnimation();
@@ -222,46 +171,6 @@ public class InventoryPlayer : MonoBehaviour
         else
         {
             PlaceBomb();
-
-            if(Input.GetKeyDown(KeyCode.Z))
-            {
-                Attack();
-            }
-        }
-
-        if (IsAttacking())
-        {
-            Collider2D[] collider2Ds;
-            collider2Ds = Physics2D.OverlapCircleAll(transform.position, 2.0f);
-            List<Collider2D> colliders = collider2Ds.ToList();
-            colliders = colliders.Where(x => x.gameObject.tag == "Enemy").ToList();
-
-            foreach (Collider2D collider in colliders)
-            {
-                collider.gameObject.GetComponent<Health>().TakeDamage(1.0f, "melee weapon");
-            }
-        }
-    }
-
-    private void Attack()
-    {
-        bool Attack = _playerAnimator.GetBool("Attack");
-
-        if (!Attack)
-        {
-            _playerAnimator.SetBool("Attack", true);
-            StartCoroutine(StopAtacking());
-            if(_testPlayer.IsAtFullHealth())
-            {
-                GameObject swordclone = CreateSword();
-
-                if(_lastDirectionToAttack != _direction)
-                {
-                    Destroy(swordclone);
-                    CreateSword();
-                    _lastDirectionToAttack = _direction;
-                }
-            }
         }
     }
 
@@ -276,34 +185,6 @@ public class InventoryPlayer : MonoBehaviour
         {
             _inventory.OpenInventory();
         }
-    }
-
-    GameObject CreateSword()
-    {
-        GameObject s = Instantiate(sword);
-        s.transform.position = transform.position;
-        s.transform.localScale = new Vector3(4.0f, 4.0f, 1.0f);
-        MoveInDirection dir = s.GetComponent<MoveInDirection>();
-        dir.direction = _direction;
-        dir.speed = 7.5f;
-
-        if (_direction != Vector2.up)
-        {
-            if (_direction == Vector2.right)
-            {
-                s.transform.Rotate(new Vector3(0, 0, -90));
-            }
-            else if (_direction == Vector2.down)
-            {
-                s.transform.Rotate(new Vector3(0, 0, -180));
-            }
-            else if (_direction == Vector2.left)
-            {
-                s.transform.Rotate(new Vector3(0, 0, -270));
-            }
-        }
-
-        return s;
     }
 
     public void AddObjectToInventory(GameObject itemObject, string itemName, uint amount)
