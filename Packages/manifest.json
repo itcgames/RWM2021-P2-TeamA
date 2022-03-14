@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.michaelrryan.topdowncharactercontroller": "https://github.com/itcgames/RWM-CharacterController.git?path=/Packages/com.michaelrryan.topdowncharactercontroller#v0.4.0",
+    "com.michaelrryan.topdowncharactercontroller": "https://github.com/itcgames/RWM-CharacterController.git?path=/Packages/com.michaelrryan.topdowncharactercontroller#v1.1.1",
     "com.unity.2d.animation": "3.2.11",
     "com.unity.2d.pixel-perfect": "2.1.0",
     "com.unity.2d.psdimporter": "2.1.8",
@@ -9,7 +9,7 @@
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.collab-proxy": "1.12.5",
     "com.unity.ide.rider": "1.2.1",
-    "com.unity.ide.visualstudio": "2.0.12",
+    "com.unity.ide.visualstudio": "2.0.14",
     "com.unity.ide.vscode": "1.2.4",
     "com.unity.test-framework": "1.1.29",
     "com.unity.textmeshpro": "2.1.6",

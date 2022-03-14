@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehaviour : CharacterBehaviour
+public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
 {
-    public CameraFollowSnap.Bounds AreaBounds { get; set; }
-
-    public GameObject projectilePrefab;
     public float maxFireInterval = 10.0f;
-    public float projectileSpeed = 5.0f;
 
     public const float TIME_BETWEEN_ACTIONS = 1.0f;
 
@@ -16,12 +12,6 @@ public class EnemyBehaviour : CharacterBehaviour
     private float _lastMovementChange;
     private float _lastShotFired;
 
-    [HideInInspector]
-    public Vector2 _direction = Vector2.right;
-    private Animator _animator;
-    private SpriteRenderer _sprite;
-
-    bool _canAnimate = false;
     public string enemyType;
 
     // For testing purposes.
@@ -33,12 +23,17 @@ public class EnemyBehaviour : CharacterBehaviour
     new void Start()
     {
         base.Start();
+
+        Health.DeathCallbacks.Add(OnDeath);
+
+        MeleeAttack.AttackInfo.Add("weapon_name", "melee");
+        MeleeAttack.AttackInfo.Add("enemy_type", enemyType);
+
+        RangedAttack.AttackInfo.Add("weapon_name", "rock");
+        RangedAttack.AttackInfo.Add("enemy_type", enemyType);
+
         _lastMovementChange = Time.time - TIME_BETWEEN_ACTIONS;
         _lastShotFired = Time.time;
-
-        _animator = GetComponentInChildren<Animator>();
-        _sprite = GetComponentInChildren<SpriteRenderer>();
-        if (_animator && _sprite) _canAnimate = true;
     }
 
     void Update()
@@ -47,21 +42,15 @@ public class EnemyBehaviour : CharacterBehaviour
         {
             // Reset and pick a new action.
             _lastMovementChange = Time.time;
-            Controller.ClearPersistentInput();
+            Movement.ClearPersistentInput();
 
             TakeRandomAction();
             ChanceToFireProjectile();
         }
-
-        // Keeps to the area bounds.
-        StayWithinBoundary();
     }
 
     private void ChanceToFireProjectile()
     {
-        // Breaks from the function immediately if no projectile is set.
-        if (!projectilePrefab) return;
-
         // Works out the chance to fire. Get's closer to 100% as time without
         //      firing increases.
         float timeSinceLastShot = Time.time - _lastShotFired;
@@ -70,12 +59,7 @@ public class EnemyBehaviour : CharacterBehaviour
         if (Random.Range(0, shotChance) == 0)
         {
             _lastShotFired = Time.time; // Resets the fired time.
-
-            // Instantiates the projectile and fires it in the last movement direction.
-            GameObject proj = Instantiate(projectilePrefab,
-                transform.position, Quaternion.identity);
-
-            proj.GetComponent<Projectile>()?.Fire(_direction * projectileSpeed, AreaBounds);
+            RangedAttack.Fire(Movement.Direction);
         }
     }
 
@@ -87,61 +71,30 @@ public class EnemyBehaviour : CharacterBehaviour
         switch (action)
         {
             case 1:
-                Controller.MoveLeft(true);
-                _direction = Vector2.left;
-
+                Movement.MoveLeft(true);
                 break;
             case 2:
-                Controller.MoveRight(true);
-                _direction = Vector2.right;
+                Movement.MoveRight(true);
                 break;
             case 3:
-                Controller.MoveDown(true);
-                _direction = Vector2.down;
+                Movement.MoveDown(true);
                 break;
             case 4:
-                Controller.MoveUp(true);
-                _direction = Vector2.up;
+                Movement.MoveUp(true);
                 break;
         }
-
-        if (_canAnimate)
-        {
-            _animator.SetBool("IsVertical", _direction.y != 0.0f);
-            _sprite.flipY = _direction.y > 0.0f;
-            _sprite.flipX = _direction.x > 0.0f;
-        }
     }
 
-    private void StayWithinBoundary()
+    private void OnDeath(Dictionary<string, string> damageInfo)
     {
-        Vector3 newPosition = transform.position;
-
-        // Keep to the horizontal bounds.
-        if (transform.position.x > AreaBounds.right)
-            newPosition.x = AreaBounds.right;
-        else if (transform.position.x < AreaBounds.left)
-            newPosition.x = AreaBounds.left;
-
-        // Keep to the vertical bounds.
-        if (transform.position.y > AreaBounds.top)
-            newPosition.y = AreaBounds.top;
-        else if (transform.position.y < AreaBounds.bottom)
-            newPosition.y = AreaBounds.bottom;
-
-        transform.position = new Vector3(newPosition.x, newPosition.y);
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
+        EnemyScript script = gameObject.GetComponent<EnemyScript>();
+        if (script != null)
         {
-            // Gets the player's health component and damages it if it exists.
-            Health health = collision.GetComponent<Health>();
-            if (health)
-            {
-                health.TakeDamage(0.5f, "melee", enemyType);
-            }
+            script.GenerateItemPossibility();
+            script.PlaceItem();
+            if (damageInfo != null && damageInfo.ContainsKey("weapon_name"))
+                script.OnKillOccurs(damageInfo["weapon_name"]);
+            script.PlayParticleEffect();
         }
     }
 }

@@ -4,19 +4,9 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public Sprite[] sprites;
-    public bool usingSprites;
-    public int leftSprite;
-    public int rightSprite;
-    public int upSprite;
-    public int downSprite;
-    private SpriteRenderer _sprite;
-    public GameObject player;
     public bool hasShield;
     public GameObject destroyParticleEffect;
     public bool hurtPlayerOnCollision;
-    public int health;
-    public int damageAmount;
     public GameObject[] items;
     public string enemyType;
     private int probability;
@@ -29,41 +19,6 @@ public class EnemyScript : MonoBehaviour
         public int eventId = 2;
         public string deviceUniqueIdentifier;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        if(player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-        }
-
-        if(usingSprites)
-        {
-            _sprite = GetComponent<SpriteRenderer>();
-            _sprite.sprite = sprites[leftSprite];
-            if (hasShield)
-            {
-                int pickedDirection = Random.Range(1, 4);
-                if (pickedDirection == leftSprite)
-                {
-                    _sprite.sprite = sprites[leftSprite];
-                }
-                else if (pickedDirection == rightSprite)
-                {
-                    _sprite.sprite = sprites[rightSprite];
-                }
-                else if (pickedDirection == upSprite)
-                {
-                    _sprite.sprite = sprites[upSprite];
-                }
-                else if (pickedDirection == downSprite)
-                {
-                    _sprite.sprite = sprites[downSprite];
-                }
-            }
-            transform.localScale = new Vector2(4.0f, 4.0f);
-        }       
-    }
 
     /// <summary>
     /// Used to send data to the server to say how the enemy was killed as well as what type of enemy was killed
@@ -74,20 +29,6 @@ public class EnemyScript : MonoBehaviour
         KillOccurs killOccurs = new KillOccurs { weaponUsed = weaponUsed, enemyType = enemyType, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 2 };
         string jsonData = JsonUtility.ToJson(killOccurs);
         StartCoroutine(AnalyticsManager.PostMethod(jsonData));
-    }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Sword")
-        {
-            Destroy(collision.gameObject);
-            health -= damageAmount;
-            Health h = GetComponent<Health>();
-            if (h)
-            {
-                h.TakeDamage(damageAmount, "Ranged Weapon");
-            }
-        }
     }
 
     public void PlayParticleEffect()

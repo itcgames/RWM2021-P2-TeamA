@@ -8,8 +8,13 @@ public class BombScript : MonoBehaviour
     public Vector2 direction;
     public float timeToDetonate;
     public int radius;
+    public float damage = 10.0f;
+    public string AttackerTag = "Player";
+    private Dictionary<string, string> AttackInfo = new Dictionary<string, string>();
+
     void Start()
     {
+        AttackInfo.Add("weapon_name", "bomb");
     }
 
     public void InitialiseBasics(Vector2 position)
@@ -40,32 +45,31 @@ public class BombScript : MonoBehaviour
                 EnemyBehaviour enemyBehaviour = collider.GetComponent<EnemyBehaviour>();
                 if(script.hasShield)
                 {
-                    Vector2 enemyDirection = enemyBehaviour._direction;
+                    Vector2 enemyDirection = enemyBehaviour.Movement.Direction;
                     if(direction == Vector2.up && enemyDirection != Vector2.down)
                     {
-                        Destroy(collider.gameObject);
+                        enemyBehaviour.Health.TakeDamage(damage, AttackerTag, AttackInfo);
                     }
                     else if (direction == Vector2.down && enemyDirection != Vector2.up)
                     {
-                        Destroy(collider.gameObject);
+                        enemyBehaviour.Health.TakeDamage(damage, AttackerTag, AttackInfo);
                     }
                     if (direction == Vector2.left && enemyDirection != Vector2.right)
                     {
-                        Destroy(collider.gameObject);
+                        enemyBehaviour.Health.TakeDamage(damage, AttackerTag, AttackInfo);
                     }
                     if (direction == Vector2.right && enemyDirection != Vector2.left)
                     {
-                        Destroy(collider.gameObject);
+                        enemyBehaviour.Health.TakeDamage(damage, AttackerTag, AttackInfo);
                     }
                 }
                 else
                 {
-                    Destroy(collider.gameObject);
+                    enemyBehaviour.Health.TakeDamage(damage, AttackerTag, AttackInfo);
                 }
             }
         }
-        
-        yield return new WaitForSeconds(particles.duration);
+        yield return new WaitForSeconds(particles.main.duration);
         Destroy(gameObject);
     }
 }

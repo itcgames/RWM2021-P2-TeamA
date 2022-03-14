@@ -13,7 +13,7 @@ public class DoorDetector : MonoBehaviour
 
     public CrossFade crossFade;
     public EntityManager entityManager;
-    public Player player;
+    public PlayerBehaviour player;
     public Vector3 movePlayerTo = Vector3.zero;
 
     public List<string> levelsFrom = new List<string>();
