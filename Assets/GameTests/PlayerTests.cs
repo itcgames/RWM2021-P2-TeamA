@@ -7,8 +7,6 @@ using TopdownCharacterController;
 
 public class PlayerTests
 {
-    private CharacterBehaviour player;
-
     [SetUp]
     public void Setup()
     {
@@ -21,7 +19,7 @@ public class PlayerTests
         var playerObj = GameObject.Find("Player");
         Assert.IsNotNull(playerObj);
 
-        player = playerObj.GetComponent<CharacterBehaviour>();
+        var player = playerObj.GetComponent<CharacterBehaviour>();
         Assert.IsNotNull(player);
 
         yield return null;
@@ -30,14 +28,16 @@ public class PlayerTests
     [UnityTest]
     public IEnumerator PlayerMovesCorrectly()
     {
-        // Calls the previous test to get the player script and ensure it's
-        //      not null before running checks on it.
-        PlayerIsNotNull();
+        var playerObj = GameObject.Find("Player");
+        Assert.IsNotNull(playerObj);
+
+        var player = playerObj.GetComponent<CharacterBehaviour>();
+        Assert.IsNotNull(player);
 
         Assert.Null(player.TilebasedMovement);
-        Assert.IsFalse(player.TopdownMovement.DiagonalMovementAllowed);
-        Assert.AreEqual(player.TopdownMovement.TimeToMaxSpeed, 0.0f);
-        Assert.AreEqual(player.TopdownMovement.TimeToFullStop, 0.0f);
+        Assert.IsTrue(player.TopdownMovement.DiagonalMovementAllowed);
+        Assert.AreEqual(player.TopdownMovement.TimeToMaxSpeed, 1.0f);
+        Assert.AreEqual(player.TopdownMovement.TimeToFullStop, 2.0f);
 
         yield return null;
     }
