@@ -54,7 +54,7 @@ public class PlayerBehaviour : CharacterBehaviour
 		base.Start();
 
 		// Disables the behaviour if the required components are null.
-		if (!Movement || !MeleeAttack || !RangedAttack || !Health)
+		if (!Movement || !RangedAttack || !Health)
 			enabled = false;
 
 		// Adds the callbacks.
@@ -65,7 +65,6 @@ public class PlayerBehaviour : CharacterBehaviour
 		Health.HP = maxHealth;
 
 		// Sets the attack properties.
-		MeleeAttack.AttackInfo.Add("weapon_name", "sword");
 		RangedAttack.AttackInfo.Add("weapon_name", "sword projectile");
 
 		// Posts the game start event.
@@ -95,9 +94,6 @@ public class PlayerBehaviour : CharacterBehaviour
 					|| Input.GetKeyDown(KeyCode.DownArrow))
 				Movement.PreferHorizontal = false;
 		}
-
-		if (Input.GetKey(KeyCode.C))
-			MeleeAttack.Attack(Movement.Direction);
 
 		if (Input.GetKeyDown(KeyCode.X))
 			RangedAttack.Fire(Movement.Direction);
