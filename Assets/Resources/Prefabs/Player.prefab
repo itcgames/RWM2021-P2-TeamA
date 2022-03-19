@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f557ed19680a9341b7de6d65a90e011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HandleAnimationEvents: 1
+  HandleAnimationEvents: 0
   Direction: {x: 0, y: -1}
   PreferHorizontal: 0
   _diagonalMovementAllowed: 1
@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978266e151c522640ba53d4e287c3550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HandleAnimationEvents: 1
-  projectilePrefab: {fileID: 4993804359816569444, guid: 864be05f3dfa0e34792654ea8e49db08,
+  HandleAnimationEvents: 0
+  projectilePrefab: {fileID: 3977255126641173149, guid: 2e53006bf7d71f54cb9b5884426da450,
     type: 3}
   _cooldown: 0.5
   LimitedAmmo: 0
@@ -105,7 +105,7 @@ Animator:
   m_GameObject: {fileID: 5711945325022199949}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2d1302f40677dd549809b49166108cf7, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -174,8 +174,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8020143640844766479, guid: 8ffcced57b1664d40ab73800bb96f74b,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: e4b54042e1687fd4297b314d0b923db1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -199,9 +198,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.2}
-  m_Size: {x: 0.8, y: 0.6}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 0.8}
+  m_Direction: 0
 --- !u!114 &6437729028663326160
 MonoBehaviour:
   m_ObjectHideFlags: 0

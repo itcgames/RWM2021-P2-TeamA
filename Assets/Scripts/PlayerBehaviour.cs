@@ -83,20 +83,11 @@ public class PlayerBehaviour : CharacterBehaviour
 		if (Input.GetKey(KeyCode.UpArrow)) Movement.MoveUp();
 		if (Input.GetKey(KeyCode.DownArrow)) Movement.MoveDown();
 
-		if (!Movement.DiagonalMovement)
-		{
-			// Checks for which direction was pressed last.
-			if (Input.GetKeyDown(KeyCode.LeftArrow)
-					|| Input.GetKeyDown(KeyCode.RightArrow))
-				Movement.PreferHorizontal = true;
-
-			else if (Input.GetKeyDown(KeyCode.UpArrow)
-					|| Input.GetKeyDown(KeyCode.DownArrow))
-				Movement.PreferHorizontal = false;
-		}
-
 		if (Input.GetKeyDown(KeyCode.X))
 			RangedAttack.Fire(Movement.Direction);
+
+		transform.rotation = Quaternion.Euler(0.0f, 0.0f,
+			Mathf.Atan2(Movement.Direction.y, Movement.Direction.x) * Mathf.Rad2Deg);
 	}
 
 	private void HealthChangedCallback(float newHealth, Dictionary<string, string> damageInfo)
