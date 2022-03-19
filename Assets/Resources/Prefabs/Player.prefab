@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HandleAnimationEvents: 0
-  projectilePrefab: {fileID: 4993804359816569444, guid: 864be05f3dfa0e34792654ea8e49db08,
+  projectilePrefab: {fileID: 3977255126641173149, guid: 2e53006bf7d71f54cb9b5884426da450,
     type: 3}
   _cooldown: 0.5
   LimitedAmmo: 0
