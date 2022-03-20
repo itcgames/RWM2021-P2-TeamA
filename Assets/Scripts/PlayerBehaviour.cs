@@ -71,7 +71,7 @@ public class PlayerBehaviour : CharacterBehaviour
 			Health.HP = maxHealth;
 
 			// Sets the attack properties.
-			RangedAttack.AttackInfo.Add("weapon_name", "sword projectile");
+			RangedAttack.AttackInfo.Add("weapon_name", "player laser");
 
 			// Posts the game start event.
 			GameStart gameStart = new GameStart { dateTime = DateTime.UtcNow, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 0 };

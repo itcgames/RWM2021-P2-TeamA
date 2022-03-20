@@ -76,6 +76,8 @@ public class PlayerTests
         //      after a delay.
         player.Movement.MoveUp(true);
         yield return new WaitForSeconds(0.5f);
+        player.Movement.ClearPersistentInput();
+        yield return new WaitForSeconds(0.1f);
 
         playerRot = player.transform.rotation.eulerAngles.z;
         velocityDir = Mathf.Atan2(rigidbody.velocity.y, rigidbody.velocity.x)
