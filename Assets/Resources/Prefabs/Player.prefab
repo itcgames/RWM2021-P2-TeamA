@@ -58,8 +58,8 @@ MonoBehaviour:
   PreferHorizontal: 0
   _diagonalMovementAllowed: 1
   MaxSpeed: 4
-  _timeToMaxSpeed: 1
-  _timeToFullStop: 2
+  _timeToMaxSpeed: 0.5
+  _timeToFullStop: 1
 --- !u!114 &1731963263707207951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
   HandleAnimationEvents: 0
   projectilePrefab: {fileID: 3977255126641173149, guid: 2e53006bf7d71f54cb9b5884426da450,
     type: 3}
-  _cooldown: 0.5
+  _cooldown: 0.15
   LimitedAmmo: 0
   Ammo: 0
 --- !u!95 &8140814748794259675
