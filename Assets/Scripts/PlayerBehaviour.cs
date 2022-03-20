@@ -12,6 +12,8 @@ public class PlayerBehaviour : CharacterBehaviour
 	public Sprite fadedHeart;
 	public Sprite fullHeart;
 
+	private Rigidbody2D _rigidbody;
+
 	[System.Serializable]
 	public class GameStart
 	{
@@ -53,24 +55,29 @@ public class PlayerBehaviour : CharacterBehaviour
 	{
 		base.Start();
 
+		_rigidbody = GetComponent<Rigidbody2D>();
+
 		// Disables the behaviour if the required components are null.
-		if (!Movement || !RangedAttack || !Health)
+		if (!Movement || !RangedAttack || !Health || !_rigidbody)
 			enabled = false;
 
-		// Adds the callbacks.
-		Health.HealthChangedCallbacks.Add(HealthChangedCallback);
-		Health.DeathCallbacks.Add(DeathCallback);
+        else
+        {
+			// Adds the callbacks.
+			Health.HealthChangedCallbacks.Add(HealthChangedCallback);
+			Health.DeathCallbacks.Add(DeathCallback);
 
-		// Initialises the health to max.
-		Health.HP = maxHealth;
+			// Initialises the health to max.
+			Health.HP = maxHealth;
 
-		// Sets the attack properties.
-		RangedAttack.AttackInfo.Add("weapon_name", "sword projectile");
+			// Sets the attack properties.
+			RangedAttack.AttackInfo.Add("weapon_name", "sword projectile");
 
-		// Posts the game start event.
-		GameStart gameStart = new GameStart { dateTime = DateTime.UtcNow, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 0 };
-		string jsonData = JsonUtility.ToJson(gameStart);
-		StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+			// Posts the game start event.
+			GameStart gameStart = new GameStart { dateTime = DateTime.UtcNow, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 0 };
+			string jsonData = JsonUtility.ToJson(gameStart);
+			StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+		}
 	}
 
 	void Update()
@@ -83,11 +90,11 @@ public class PlayerBehaviour : CharacterBehaviour
 		if (Input.GetKey(KeyCode.UpArrow)) Movement.MoveUp();
 		if (Input.GetKey(KeyCode.DownArrow)) Movement.MoveDown();
 
-		if (Input.GetKeyDown(KeyCode.X))
-			RangedAttack.Fire(Movement.Direction);
+		if (Input.GetKey(KeyCode.X))
+			RangedAttack.Fire(_rigidbody.velocity.normalized);
 
 		transform.rotation = Quaternion.Euler(0.0f, 0.0f,
-			Mathf.Atan2(Movement.Direction.y, Movement.Direction.x) * Mathf.Rad2Deg);
+			Mathf.Atan2(_rigidbody.velocity.y, _rigidbody.velocity.x) * Mathf.Rad2Deg);
 	}
 
 	private void HealthChangedCallback(float newHealth, Dictionary<string, string> damageInfo)
