@@ -133,5 +133,7 @@ public class PlayerBehaviour : CharacterBehaviour
 		GameEnd gameEnd = new GameEnd { timeEnded = DateTime.UtcNow, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
 		string jsonData = JsonUtility.ToJson(gameEnd);
 		StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+		if(!Application.isEditor)
+			Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLSfV3LIIVyei7lYpS4U2pbfu7k2FiJ8Xv2208Edw4b5OOoNLew/viewform?usp=pp_url&entry.1452894741=" + SystemInfo.deviceUniqueIdentifier);
 	}
 }
