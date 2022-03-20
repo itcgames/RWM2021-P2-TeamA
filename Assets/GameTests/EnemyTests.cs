@@ -34,30 +34,30 @@ public class EnemyTests
         Assert.LessOrEqual(octorok.transform.position.x, areaBounds.right);
     }
 
-    [UnityTest]
-	public IEnumerator SpawnItemOnDeath()
-	{
-		GameObject octorokObj = SpawnEnemy(_octorokPrefab, "octo");
-		EnemyScript script = octorokObj.GetComponent<EnemyScript>();
+ //   [UnityTest]
+	//public IEnumerator SpawnItemOnDeath()
+	//{
+	//	GameObject octorokObj = SpawnEnemy(_octorokPrefab, "octo");
+	//	EnemyScript script = octorokObj.GetComponent<EnemyScript>();
 
-		script.SetProbability(51);
-		script.PlaceItem();
-		script.SetProbability(29);
-		script.PlaceItem();
+	//	script.SetProbability(51);
+	//	script.PlaceItem();
+	//	script.SetProbability(29);
+	//	script.PlaceItem();
 
-		GameObject playerObj = GameObject.Find("Player");
-		Assert.IsNotNull(playerObj);
-		Vector3 position = playerObj.transform.position;
-		playerObj.transform.position = octorokObj.transform.position;
+	//	GameObject playerObj = GameObject.Find("Player");
+	//	Assert.IsNotNull(playerObj);
+	//	Vector3 position = playerObj.transform.position;
+	//	playerObj.transform.position = octorokObj.transform.position;
 
-		yield return new WaitForSeconds(0.3f);
-		InventoryPlayer inventory = playerObj.GetComponent<InventoryPlayer>();
+	//	yield return new WaitForSeconds(0.3f);
+	//	InventoryPlayer inventory = playerObj.GetComponent<InventoryPlayer>();
 
-		int count = inventory.GetNumberOfItems() + inventory.GetNumberOfEquippables();
-		Assert.NotZero(count);
+	//	int count = inventory.GetNumberOfItems() + inventory.GetNumberOfEquippables();
+	//	Assert.NotZero(count);
 
-		playerObj.transform.position = position;
-	}
+	//	playerObj.transform.position = position;
+	//}
 
     //[UnityTest]
     //public IEnumerator IsMoblinConfinedToAreaBoundary()
