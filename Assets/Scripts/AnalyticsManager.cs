@@ -6,12 +6,11 @@ using UnityEngine.Networking;
 
 public class AnalyticsManager : MonoBehaviour
 {
-    private const bool IS_A_BUILD = false;
     private const string SERVER_URL = "http://44.202.60.121/upload_data";
 
     public static IEnumerator PostMethod(string jsonData)
     {
-        if (IS_A_BUILD)
+        if (!Application.isEditor)
         {
             using (UnityWebRequest request = UnityWebRequest.Put(SERVER_URL, jsonData))
             {

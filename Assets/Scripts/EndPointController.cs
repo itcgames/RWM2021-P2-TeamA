@@ -20,10 +20,13 @@ public class EndPointController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Application.Quit();
-        if (UnityEditor.EditorApplication.isPlaying)
+        if (collision.CompareTag("Player"))
         {
-            UnityEditor.EditorApplication.isPlaying = false;
+            Application.Quit();
+            if (UnityEditor.EditorApplication.isPlaying)
+            {
+                UnityEditor.EditorApplication.isPlaying = false;
+            }
         }
     }
 }
