@@ -12,6 +12,7 @@ TagManager:
   - SpawnSmoke
   - Rupee
   - Projectile
+  - Background
   layers:
   - Default
   - TransparentFX
