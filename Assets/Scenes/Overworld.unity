@@ -369,6 +369,18 @@ MonoBehaviour:
   boundaryOffset: {x: 0.5, y: 0.5}
   secondsPerPan: 1
   movingSpeed: 0.5
+--- !u!1 &151234365 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5711945325022199949, guid: 4d905866ed932a144a34f4b35d1d665f,
+    type: 3}
+  m_PrefabInstance: {fileID: 260865019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &151234372 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 3277950688566637593, guid: 4d905866ed932a144a34f4b35d1d665f,
+    type: 3}
+  m_PrefabInstance: {fileID: 260865019}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &192014676
 GameObject:
   m_ObjectHideFlags: 0
@@ -1843,16 +1855,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c31e6d0e1ef255e47a82102695302fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnemiesPerRoom: 6
-  minEnemiesPerRoom: 4
-  enemySpawnSeconds: 1
+  minEnemiesPerSpawn: 1
+  maxEnemiesPerSpawn: 3
+  enemySpawnDelay: 5
+  enemySpawnIncrease: 0.01
+  spawnMargin: 0.5
+  spawnSpacing: 1
+  approxEnemyRadius: 1.5
   enemyPrefabs:
   - {fileID: 5916769944785432130, guid: cd6215b988f350e44b248e09583c62b0, type: 3}
+  _camera: {fileID: 146270866}
   spawnSmokePrefab: {fileID: 4884333843683855636, guid: a301724edd45d8a458c929fa7bb73940,
     type: 3}
-  cameraMover: {fileID: 146270868}
-  player: {fileID: 0}
-  playerRigidbody: {fileID: 0}
+  player: {fileID: 151234365}
+  playerRigidbody: {fileID: 151234372}
 --- !u!4 &836570715
 Transform:
   m_ObjectHideFlags: 0
