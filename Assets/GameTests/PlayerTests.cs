@@ -53,6 +53,8 @@ public class PlayerTests
     [UnityTest]
     public IEnumerator PlayerFacesMovementDirection()
     {
+        DisableEnemies();
+
         // Gets the necessary components.
         PlayerBehaviour player = GetPlayer();
         Assert.NotNull(player.Movement);
@@ -94,6 +96,13 @@ public class PlayerTests
         Assert.IsNotNull(player);
 
         return player;
+    }
+
+    private void DisableEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+            enemy.SetActive(false);
     }
 }
 
