@@ -6,92 +6,65 @@ using UnityEngine.TestTools;
 
 public class EntityManagerTests
 {
+    private const string ENTITY_MANAGER_NAME = "EntityManager";
+
     [SetUp]
     public void Setup()
     {
         SceneManager.LoadScene("Overworld", LoadSceneMode.Single);
     }
 
-    //[UnityTest]
-    //public IEnumerator EntitiesClearOnCameraMovement()
-    //{
-    //    // Ensures there are items and enemies in the scene.
-    //    Assert.NotZero(GameObject.FindGameObjectsWithTag("Item").Length);
-    //    Assert.NotZero(GameObject.FindGameObjectsWithTag("Enemy").Length);
+    [UnityTest]
+    public IEnumerator EnemiesSpawnOverTime()
+    {
+        EntityManager entityManager = GetEntityManager();
 
-    //    // Gets the camera component.
-    //    var cameraObj = GameObject.Find("Main Camera");
-    //    CameraFollowSnap camSnap = cameraObj.GetComponent<CameraFollowSnap>();
+        // Asserts there are no enemies yet.
+        EnemyBehaviour[] enemies = Object.FindObjectsOfType<EnemyBehaviour>();
+        Assert.IsEmpty(enemies);
 
-    //    // Gets the player and moves it outside the camera bounds.
-    //    var playerObj = GameObject.Find("Player");
-    //    playerObj.transform.position = cameraObj.transform.position +
-    //        Vector3.right * camSnap.HalfAreaSize.x;
+        // Waits the length of the spawn delay and ensures there are now some enemies.
+        yield return new WaitForSeconds(entityManager.enemySpawnDelay);
+        enemies = Object.FindObjectsOfType<EnemyBehaviour>();
+        Assert.IsNotEmpty(enemies);
+    }
 
-    //    yield return new WaitForSeconds(0.1f);
+    [UnityTest]
+    public IEnumerator EnemySpawnRateIncreasesOverTime()
+    {
+        EntityManager entityManager = GetEntityManager();
+        float spawnDelay = entityManager.enemySpawnDelay;
 
-    //    // Checks that there's no longer any items or enemies in the scene.
-    //    Assert.Zero(GameObject.FindGameObjectsWithTag("Item").Length);
-    //    Assert.Zero(GameObject.FindGameObjectsWithTag("Enemy").Length);
-    //}
+        // Waits a second and checks the spawn delay has decreased.
+        yield return new WaitForSeconds(1.0f);
+        Assert.Less(entityManager.enemySpawnDelay, spawnDelay);
+    }
 
-    //[UnityTest]
-    //public IEnumerator PlayerFreezesOnCameraMovement()
-    //{
-    //    // Gets the camera component and sets the initial values.
-    //    var cameraObj = GameObject.Find("Main Camera");
-    //    CameraFollowSnap camSnap = cameraObj.GetComponent<CameraFollowSnap>();
-    //    camSnap.secondsPerPan = 0.5f;
+    [UnityTest]
+    public IEnumerator CorrectNumberOfEnemiesSpawn()
+    {
+        EntityManager entityManager = GetEntityManager();
 
-    //    // Gets the player and moves it outside the camera bounds.
-    //    var playerObj = GameObject.Find("Player");
-    //    playerObj.transform.position = cameraObj.transform.position +
-    //        Vector3.right * camSnap.HalfAreaSize.x;
+        // Asserts there are no enemies yet.
+        EnemyBehaviour[] enemies = Object.FindObjectsOfType<EnemyBehaviour>();
+        Assert.IsEmpty(enemies);
 
-    //    // Pauses for a fraction of a second to allow the camera to start moving.
-    //    yield return new WaitForSeconds(0.1f);
+        // Waits the length of the spawn delay and ensures there are now some enemies.
+        yield return new WaitForSeconds(entityManager.enemySpawnDelay);
+        enemies = Object.FindObjectsOfType<EnemyBehaviour>();
+        Assert.IsNotEmpty(enemies);
 
-    //    // Gets the player position for later comparison.
-    //    Vector3 previousPlayerPosition = playerObj.transform.position;
+        // Checks the number of enemies is within the correct range.
+        Assert.LessOrEqual(enemies.Length, entityManager.maxEnemiesPerSpawn);
+        Assert.GreaterOrEqual(enemies.Length, entityManager.minEnemiesPerSpawn);
+    }
 
-    //    // Gets the player controller and tries to move right.
-    //    var playerController = playerObj.GetComponent<TopdownCharacterController>();
-    //    Assert.NotNull(playerController);
-    //    playerController.MoveRight(true);
-
-    //    // Pauses for a fraction of a second to allow the player to react.
-    //    yield return new WaitForSeconds(0.1f);
-
-    //    // Checks that the player has ignored the movement input.
-    //    Assert.AreEqual(previousPlayerPosition, playerObj.transform.position);
-    //}
-
-    //[UnityTest]
-    //public IEnumerator EnemiesSpawnOnCameraMovement()
-    //{
-    //    // Gets the camera component and sets the initial values.
-    //    var cameraObj = GameObject.Find("Main Camera");
-    //    CameraFollowSnap camSnap = cameraObj.GetComponent<CameraFollowSnap>();
-    //    camSnap.secondsPerPan = 0.5f;
-
-    //    // Gets the player and moves it outside the camera bounds.
-    //    var playerObj = GameObject.Find("Player");
-    //    playerObj.transform.position = cameraObj.transform.position +
-    //        Vector3.right * camSnap.HalfAreaSize.x;
-
-    //    // Pauses for a fraction of a second to allow the camera to start moving.
-    //    yield return new WaitForSeconds(0.55f);
-
-    //    // Checks that there's spawn smoke in the room.
-    //    Assert.NotZero(GameObject.FindGameObjectsWithTag("SpawnSmoke").Length);
-
-    //    // Gets the entity manager and waits for the enemy spawn time.
-    //    var entityManagerObj = GameObject.Find("EntityManager");
-    //    EntityManager entityManager = entityManagerObj.GetComponent<EntityManager>();
-    //    yield return new WaitForSeconds(entityManager.enemySpawnSeconds);
-
-    //    // Checks that there's no spawn smoke and there is enemies.
-    //    Assert.Zero(GameObject.FindGameObjectsWithTag("SpawnSmoke").Length);
-    //    Assert.NotZero(GameObject.FindGameObjectsWithTag("Enemy").Length);
-    //}
+    private EntityManager GetEntityManager()
+    {
+        GameObject entityManagerObj = GameObject.Find(ENTITY_MANAGER_NAME);
+        Assert.NotNull(entityManagerObj);
+        EntityManager entityManager = entityManagerObj.GetComponent<EntityManager>();
+        Assert.NotNull(entityManager);
+        return entityManager;
+    }
 }
