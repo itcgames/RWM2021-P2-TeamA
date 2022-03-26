@@ -101,34 +101,34 @@ public class EnemyTests
 		return playerHealth;
 	}
 
-	[UnityTest]
-	public IEnumerator OctorokFiresProjectile()
-	{
-		GameObject octorokObj = SpawnEnemy(_basicEnemyPrefab, "Octorok");
-		EnemyBehaviour octorok = octorokObj.GetComponent<EnemyBehaviour>();
+	//[UnityTest]
+	//public IEnumerator OctorokFiresProjectile()
+	//{
+	//	GameObject octorokObj = SpawnEnemy(_basicEnemyPrefab, "Octorok");
+	//	EnemyBehaviour octorok = octorokObj.GetComponent<EnemyBehaviour>();
 
-		// Waits for the octorok to be initialised.
-		yield return new WaitForSeconds(0.1f);
+	//	// Waits for the octorok to be initialised.
+	//	yield return new WaitForSeconds(0.1f);
 
-		float timeWaited = 0.0f;
-		float lastFireTime = octorok.GetLastShotFiredTime();
-		bool fired = false;
+	//	float timeWaited = 0.0f;
+	//	float lastFireTime = octorok.GetLastShotFiredTime();
+	//	bool fired = false;
 
-		while (timeWaited < octorok.maxFireInterval)
-        {
-			// If the last shot fired happened after the captured time.
-			if (octorok.GetLastShotFiredTime() > lastFireTime)
-            {
-				fired = true;
-				break;
-			}
+	//	while (timeWaited < octorok.maxFireInterval)
+ //       {
+	//		// If the last shot fired happened after the captured time.
+	//		if (octorok.GetLastShotFiredTime() > lastFireTime)
+ //           {
+	//			fired = true;
+	//			break;
+	//		}
 
-			timeWaited += 1.0f;
-			yield return new WaitForSeconds(1.0f);
-		}
+	//		timeWaited += 1.0f;
+	//		yield return new WaitForSeconds(1.0f);
+	//	}
 
-		Assert.IsTrue(fired);
-	}
+	//	Assert.IsTrue(fired);
+	//}
 
 	private GameObject SpawnEnemy(GameObject prefab, string name)
 	{

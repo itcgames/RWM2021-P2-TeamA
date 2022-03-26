@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HandleAnimationEvents: 1
-  projectilePrefab: {fileID: 5118876742396447839, guid: 06f14580b09a33b42980c3f5f0050b97,
+  projectilePrefab: {fileID: 4131089190592036268, guid: 14b8a4ba12d00314083c022e5ee47028,
     type: 3}
   _cooldown: 0.5
   LimitedAmmo: 0
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7b6792ea94f1b4d85fdcd3c848e901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxFireInterval: 10
+  fireInterval: 1
   waveAmount: 1.5
   enemyType: Octorok
 --- !u!114 &719509679313348840
