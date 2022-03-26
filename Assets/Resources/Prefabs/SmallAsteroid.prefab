@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextAsteroid: {fileID: 0}
+  Type: Small
 --- !u!50 &5774859834368417809
 Rigidbody2D:
   serializedVersion: 4

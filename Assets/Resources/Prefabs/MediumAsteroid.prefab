@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextAsteroid: {fileID: 7186072102224231594, guid: 735e32eb379ab2644819901dba0b3ef0,
     type: 3}
+  Type: Medium
 --- !u!50 &390066135270472353
 Rigidbody2D:
   serializedVersion: 4

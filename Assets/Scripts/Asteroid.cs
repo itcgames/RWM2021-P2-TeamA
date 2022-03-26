@@ -8,7 +8,7 @@ public class Asteroid : CharacterBehaviour
     public GameObject nextAsteroid;
     private Vector2 _velocity = new Vector2(-1, 0);
     private bool _persistentMovement = true;
-
+    public string Type;
     public Vector2 Velocity { get; private set; }
     // Start is called before the first frame update
     void Start()
