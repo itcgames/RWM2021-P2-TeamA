@@ -12,6 +12,7 @@ public class PlayerBehaviour : CharacterBehaviour
 	public Sprite fadedHeart;
 	public Sprite fullHeart;
 
+	private DateTime _timeStart;
 	private Rigidbody2D _rigidbody;
 
 	[System.Serializable]
@@ -28,6 +29,7 @@ public class PlayerBehaviour : CharacterBehaviour
 		public string deviceUniqueIdentifier;
 		public DateTime timeEnded;
 		public int eventId;
+		public double timePlayed;//time in seconds that they played the game for
 	}
 
 	[System.Serializable]
@@ -39,6 +41,16 @@ public class PlayerBehaviour : CharacterBehaviour
 		public DateTime timeOfDeath;
 		public int eventId;
 	}
+
+	public class AsteroidExternalData
+    {
+		public string deviceUniqueIdentifier;
+		public int eventId;
+		public int asteroidsDestroyed;
+		public int asteroidsSpawned;
+		public int asteroidsMissed;
+		public int asteroidsCollisions;
+    }
 
 	public void HealToFull()
 	{
@@ -54,7 +66,7 @@ public class PlayerBehaviour : CharacterBehaviour
 	new void Start()
 	{
 		base.Start();
-
+		_timeStart = DateTime.UtcNow;
 		_rigidbody = GetComponent<Rigidbody2D>();
 
 		// Disables the behaviour if the required components are null.
@@ -130,10 +142,31 @@ public class PlayerBehaviour : CharacterBehaviour
 
 	private void OnApplicationQuit()
 	{
-		GameEnd gameEnd = new GameEnd { timeEnded = DateTime.UtcNow, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier };
+		GameEnd gameEnd = new GameEnd { timeEnded = DateTime.UtcNow, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, timePlayed=(DateTime.UtcNow - _timeStart).TotalSeconds, eventId = 1 };
 		string jsonData = JsonUtility.ToJson(gameEnd);
 		StartCoroutine(AnalyticsManager.PostMethod(jsonData));
-		if(!Application.isEditor)
+
+		AsteroidExternalData asteroidData = new AsteroidExternalData
+		{
+			eventId = 6,
+			deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier,
+			asteroidsDestroyed = AsteroidData.asteroidsDestroyed,
+			asteroidsMissed = AsteroidData.numberAsteroidsMissed,
+			asteroidsSpawned = AsteroidData.asteroidsSpawned,
+			asteroidsCollisions = AsteroidData.asteroidCollisions
+		};
+		string asteroidJson = JsonUtility.ToJson(asteroidData);
+		StartCoroutine(AnalyticsManager.PostMethod(asteroidJson));
+
+		if (!Application.isEditor)
 			Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLSfV3LIIVyei7lYpS4U2pbfu7k2FiJ8Xv2208Edw4b5OOoNLew/viewform?usp=pp_url&entry.1452894741=" + SystemInfo.deviceUniqueIdentifier);
 	}
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Asteroid")
+        {
+			AsteroidData.asteroidCollisions += 1;
+		}
+    }
 }

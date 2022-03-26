@@ -48,6 +48,7 @@ public class Spawner : MonoBehaviour
 
     public void CreateObject()
     {
+        AsteroidData.asteroidsSpawned += 1;
         Instantiate(ObjectToSpawn(), transform.position, Quaternion.identity);
     }
 
