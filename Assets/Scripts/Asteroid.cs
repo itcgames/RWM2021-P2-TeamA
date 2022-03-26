@@ -57,6 +57,8 @@ public class Asteroid : CharacterBehaviour
     {
         if(nextAsteroid != null)
         {
+            AsteroidData.asteroidsDestroyed += 1;
+            AsteroidData.asteroidsSpawned += 1;
             Instantiate(nextAsteroid, transform.position, Quaternion.identity);
         }
     }
@@ -70,6 +72,7 @@ public class Asteroid : CharacterBehaviour
             //if it goes off of the right hand screen we just want to destroy it we dont want it to screen wrap as well
             if (viewportPosition.x < 0)
             {
+                AsteroidData.numberAsteroidsMissed += 1;
                 Destroy(gameObject);
                 return;
             }
