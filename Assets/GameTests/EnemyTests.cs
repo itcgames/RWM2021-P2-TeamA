@@ -10,17 +10,15 @@ using TopdownCharacterController;
 public class EnemyTests
 {
 	private GameObject _basicEnemyPrefab;
-	private GameObject _moblinPrefab;
 
 	[SetUp]
 	public void Setup()
 	{
 		_basicEnemyPrefab = Resources.Load<GameObject>("Prefabs/BasicEnemy");
-		_moblinPrefab = Resources.Load<GameObject>("Prefabs/MoblinEnemy");
 		SceneManager.LoadScene("Overworld", LoadSceneMode.Single);
 	}
 
- //   [UnityTest]
+	//   [UnityTest]
 	//public IEnumerator SpawnItemOnDeath()
 	//{
 	//	GameObject octorokObj = SpawnEnemy(_octorokPrefab, "octo");
@@ -45,39 +43,59 @@ public class EnemyTests
 	//	playerObj.transform.position = position;
 	//}
 
-    private CameraFollowSnap.Bounds GetAreaBounds()
-    {
-        GameObject cameraObj = GameObject.Find("Main Camera");
-        var camController = cameraObj.GetComponent<CameraFollowSnap>();
-        return camController.GetBounds(); ;
-    }
-
-    [UnityTest]
-	public IEnumerator OctorokDiesOnHit()
+	[UnityTest]
+	public IEnumerator BasicEnemyAlwaysMovesLeft()
 	{
-		GameObject octorokObj = SpawnEnemy(_basicEnemyPrefab, "TestOctorok");
-		string name = octorokObj.name;
+		GameObject enemyObj = SpawnEnemy(_basicEnemyPrefab, "Enemy");
 		yield return null;
 
-		// Gets the Octorok's health component
-		var healthComponent = octorokObj.GetComponent<Health>();
+		// Takes the enemy position, waits half a second and checks it's moved.
+		Vector3 position = enemyObj.transform.position;
+		yield return new WaitForSeconds(0.5f);
+		Assert.Less(enemyObj.transform.position.x, position.x);
+	}
+
+	[UnityTest]
+	public IEnumerator BasicEnemyMovesUpAndDown()
+	{
+		GameObject enemyObj = SpawnEnemy(_basicEnemyPrefab, "Enemy", new Vector3(0.0f, 500.0f));
+		yield return null;
+
+		Rigidbody2D rigidbody = enemyObj.GetComponent<Rigidbody2D>();
+		Assert.NotNull(rigidbody);
+
+		float yDir = Mathf.Sign(rigidbody.velocity.y);
+
+		yield return new WaitForSeconds(3.8f);
+		Assert.AreNotEqual(yDir, Mathf.Sign(rigidbody.velocity.y));
+	}
+
+	[UnityTest]
+	public IEnumerator BasicEnemyDiesOnHit()
+	{
+		GameObject enemyObj = SpawnEnemy(_basicEnemyPrefab, "TestEnemy");
+		string name = enemyObj.name;
+		yield return null;
+
+		// Gets the enemy's health component
+		var healthComponent = enemyObj.GetComponent<Health>();
 		Assert.NotNull(healthComponent);
 
-		// Damages the Octorok, waits, checks the Octorok is dead.
+		// Damages the enemy, waits, checks the enemy is dead.
 		healthComponent.TakeDamage(1.0f);
 		yield return null;
 		Assert.IsNull(GameObject.Find(name));
 	}
 
 	[UnityTest]
-	public IEnumerator OctorokDealsThornsDamage()
+	public IEnumerator BasicEnemyDealsThornsDamage()
 	{
 		Health playerHealth = GetPlayersHealthComponent();
 		float healthValue = playerHealth.HP;
 
-		// Spawns an Octorok and moves it to the player.
-		GameObject octorok = SpawnEnemy(_basicEnemyPrefab, "Octorok");
-		octorok.transform.position = playerHealth.transform.position;
+		// Spawns an enemy and moves it to the player.
+		GameObject enemy = SpawnEnemy(_basicEnemyPrefab, "Enemy");
+		enemy.transform.position = playerHealth.transform.position;
 
 		// Waits for the collision method to be called.
 		yield return new WaitForSeconds(0.1f);
@@ -90,7 +108,7 @@ public class EnemyTests
 	}
 
 	private Health GetPlayersHealthComponent()
-    {
+	{
 		// Gets the player and player's health.
 		GameObject playerObj = GameObject.Find("Player");
 		Assert.IsNotNull(playerObj);
@@ -130,7 +148,7 @@ public class EnemyTests
 	//	Assert.IsTrue(fired);
 	//}
 
-	private GameObject SpawnEnemy(GameObject prefab, string name)
+	private GameObject SpawnEnemy(GameObject prefab, string name, Vector3? position = null)
 	{
 		GameObject entityManagerObj = GameObject.Find("EntityManager");
 		Assert.NotNull(entityManagerObj);
@@ -139,13 +157,17 @@ public class EnemyTests
 			entityManagerObj.GetComponent<EntityManager>();
 		Assert.NotNull(entityManager);
 
-		EnemyBehaviour octorok =
-			entityManager.SpawnEnemy(prefab, Vector3.zero);
-		Assert.NotNull(octorok);
+		Vector3 pos = Vector3.zero;
 
-		octorok.name = name;
+		if (position != null) pos = (Vector3)position;
 
-		return octorok.gameObject;
+		EnemyBehaviour enemy =
+			entityManager.SpawnEnemy(prefab, pos);
+		Assert.NotNull(enemy);
+
+		enemy.name = name;
+
+		return enemy.gameObject;
 	}
 }
 
