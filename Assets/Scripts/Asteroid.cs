@@ -11,7 +11,7 @@ public class Asteroid : CharacterBehaviour
     public string Type;
     public Vector2 Velocity { get; private set; }
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
         base.Start();
         Health.DeathCallbacks.Add(OnDeath);
