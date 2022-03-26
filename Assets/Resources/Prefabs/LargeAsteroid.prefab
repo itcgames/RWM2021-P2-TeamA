@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2591494602667096845}
   - component: {fileID: 1481088492109346211}
   - component: {fileID: -8308696183213370864}
+  - component: {fileID: 3035083817714394632}
   m_Layer: 0
   m_Name: LargeAsteroid
   m_TagString: Asteroid
@@ -174,3 +175,21 @@ MonoBehaviour:
   MaxSpeed: 3.75
   _timeToMaxSpeed: 1
   _timeToFullStop: 10
+--- !u!114 &3035083817714394632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7773968747272177821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d880cadb52932f64db2e676ce3a91aa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandleAnimationEvents: 1
+  AttackDamage: 0
+  AttackRadius: 0.5
+  _attackCooldown: 0.5
+  ThornsDamage: 0.5
+  FreezeOnAttack: 0

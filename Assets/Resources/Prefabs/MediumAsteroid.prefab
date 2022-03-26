@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1631516614093934192}
   - component: {fileID: 6096814535222234555}
   - component: {fileID: -6681395178144845037}
+  - component: {fileID: -1330035222681032465}
   m_Layer: 0
   m_Name: MediumAsteroid
   m_TagString: Asteroid
@@ -174,3 +175,21 @@ MonoBehaviour:
   MaxSpeed: 4
   _timeToMaxSpeed: 1
   _timeToFullStop: 10
+--- !u!114 &-1330035222681032465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5381984337123413337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d880cadb52932f64db2e676ce3a91aa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandleAnimationEvents: 1
+  AttackDamage: 0
+  AttackRadius: 0.5
+  _attackCooldown: 0.5
+  ThornsDamage: 0.5
+  FreezeOnAttack: 0
