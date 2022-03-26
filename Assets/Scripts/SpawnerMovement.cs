@@ -15,5 +15,6 @@ public class SpawnerMovement : MonoBehaviour
     void Update()
     {
         transform.position = cam.ViewportToWorldPoint(new Vector3(1, 0.5f, 0));
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
 }

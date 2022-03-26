@@ -8,7 +8,6 @@ public class Spawner : MonoBehaviour
     public int numberToSpawn;
     public int limit = 20;
     public float rate;
-    float spawnTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +21,7 @@ public class Spawner : MonoBehaviour
         {
             for (int i = 0; i < numberToSpawn; i++)
             {
-                GameObject obj = Instantiate(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)], transform.position, Quaternion.identity);
+                Instantiate(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)], transform.position, Quaternion.identity);
             }
             yield return new WaitForSeconds(rate);
         }
