@@ -1637,7 +1637,7 @@ MonoBehaviour:
   maxEnemiesPerSpawn: 3
   enemySpawnDelay: 5
   enemySpawnIncrease: 0.01
-  spawnMargin: 0.5
+  spawnMargin: 2
   spawnSpacing: 1
   approxEnemyRadius: 1.5
   spawnDistance: 18

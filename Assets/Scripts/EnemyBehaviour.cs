@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
 {
-    public float maxFireInterval = 10.0f;
 
     public const float TIME_BETWEEN_ACTIONS = 1.0f;
 
+    public float maxFireInterval = 10.0f;
+    public float waveAmount = 5.0f;
+
     // The time at which the last action occurred.
-    private float _lastMovementChange;
     private float _lastShotFired;
+
+    // A random number to make each enemy move in waves differently.
+    private float _randWaveStart;
 
     public string enemyType;
 
@@ -24,29 +28,46 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
     {
         base.Start();
 
-        Health.DeathCallbacks.Add(OnDeath);
+        // Disables the behaviour if the required components are null.
+        if (!Movement || !MeleeAttack || !RangedAttack || !Health)
+            enabled = false;
 
-        MeleeAttack.AttackInfo.Add("weapon_name", "melee");
-        MeleeAttack.AttackInfo.Add("enemy_type", enemyType);
+        else
+        {
+            Health.DeathCallbacks.Add(OnDeath);
 
-        RangedAttack.AttackInfo.Add("weapon_name", "rock");
-        RangedAttack.AttackInfo.Add("enemy_type", enemyType);
+            MeleeAttack.AttackInfo.Add("weapon_name", "melee");
+            MeleeAttack.AttackInfo.Add("enemy_type", enemyType);
 
-        _lastMovementChange = Time.time - TIME_BETWEEN_ACTIONS;
-        _lastShotFired = Time.time;
+            RangedAttack.AttackInfo.Add("weapon_name", "rock");
+            RangedAttack.AttackInfo.Add("enemy_type", enemyType);
+
+            Movement.MoveLeft(true);
+
+            _lastShotFired = Time.time;
+
+            _randWaveStart = Random.Range(0.0f, 100.0f);
+        }
     }
 
     void Update()
     {
-        if (_lastMovementChange + TIME_BETWEEN_ACTIONS <= Time.time)
-        {
-            // Reset and pick a new action.
-            _lastMovementChange = Time.time;
-            Movement.ClearPersistentInput();
+        float waveValue = _randWaveStart + (transform.position.x / waveAmount);
 
-            TakeRandomAction();
-            ChanceToFireProjectile();
-        }
+        if (Mathf.Sin(waveValue) < 0)
+            Movement.MoveUp();
+        else
+            Movement.MoveDown();
+
+        //if (_lastMovementChange + TIME_BETWEEN_ACTIONS <= Time.time)
+        //{
+        //    // Reset and pick a new action.
+        //    _lastMovementChange = Time.time;
+        //    Movement.ClearPersistentInput();
+
+        //    TakeRandomAction();
+        //    ChanceToFireProjectile();
+        //}
     }
 
     private void ChanceToFireProjectile()

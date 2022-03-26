@@ -9,7 +9,7 @@ public class EntityManager : MonoBehaviour
 	public int maxEnemiesPerSpawn = 3;
 	public float enemySpawnDelay = 5.0f; // The number of seconds between spawn delay.
 	public float enemySpawnIncrease = 0.01f; // The decrease in seconds of the spawn delay every second.
-	public float spawnMargin = 0.5f;
+	public float spawnMargin = 1f;
 	public float spawnSpacing = 1.0f;
 	public float approxEnemyRadius = 1.5f;
 	public float spawnDistance = 5.0f; // The distance over which enemies spawn, none spawn after this distance.

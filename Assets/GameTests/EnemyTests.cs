@@ -9,13 +9,13 @@ using TopdownCharacterController;
 
 public class EnemyTests
 {
-	private GameObject _octorokPrefab;
+	private GameObject _basicEnemyPrefab;
 	private GameObject _moblinPrefab;
 
 	[SetUp]
 	public void Setup()
 	{
-		_octorokPrefab = Resources.Load<GameObject>("Prefabs/OctorokEnemy");
+		_basicEnemyPrefab = Resources.Load<GameObject>("Prefabs/BasicEnemy");
 		_moblinPrefab = Resources.Load<GameObject>("Prefabs/MoblinEnemy");
 		SceneManager.LoadScene("Overworld", LoadSceneMode.Single);
 	}
@@ -55,7 +55,7 @@ public class EnemyTests
     [UnityTest]
 	public IEnumerator OctorokDiesOnHit()
 	{
-		GameObject octorokObj = SpawnEnemy(_octorokPrefab, "TestOctorok");
+		GameObject octorokObj = SpawnEnemy(_basicEnemyPrefab, "TestOctorok");
 		string name = octorokObj.name;
 		yield return null;
 
@@ -76,7 +76,7 @@ public class EnemyTests
 		float healthValue = playerHealth.HP;
 
 		// Spawns an Octorok and moves it to the player.
-		GameObject octorok = SpawnEnemy(_octorokPrefab, "Octorok");
+		GameObject octorok = SpawnEnemy(_basicEnemyPrefab, "Octorok");
 		octorok.transform.position = playerHealth.transform.position;
 
 		// Waits for the collision method to be called.
@@ -104,7 +104,7 @@ public class EnemyTests
 	[UnityTest]
 	public IEnumerator OctorokFiresProjectile()
 	{
-		GameObject octorokObj = SpawnEnemy(_octorokPrefab, "Octorok");
+		GameObject octorokObj = SpawnEnemy(_basicEnemyPrefab, "Octorok");
 		EnemyBehaviour octorok = octorokObj.GetComponent<EnemyBehaviour>();
 
 		// Waits for the octorok to be initialised.
