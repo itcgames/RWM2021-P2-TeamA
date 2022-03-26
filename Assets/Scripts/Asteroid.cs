@@ -29,7 +29,7 @@ public class Asteroid : CharacterBehaviour
         _velocity.y = (Random.value < 0.5f) ? -1 : 1;
         Movement.PreferHorizontal = true;
         Movement.DiagonalMovement = true;
-        Movement.MoveLeft();
+        Movement.MoveLeft(_persistentMovement);
         if(_velocity.y == -1)
         {
             Movement.MoveUp(_persistentMovement);
