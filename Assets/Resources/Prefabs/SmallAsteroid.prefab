@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7284051811827315164}
   - component: {fileID: 2740843138701018821}
   - component: {fileID: -470057498698881171}
+  - component: {fileID: -6610117932987890412}
   m_Layer: 0
   m_Name: SmallAsteroid
   m_TagString: Asteroid
@@ -173,3 +174,21 @@ MonoBehaviour:
   MaxSpeed: 4.25
   _timeToMaxSpeed: 1
   _timeToFullStop: 10
+--- !u!114 &-6610117932987890412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7186072102224231594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d880cadb52932f64db2e676ce3a91aa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandleAnimationEvents: 1
+  AttackDamage: 0
+  AttackRadius: 0.5
+  _attackCooldown: 0.5
+  ThornsDamage: 0.5
+  FreezeOnAttack: 0
