@@ -138,6 +138,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Octorok (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5916769944785432130, guid: cd6215b988f350e44b248e09583c62b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5916769944785432142, guid: cd6215b988f350e44b248e09583c62b0,
         type: 3}
       propertyPath: m_RootOrder
@@ -856,6 +861,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Octorok (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916769944785432130, guid: cd6215b988f350e44b248e09583c62b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5916769944785432142, guid: cd6215b988f350e44b248e09583c62b0,
         type: 3}
@@ -1583,6 +1593,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Octorok (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916769944785432130, guid: cd6215b988f350e44b248e09583c62b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5916769944785432142, guid: cd6215b988f350e44b248e09583c62b0,
         type: 3}
@@ -2412,6 +2427,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Octorok (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5916769944785432130, guid: cd6215b988f350e44b248e09583c62b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5916769944785432142, guid: cd6215b988f350e44b248e09583c62b0,
         type: 3}
       propertyPath: m_RootOrder
@@ -3223,6 +3243,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Octorok (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 5916769944785432130, guid: cd6215b988f350e44b248e09583c62b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5916769944785432142, guid: cd6215b988f350e44b248e09583c62b0,
         type: 3}
       propertyPath: m_RootOrder
@@ -3519,6 +3544,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Octorok (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5916769944785432130, guid: cd6215b988f350e44b248e09583c62b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5916769944785432142, guid: cd6215b988f350e44b248e09583c62b0,
         type: 3}
       propertyPath: m_RootOrder
@@ -3752,6 +3782,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Octorok (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5916769944785432130, guid: cd6215b988f350e44b248e09583c62b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5916769944785432142, guid: cd6215b988f350e44b248e09583c62b0,
         type: 3}
       propertyPath: m_RootOrder
@@ -3949,6 +3984,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Octorok
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916769944785432130, guid: cd6215b988f350e44b248e09583c62b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5916769944785432142, guid: cd6215b988f350e44b248e09583c62b0,
         type: 3}
