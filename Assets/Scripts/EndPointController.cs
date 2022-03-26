@@ -23,10 +23,10 @@ public class EndPointController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Application.Quit();
-            //if (UnityEditor.EditorApplication.isPlaying)
-            //{
-            //    UnityEditor.EditorApplication.isPlaying = false;
-            //}
+            if (UnityEditor.EditorApplication.isPlaying)
+            {
+                UnityEditor.EditorApplication.isPlaying = false;
+            }
         }
     }
 }
