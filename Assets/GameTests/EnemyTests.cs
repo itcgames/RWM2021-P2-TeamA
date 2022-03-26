@@ -56,21 +56,6 @@ public class EnemyTests
 	}
 
 	[UnityTest]
-	public IEnumerator BasicEnemyMovesUpAndDown()
-	{
-		GameObject enemyObj = SpawnEnemy(_basicEnemyPrefab, "Enemy", new Vector3(0.0f, 500.0f));
-		yield return null;
-
-		Rigidbody2D rigidbody = enemyObj.GetComponent<Rigidbody2D>();
-		Assert.NotNull(rigidbody);
-
-		float yDir = Mathf.Sign(rigidbody.velocity.y);
-
-		yield return new WaitForSeconds(3.8f);
-		Assert.AreNotEqual(yDir, Mathf.Sign(rigidbody.velocity.y));
-	}
-
-	[UnityTest]
 	public IEnumerator BasicEnemyDiesOnHit()
 	{
 		GameObject enemyObj = SpawnEnemy(_basicEnemyPrefab, "TestEnemy");
@@ -119,36 +104,29 @@ public class EnemyTests
 		return playerHealth;
 	}
 
-	//[UnityTest]
-	//public IEnumerator OctorokFiresProjectile()
-	//{
-	//	GameObject octorokObj = SpawnEnemy(_basicEnemyPrefab, "Octorok");
-	//	EnemyBehaviour octorok = octorokObj.GetComponent<EnemyBehaviour>();
+    [UnityTest]
+    public IEnumerator BasicEnemyFiresProjectile()
+    {
+        GameObject enemyObj = SpawnEnemy(_basicEnemyPrefab, "Enemy");
+        EnemyBehaviour enemy = enemyObj.GetComponent<EnemyBehaviour>();
+        yield return null;
 
-	//	// Waits for the octorok to be initialised.
-	//	yield return new WaitForSeconds(0.1f);
+		// Checks there's no projectiles yet.
+		Projectile[] projectiles = Object.FindObjectsOfType<Projectile>();
+		Assert.IsEmpty(projectiles);
 
-	//	float timeWaited = 0.0f;
-	//	float lastFireTime = octorok.GetLastShotFiredTime();
-	//	bool fired = false;
+		// Gets the last fire time, waits the fire interval and makes sure the
+		//		new last fired time is greater than the previous.
+		float lastFireTime = enemy.GetLastShotFiredTime();
+		yield return new WaitForSeconds(enemy.fireInterval);
+		Assert.Greater(enemy.GetLastShotFiredTime(), lastFireTime);
 
-	//	while (timeWaited < octorok.maxFireInterval)
- //       {
-	//		// If the last shot fired happened after the captured time.
-	//		if (octorok.GetLastShotFiredTime() > lastFireTime)
- //           {
-	//			fired = true;
-	//			break;
-	//		}
+		// Checks there's exactly one projectile.
+		projectiles = Object.FindObjectsOfType<Projectile>();
+		Assert.AreEqual(1, projectiles.Length);
+    }
 
-	//		timeWaited += 1.0f;
-	//		yield return new WaitForSeconds(1.0f);
-	//	}
-
-	//	Assert.IsTrue(fired);
-	//}
-
-	private GameObject SpawnEnemy(GameObject prefab, string name, Vector3? position = null)
+    private GameObject SpawnEnemy(GameObject prefab, string name, Vector3? position = null)
 	{
 		GameObject entityManagerObj = GameObject.Find("EntityManager");
 		Assert.NotNull(entityManagerObj);
