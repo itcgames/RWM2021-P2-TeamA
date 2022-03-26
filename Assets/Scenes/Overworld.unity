@@ -1651,6 +1651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 722682327}
   - component: {fileID: 722682326}
+  - component: {fileID: 722682328}
   m_Layer: 0
   m_Name: AsteroidSpawner
   m_TagString: Untagged
@@ -1670,8 +1671,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24f7453a9f49184eb2a89a5ed47514c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 0}
-  parent: {fileID: 722682325}
+  objectsToSpawn:
+  - {fileID: 7773968747272177821, guid: f63e7743556729a4aa71ffce07ef27cb, type: 3}
+  - {fileID: 5381984337123413337, guid: 5b388feb9fb356b469610f869485612f, type: 3}
+  - {fileID: 7186072102224231594, guid: 735e32eb379ab2644819901dba0b3ef0, type: 3}
   numberToSpawn: 1
   limit: 20
   rate: 2
@@ -1689,6 +1692,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &722682328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722682325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ecfba8a1dfb9f44da76be18b0b39ffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &829817224
 GameObject:
   m_ObjectHideFlags: 0
