@@ -13,6 +13,9 @@ TagManager:
   - Rupee
   - Projectile
   - Background
+  - Asteroid
+  - AsteroidSpawner
+  - LevelManager
   layers:
   - Default
   - TransparentFX
