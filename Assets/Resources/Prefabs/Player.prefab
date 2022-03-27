@@ -57,7 +57,7 @@ MonoBehaviour:
   Direction: {x: 0, y: -1}
   PreferHorizontal: 0
   _diagonalMovementAllowed: 1
-  MaxSpeed: 4
+  MaxSpeed: 2.5
   _timeToMaxSpeed: 0.5
   _timeToFullStop: 1
 --- !u!114 &1731963263707207951
@@ -199,7 +199,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 0.8}
+  m_Size: {x: 0.3, y: 0.6}
   m_Direction: 0
 --- !u!114 &6437729028663326160
 MonoBehaviour:

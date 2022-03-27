@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96915f5f0f3ca2489e1dbaca1058fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 3
+  _HP: 2
   _damageGracePeriod: 0.1
   GracePeriodFlashes: 1
   DamageWhitelistTags:
@@ -196,8 +196,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.9, y: 0.9}
+  m_Offset: {x: 0.15, y: 0}
+  m_Size: {x: 0.9, y: 0.6}
   m_Direction: 1
 --- !u!114 &2837528132377712335
 MonoBehaviour:
