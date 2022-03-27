@@ -20,7 +20,6 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-
             CreateItem();
             yield return new WaitForSeconds(timeToWaitBetweenSpawns);
         }
