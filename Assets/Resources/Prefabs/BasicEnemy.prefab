@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 4904163365884900324}
   - component: {fileID: 2837528132377712335}
   - component: {fileID: 2837528132377712334}
-  - component: {fileID: 719509679313348840}
+  - component: {fileID: 3721522067802827228}
   m_Layer: 0
   m_Name: BasicEnemy
   m_TagString: Enemy
@@ -72,9 +72,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96915f5f0f3ca2489e1dbaca1058fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 1
-  _damageGracePeriod: 0.8
-  GracePeriodFlashes: 4
+  _HP: 3
+  _damageGracePeriod: 0.1
+  GracePeriodFlashes: 1
   DamageWhitelistTags:
   - Player
 --- !u!114 &7403931489709203135
@@ -93,7 +93,7 @@ MonoBehaviour:
   AttackDamage: 1
   AttackRadius: 0.6
   _attackCooldown: 0.5
-  ThornsDamage: 0.5
+  ThornsDamage: 1
   FreezeOnAttack: 0
 --- !u!114 &816391591701568144
 MonoBehaviour:
@@ -240,7 +240,7 @@ MonoBehaviour:
   - {fileID: 388625722569042784, guid: 5d69bdf32b10e7d429f20bff98b839a9, type: 3}
   - {fileID: 388625722569042784, guid: 8fba9cc4f553aa946aadb163258c27dc, type: 3}
   - {fileID: 2647169056960781635, guid: 940228a441512e842892508508e153ec, type: 3}
-  enemyType: Octorok
+  enemyType: Basic Enemy
 --- !u!114 &2837528132377712334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
   fireInterval: 1
   waveAmount: 1.5
   enemyType: Octorok
---- !u!114 &719509679313348840
+--- !u!114 &3721522067802827228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -265,6 +265,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5916769944785432130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11af38c058951d44db12165ecdd68910, type: 3}
+  m_Script: {fileID: 11500000, guid: c711256f7df337744b5fd1fd927aff82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  secondsDelay: 10

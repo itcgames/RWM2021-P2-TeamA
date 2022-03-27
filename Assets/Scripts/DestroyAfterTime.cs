@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class DestroyAfterTime : MonoBehaviour
 {
+    public float secondsDelay;
+
     void Start()
     {
         StartCoroutine(DestroyAfter());
     }
+
     private IEnumerator DestroyAfter()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(secondsDelay);
         Destroy(gameObject);
     }
 }
