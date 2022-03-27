@@ -105,8 +105,9 @@ public class PlayerBehaviour : CharacterBehaviour
 		if (Input.GetKey(KeyCode.X))
 			RangedAttack.Fire(_rigidbody.velocity.normalized);
 
-		transform.rotation = Quaternion.Euler(0.0f, 0.0f,
-			Mathf.Atan2(_rigidbody.velocity.y, _rigidbody.velocity.x) * Mathf.Rad2Deg);
+		if (_rigidbody.velocity.SqrMagnitude() > 0.0f)
+			transform.rotation = Quaternion.Euler(0.0f, 0.0f,
+				Mathf.Atan2(_rigidbody.velocity.y, _rigidbody.velocity.x) * Mathf.Rad2Deg);
 	}
 
 	private void HealthChangedCallback(float newHealth, Dictionary<string, string> damageInfo)
