@@ -56,7 +56,7 @@ public class EnemyTests
 	}
 
 	[UnityTest]
-	public IEnumerator BasicEnemyDiesOnHit()
+	public IEnumerator BasicEnemyDiesOnThreeHits()
 	{
 		GameObject enemyObj = SpawnEnemy(_basicEnemyPrefab, "TestEnemy");
 		string name = enemyObj.name;
@@ -66,9 +66,16 @@ public class EnemyTests
 		var healthComponent = enemyObj.GetComponent<Health>();
 		Assert.NotNull(healthComponent);
 
-		// Damages the enemy, waits, checks the enemy is dead.
+		// Damages the enemy and waits 3 times and checks the enemy is dead.
 		healthComponent.TakeDamage(1.0f);
-		yield return null;
+		yield return new WaitForSeconds(healthComponent.DamageGracePeriod);
+
+		healthComponent.TakeDamage(1.0f);
+		yield return new WaitForSeconds(healthComponent.DamageGracePeriod);
+
+		healthComponent.TakeDamage(1.0f);
+		yield return new WaitForSeconds(healthComponent.DamageGracePeriod);
+
 		Assert.IsNull(GameObject.Find(name));
 	}
 
