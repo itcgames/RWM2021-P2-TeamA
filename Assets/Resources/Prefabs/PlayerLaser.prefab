@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 7567286965037000829}
   - component: {fileID: 9084972817563365286}
   - component: {fileID: 5517724613643714517}
+  - component: {fileID: 51441879803492835}
   m_Layer: 10
-  m_Name: Laser
+  m_Name: PlayerLaser
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,14 +123,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.9375, y: 1.25}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.1}
+  m_Size: {x: 0.35, y: 0.05}
   m_EdgeRadius: 0
 --- !u!114 &5517724613643714517
 MonoBehaviour:
@@ -147,3 +148,15 @@ MonoBehaviour:
   Damage: 1
   ExpireTime: 5
   ShootersTag: 
+--- !u!114 &51441879803492835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977255126641173149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11af38c058951d44db12165ecdd68910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -65,6 +65,9 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
             _lastShotFired = Time.time;
             RangedAttack.Fire(_rigidbody.velocity.normalized);
         }
+
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f,
+            Mathf.Atan2(_rigidbody.velocity.y, _rigidbody.velocity.x) * Mathf.Rad2Deg);
     }
 
     private void OnDeath(Dictionary<string, string> damageInfo)
