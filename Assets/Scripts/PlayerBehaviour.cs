@@ -12,6 +12,8 @@ public class PlayerBehaviour : CharacterBehaviour
 	public Sprite fadedHeart;
 	public Sprite fullHeart;
 
+	public bool completed = false;
+
 	private DateTime _timeStart;
 	private Rigidbody2D _rigidbody;
 
@@ -30,6 +32,7 @@ public class PlayerBehaviour : CharacterBehaviour
 		public DateTime timeEnded;
 		public int eventId;
 		public double timePlayed;//time in seconds that they played the game for
+		public bool completed;
 	}
 
 	[System.Serializable]
@@ -143,7 +146,14 @@ public class PlayerBehaviour : CharacterBehaviour
 
 	private void OnApplicationQuit()
 	{
-		GameEnd gameEnd = new GameEnd { timeEnded = DateTime.UtcNow, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, timePlayed=(DateTime.UtcNow - _timeStart).TotalSeconds, eventId = 1 };
+		GameEnd gameEnd = new GameEnd 
+		{ 
+			timeEnded = DateTime.UtcNow, 
+			deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, 
+			timePlayed=(DateTime.UtcNow - _timeStart).TotalSeconds, 
+			eventId = 1,
+			completed = completed
+		};
 		string jsonData = JsonUtility.ToJson(gameEnd);
 		StartCoroutine(AnalyticsManager.PostMethod(jsonData));
 

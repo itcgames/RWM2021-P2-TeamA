@@ -22,11 +22,14 @@ public class EndPointController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            PlayerBehaviour player = collision.GetComponent<PlayerBehaviour>();
+            if (player) player.completed = true;
+
             Application.Quit();
-            if (UnityEditor.EditorApplication.isPlaying)
-            {
-                UnityEditor.EditorApplication.isPlaying = false;
-            }
+            //if (UnityEditor.EditorApplication.isPlaying)
+            //{
+            //    UnityEditor.EditorApplication.isPlaying = false;
+            //}
         }
     }
 }

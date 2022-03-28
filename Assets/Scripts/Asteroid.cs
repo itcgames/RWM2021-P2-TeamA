@@ -18,6 +18,9 @@ public class Asteroid : CharacterBehaviour
         Health.DeathCallbacks.Add(OnDeath);
         PickDirection();
         cam = Camera.main;
+
+        MeleeAttack.AttackInfo.Add("weapon_name", "collision");
+        MeleeAttack.AttackInfo.Add("enemy_type", "asteroid");
     }
 
     public void PickDirection()

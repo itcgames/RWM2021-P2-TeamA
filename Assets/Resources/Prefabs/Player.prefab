@@ -77,6 +77,7 @@ MonoBehaviour:
   GracePeriodFlashes: 4
   DamageWhitelistTags:
   - Enemy
+  - Asteroid
 --- !u!114 &1588672513343140959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,6 +297,7 @@ MonoBehaviour:
   - {fileID: 0}
   fadedHeart: {fileID: 21300000, guid: 5fd5b0cd2e8c56a478fc6dc8f3c5999f, type: 3}
   fullHeart: {fileID: 21300000, guid: d6b8676fdae598a46a90a7e935f9a15c, type: 3}
+  completed: 0
 --- !u!114 &6437729028663326167
 MonoBehaviour:
   m_ObjectHideFlags: 0

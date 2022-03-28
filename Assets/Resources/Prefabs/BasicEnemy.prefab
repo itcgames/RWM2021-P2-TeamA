@@ -234,7 +234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireInterval: 1
   waveAmount: 1.5
-  enemyType: Octorok
+  enemyType: Basic Enemy
 --- !u!114 &3721522067802827228
 MonoBehaviour:
   m_ObjectHideFlags: 0

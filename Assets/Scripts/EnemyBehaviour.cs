@@ -37,10 +37,10 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
         {
             Health.DeathCallbacks.Add(OnDeath);
 
-            MeleeAttack.AttackInfo.Add("weapon_name", "melee");
+            MeleeAttack.AttackInfo.Add("weapon_name", "enemy collision");
             MeleeAttack.AttackInfo.Add("enemy_type", enemyType);
 
-            RangedAttack.AttackInfo.Add("weapon_name", "rock");
+            RangedAttack.AttackInfo.Add("weapon_name", "enemy laser");
             RangedAttack.AttackInfo.Add("enemy_type", enemyType);
 
             Movement.MoveLeft(true);
