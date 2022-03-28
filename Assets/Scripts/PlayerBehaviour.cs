@@ -13,6 +13,7 @@ public class PlayerBehaviour : CharacterBehaviour
 	public Sprite fullHeart;
 
 	private DateTime _timeStart;
+	private Animator _animator;
 
 	[System.Serializable]
 	public class GameStart
@@ -66,11 +67,12 @@ public class PlayerBehaviour : CharacterBehaviour
 	{
 		base.Start();
 		_timeStart = DateTime.UtcNow;
+		_animator = GetComponent<Animator>();
 
 		// Disables the behaviour if the required components are null.
 		if (!Movement || !RangedAttack || !Health)
 			enabled = false;
-
+		
         else
         {
 			// Adds the callbacks.
@@ -94,7 +96,15 @@ public class PlayerBehaviour : CharacterBehaviour
 	{
 		// Horizontal Input.
 		if (Input.GetKey(KeyCode.LeftArrow)) Movement.MoveLeft();
-		if (Input.GetKey(KeyCode.RightArrow)) Movement.MoveRight();
+		if (Input.GetKey(KeyCode.RightArrow))
+        {
+			Movement.MoveRight();
+
+			if (_animator != null)
+				_animator.SetFloat("RightwardVelocity", 1.0f);
+		}
+		else if (_animator != null)
+			_animator.SetFloat("RightwardVelocity", 0.0f);
 
 		// Vertical Input.
 		if (Input.GetKey(KeyCode.UpArrow)) Movement.MoveUp();
@@ -102,6 +112,8 @@ public class PlayerBehaviour : CharacterBehaviour
 
 		if (Input.GetKey(KeyCode.X))
 			RangedAttack.Fire(Vector2.right);
+
+		
 	}
 
 	private void HealthChangedCallback(float newHealth, Dictionary<string, string> damageInfo)
