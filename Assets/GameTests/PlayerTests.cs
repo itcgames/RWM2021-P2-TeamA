@@ -28,7 +28,8 @@ public class PlayerTests
 
         Assert.Null(player.TilebasedMovement);
         Assert.IsTrue(player.TopdownMovement.DiagonalMovementAllowed);
-        Assert.AreEqual(player.TopdownMovement.TimeToMaxSpeed, 0.5f);
+        Assert.AreEqual(player.TopdownMovement.MaxSpeed, 3.5f);
+        Assert.AreEqual(player.TopdownMovement.TimeToMaxSpeed, 0.3f);
         Assert.AreEqual(player.TopdownMovement.TimeToFullStop, 1.0f);
 
         yield return null;
@@ -51,7 +52,7 @@ public class PlayerTests
     }
 
     [UnityTest]
-    public IEnumerator PlayerFacesMovementDirection()
+    public IEnumerator PlayerFacesTheRight()
     {
         DisableEnemies();
 
@@ -67,9 +68,7 @@ public class PlayerTests
         yield return new WaitForSeconds(0.5f);
 
         float playerRot = player.transform.rotation.eulerAngles.z;
-        float velocityDir = Mathf.Atan2(rigidbody.velocity.y, rigidbody.velocity.x)
-            * Mathf.Rad2Deg;
-        Assert.AreEqual(velocityDir, playerRot);
+        Assert.AreEqual(0.0f, playerRot);
 
         // Clears the previous movement input.
         player.Movement.ClearPersistentInput();
@@ -82,9 +81,7 @@ public class PlayerTests
         yield return new WaitForSeconds(0.1f);
 
         playerRot = player.transform.rotation.eulerAngles.z;
-        velocityDir = Mathf.Atan2(rigidbody.velocity.y, rigidbody.velocity.x)
-            * Mathf.Rad2Deg;
-        Assert.AreEqual(velocityDir, playerRot);
+        Assert.AreEqual(0.0f, playerRot);
     }
 
     private PlayerBehaviour GetPlayer()

@@ -13,7 +13,6 @@ public class PlayerBehaviour : CharacterBehaviour
 	public Sprite fullHeart;
 
 	private DateTime _timeStart;
-	private Rigidbody2D _rigidbody;
 
 	[System.Serializable]
 	public class GameStart
@@ -67,10 +66,9 @@ public class PlayerBehaviour : CharacterBehaviour
 	{
 		base.Start();
 		_timeStart = DateTime.UtcNow;
-		_rigidbody = GetComponent<Rigidbody2D>();
 
 		// Disables the behaviour if the required components are null.
-		if (!Movement || !RangedAttack || !Health || !_rigidbody)
+		if (!Movement || !RangedAttack || !Health)
 			enabled = false;
 
         else
@@ -103,11 +101,7 @@ public class PlayerBehaviour : CharacterBehaviour
 		if (Input.GetKey(KeyCode.DownArrow)) Movement.MoveDown();
 
 		if (Input.GetKey(KeyCode.X))
-			RangedAttack.Fire(_rigidbody.velocity.normalized);
-
-		if (_rigidbody.velocity.SqrMagnitude() > 0.0f)
-			transform.rotation = Quaternion.Euler(0.0f, 0.0f,
-				Mathf.Atan2(_rigidbody.velocity.y, _rigidbody.velocity.x) * Mathf.Rad2Deg);
+			RangedAttack.Fire(Vector2.right);
 	}
 
 	private void HealthChangedCallback(float newHealth, Dictionary<string, string> damageInfo)

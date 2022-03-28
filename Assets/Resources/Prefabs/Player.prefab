@@ -54,11 +54,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HandleAnimationEvents: 0
-  Direction: {x: 0, y: -1}
+  Direction: {x: 1, y: 0}
   PreferHorizontal: 0
   _diagonalMovementAllowed: 1
-  MaxSpeed: 2.5
-  _timeToMaxSpeed: 0.5
+  MaxSpeed: 3.5
+  _timeToMaxSpeed: 0.3
   _timeToFullStop: 1
 --- !u!114 &1731963263707207951
 MonoBehaviour:
@@ -198,8 +198,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.6, y: 0.3}
+  m_Offset: {x: 0, y: 0.008}
+  m_Size: {x: 0.85, y: 0.45}
   m_Direction: 1
 --- !u!114 &6437729028663326160
 MonoBehaviour:
