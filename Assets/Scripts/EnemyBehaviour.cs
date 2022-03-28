@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
 {
-    public float maxFireInterval = 10.0f;
 
     public const float TIME_BETWEEN_ACTIONS = 1.0f;
 
-    // The time at which the last action occurred.
-    private float _lastMovementChange;
-    private float _lastShotFired;
-
+    public float fireInterval = 2.0f;
+    public float waveAmount = 5.0f;
     public string enemyType;
+
+    // A random number to make each enemy move in waves differently.
+    private float _randWaveStart;
+    private float _lastShotFired;
+    private Rigidbody2D _rigidbody;
+
 
     // For testing purposes.
     public float GetLastShotFiredTime()
@@ -24,65 +27,47 @@ public class EnemyBehaviour : TopdownCharacterController.CharacterBehaviour
     {
         base.Start();
 
-        Health.DeathCallbacks.Add(OnDeath);
+        _rigidbody = GetComponent<Rigidbody2D>();
 
-        MeleeAttack.AttackInfo.Add("weapon_name", "melee");
-        MeleeAttack.AttackInfo.Add("enemy_type", enemyType);
+        // Disables the behaviour if the required components are null.
+        if (!Movement || !MeleeAttack || !RangedAttack || !Health || !_rigidbody)
+            enabled = false;
 
-        RangedAttack.AttackInfo.Add("weapon_name", "rock");
-        RangedAttack.AttackInfo.Add("enemy_type", enemyType);
+        else
+        {
+            Health.DeathCallbacks.Add(OnDeath);
 
-        _lastMovementChange = Time.time - TIME_BETWEEN_ACTIONS;
-        _lastShotFired = Time.time;
+            MeleeAttack.AttackInfo.Add("weapon_name", "melee");
+            MeleeAttack.AttackInfo.Add("enemy_type", enemyType);
+
+            RangedAttack.AttackInfo.Add("weapon_name", "rock");
+            RangedAttack.AttackInfo.Add("enemy_type", enemyType);
+
+            Movement.MoveLeft(true);
+
+            _lastShotFired = Time.time;
+
+            _randWaveStart = Random.Range(0.0f, 100.0f);
+        }
     }
 
     void Update()
     {
-        if (_lastMovementChange + TIME_BETWEEN_ACTIONS <= Time.time)
+        float waveValue = _randWaveStart + (transform.position.x / waveAmount);
+
+        if (Mathf.Sin(waveValue) < 0)
+            Movement.MoveUp();
+        else
+            Movement.MoveDown();
+
+        if (Time.time >= _lastShotFired + fireInterval)
         {
-            // Reset and pick a new action.
-            _lastMovementChange = Time.time;
-            Movement.ClearPersistentInput();
-
-            TakeRandomAction();
-            ChanceToFireProjectile();
+            _lastShotFired = Time.time;
+            RangedAttack.Fire(_rigidbody.velocity.normalized);
         }
-    }
 
-    private void ChanceToFireProjectile()
-    {
-        // Works out the chance to fire. Get's closer to 100% as time without
-        //      firing increases.
-        float timeSinceLastShot = Time.time - _lastShotFired;
-        int shotChance = (int)Mathf.Max(maxFireInterval - timeSinceLastShot, 0.0f);
-
-        if (Random.Range(0, shotChance) == 0)
-        {
-            _lastShotFired = Time.time; // Resets the fired time.
-            RangedAttack.Fire(Movement.Direction);
-        }
-    }
-
-    private void TakeRandomAction()
-    {
-        int action = Random.Range(0, 5);
-
-        // Moves in a direction depending on the action number. 0 == no movement.
-        switch (action)
-        {
-            case 1:
-                Movement.MoveLeft(true);
-                break;
-            case 2:
-                Movement.MoveRight(true);
-                break;
-            case 3:
-                Movement.MoveDown(true);
-                break;
-            case 4:
-                Movement.MoveUp(true);
-                break;
-        }
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f,
+            Mathf.Atan2(_rigidbody.velocity.y, _rigidbody.velocity.x) * Mathf.Rad2Deg);
     }
 
     private void OnDeath(Dictionary<string, string> damageInfo)

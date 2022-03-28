@@ -105,8 +105,9 @@ public class PlayerBehaviour : CharacterBehaviour
 		if (Input.GetKey(KeyCode.X))
 			RangedAttack.Fire(_rigidbody.velocity.normalized);
 
-		transform.rotation = Quaternion.Euler(0.0f, 0.0f,
-			Mathf.Atan2(_rigidbody.velocity.y, _rigidbody.velocity.x) * Mathf.Rad2Deg);
+		if (_rigidbody.velocity.SqrMagnitude() > 0.0f)
+			transform.rotation = Quaternion.Euler(0.0f, 0.0f,
+				Mathf.Atan2(_rigidbody.velocity.y, _rigidbody.velocity.x) * Mathf.Rad2Deg);
 	}
 
 	private void HealthChangedCallback(float newHealth, Dictionary<string, string> damageInfo)
@@ -159,7 +160,7 @@ public class PlayerBehaviour : CharacterBehaviour
 		StartCoroutine(AnalyticsManager.PostMethod(asteroidJson));
 
 		if (!Application.isEditor)
-			Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLSfV3LIIVyei7lYpS4U2pbfu7k2FiJ8Xv2208Edw4b5OOoNLew/viewform?usp=pp_url&entry.1452894741=" + SystemInfo.deviceUniqueIdentifier);
+			Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLScQSZOf3EBjnzuc8Aw1kmCWVHfrod-ccsLGcIxlj7hfG0kH-Q/viewform?usp=pp_url&entry.1452894741=" + SystemInfo.deviceUniqueIdentifier);
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)
