@@ -183,8 +183,14 @@ public class InventoryPlayer : MonoBehaviour
         }
         else
         {
-            _inventory.OpenInventory();
+            StartCoroutine(WaitToOpenInventory());
         }
+    }
+
+    private IEnumerator WaitToOpenInventory()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        _inventory.OpenInventory();
     }
 
     public void AddObjectToInventory(GameObject itemObject, string itemName, uint amount)
