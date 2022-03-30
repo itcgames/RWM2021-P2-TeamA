@@ -5,7 +5,7 @@ using UnityEngine;
 public class EndPointController : MonoBehaviour
 {
     public float rotateSpeed;
-
+    public GameObject EndScreen;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,11 +22,8 @@ public class EndPointController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Application.Quit();
-            if (UnityEditor.EditorApplication.isPlaying)
-            {
-                UnityEditor.EditorApplication.isPlaying = false;
-            }
+            Time.timeScale = 0;
+            EndScreen.SetActive(true);
         }
     }
 }

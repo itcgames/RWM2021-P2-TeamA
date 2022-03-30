@@ -19,11 +19,15 @@ public class EndGame : MonoBehaviour
 
     public void MenuReturn()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Debug.Log("w");
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     public void CloseGame()
     {
+        Time.timeScale = 1;
+        Debug.Log("ork");
         Application.Quit();
         if (UnityEditor.EditorApplication.isPlaying)
         {

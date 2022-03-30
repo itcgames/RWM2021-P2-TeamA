@@ -16,6 +16,9 @@ TagManager:
   - Asteroid
   - AsteroidSpawner
   - LevelManager
+  - EndGame
+  - Crossfade
+  - Canvas
   layers:
   - Default
   - TransparentFX
