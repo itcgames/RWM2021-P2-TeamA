@@ -8,7 +8,7 @@ public class EndGame : MonoBehaviour
     public void MenuReturn()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
     }
 
     public void CloseGame()
