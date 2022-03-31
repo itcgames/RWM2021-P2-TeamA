@@ -173,7 +173,7 @@ MonoBehaviour:
   PreferHorizontal: 0
   _diagonalMovementAllowed: 1
   MaxSpeed: 4
-  _timeToMaxSpeed: 1
+  _timeToMaxSpeed: 0
   _timeToFullStop: 10
 --- !u!114 &-1330035222681032465
 MonoBehaviour:
