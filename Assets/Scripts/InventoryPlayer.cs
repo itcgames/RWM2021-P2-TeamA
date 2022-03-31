@@ -127,7 +127,7 @@ public class InventoryPlayer : MonoBehaviour
 
     void PlaceBomb()
     {
-        if (Input.GetKeyDown(KeyCode.B) && _inventory.EquippedItems != null)
+        if (Input.GetKeyDown(KeyCode.Z) && _inventory.EquippedItems != null)
         {
             if(_inventory.GetCurrentlySelectedEquippable().gameObject.tag == "Bomb")
             {
