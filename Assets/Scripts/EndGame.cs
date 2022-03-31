@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Menu : MonoBehaviour
+public class EndGame : MonoBehaviour
 {
-    public void PlayGame()
+    public void MenuReturn()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
     }
 
-
-    public void EndGame()
+    public void CloseGame()
     {
+        Time.timeScale = 1;
         Application.Quit();
         if (UnityEditor.EditorApplication.isPlaying)
         {
