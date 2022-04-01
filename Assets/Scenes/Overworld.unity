@@ -1844,7 +1844,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: OpenInventory (i)
+  m_Text: Open Inventory (i)
 --- !u!222 &891395870
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2152,7 +2152,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press B to use first
+  m_Text: Press Z to use first
 --- !u!222 &1025837446
 CanvasRenderer:
   m_ObjectHideFlags: 0
