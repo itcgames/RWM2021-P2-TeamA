@@ -2,9 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TopdownCharacterController;
 
 public class EndGame : MonoBehaviour
 {
+
+    public GameObject player;
+    public Text
+
+    public void Start()
+    {
+        Health health = player.GetComponent<Health>();
+        health.DeathCallbacks.Add(DeathCallback);
+    }
+
+    private void DeathCallback()
+    {
+        txt.text = 
+        gameObject.SetActive(true);
+    }
+
     public void MenuReturn()
     {
         Time.timeScale = 1;
@@ -19,5 +36,10 @@ public class EndGame : MonoBehaviour
         {
             UnityEditor.EditorApplication.isPlaying = false;
         }
+    }
+
+    private void Death()
+    {
+        if (player)
     }
 }
