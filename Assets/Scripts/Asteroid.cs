@@ -68,12 +68,14 @@ public class Asteroid : CharacterBehaviour
             Vector2 viewportPosition = cam.WorldToViewportPoint(transform.position);
             if (viewportPosition.y > 1 || viewportPosition.y < 0)
             {
-                transform.position = new Vector3(transform.position.x, -transform.position.y, 0);
+                AsteroidData.numberAsteroidsMissed += 1;
+                Destroy(gameObject);
             }
 
             if (viewportPosition.x > 1 || viewportPosition.x < 0)
             {
-                transform.position = new Vector3(-transform.position.x, transform.position.y, 0);
+                AsteroidData.numberAsteroidsMissed += 1;
+                Destroy(gameObject);
             }
 
         }

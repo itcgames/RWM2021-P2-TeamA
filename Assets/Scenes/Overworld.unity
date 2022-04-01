@@ -1526,7 +1526,7 @@ MonoBehaviour:
   - {fileID: 7186072102224231594, guid: 735e32eb379ab2644819901dba0b3ef0, type: 3}
   numberToSpawn: 1
   limit: 20
-  rate: 2
+  rate: 1
   useCoRoutine: 1
 --- !u!4 &722682327
 Transform:
