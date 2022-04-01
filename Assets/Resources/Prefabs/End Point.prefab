@@ -113,6 +113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 40
+  EndScreen: {fileID: 0}
+  mainCamera: {fileID: 0}
+  MaxDist: 3
+  speed: 0.5
 --- !u!50 &6188393812885837539
 Rigidbody2D:
   serializedVersion: 4

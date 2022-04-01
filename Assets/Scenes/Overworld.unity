@@ -3398,6 +3398,11 @@ PrefabInstance:
       propertyPath: EndScreen
       value: 
       objectReference: {fileID: 1882102159}
+    - target: {fileID: 6188393812885837543, guid: b6da2f1731e28494084a8c0191a679f8,
+        type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 146270866}
     - target: {fileID: 6188393812885837544, guid: b6da2f1731e28494084a8c0191a679f8,
         type: 3}
       propertyPath: m_Name
