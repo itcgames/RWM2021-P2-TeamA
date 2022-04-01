@@ -128,31 +128,6 @@ namespace Tests
             yield return null;
         }
 
-        [UnityTest]
-        public IEnumerator AsteroidDoesntScreenWrapOnHorizontal()
-        {
-            Camera camera = Camera.main;
-            Vector3 top = camera.ViewportToWorldPoint(new Vector3(0, 1, camera.nearClipPlane));
-
-
-            Spawner spawner = GetSpawner();
-            spawner.useCoRoutine = false;
-            spawner.Probability = 20;
-            spawner.CreateObject();
-
-            yield return new WaitForSeconds(0.1f);//need to wait after creating the object to give unity a chance to go and set up the death callbacks or it wont generate the new asteroids correctly
-
-            List<GameObject> asteroids = GameObject.FindGameObjectsWithTag("Asteroid").ToList();
-
-            asteroids[0].transform.position = camera.ViewportToWorldPoint(top);//setting this to the top of the screen should make it wrap to the bottom as velocity given should make it move up
-            asteroids[0].transform.position = new Vector3(asteroids[0].transform.position.x, asteroids[0].transform.position.y, 0);
-            asteroids[0].GetComponent<Asteroid>().SetDirection(new Vector2(-1, -1));
-            yield return new WaitForSeconds(0.2f);
-            asteroids = GameObject.FindGameObjectsWithTag("Asteroid").ToList();
-            Assert.AreEqual(0, asteroids.Count);
-            yield return null;
-        }
-
         private Spawner GetSpawner()
         {
             GameObject spawnerObj = GameObject.Find("AsteroidSpawner");
