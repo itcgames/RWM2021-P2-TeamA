@@ -10,10 +10,13 @@ public class Spawner : MonoBehaviour
     public float rate;
     public bool useCoRoutine = true;
     public uint Probability { get; set; }
-
+    private Camera cam;
+    public float spawnMargin = 1f;
+    public float spawnSpacing = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
+        cam = Camera.main;
         StartCoroutine(SpawnObject());
     }
 
@@ -49,7 +52,26 @@ public class Spawner : MonoBehaviour
     public void CreateObject()
     {
         AsteroidData.asteroidsSpawned += 1;
-        Instantiate(ObjectToSpawn(), transform.position, Quaternion.identity);
+        
+        Bounds spawnBounds = new Bounds
+        {
+            min = cam.ViewportToWorldPoint(new Vector3(1.0f, 0.0f))
+                + new Vector3(spawnMargin, spawnMargin),
+
+            max = cam.ViewportToWorldPoint(new Vector3(1.0f, 1.0f))
+                + new Vector3(spawnMargin + spawnSpacing, -spawnMargin)
+        };
+       
+        float top = cam.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
+        float bottom = cam.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
+        Vector2 dir = new Vector2(0, (Random.value < 0.5f) ? -1 : 1);
+
+        Vector3 position = new Vector3(
+            Random.Range(spawnBounds.min.x, spawnBounds.max.x),
+            (dir.y == 1) ? top : bottom
+        );
+        GameObject obj = Instantiate(ObjectToSpawn(), position, Quaternion.identity);
+        obj.GetComponent<Asteroid>().SetDirection(dir);
     }
 
     public void GenerateObjectPossibility()

@@ -16,16 +16,15 @@ public class Asteroid : CharacterBehaviour
     {
         base.Start();
         Health.DeathCallbacks.Add(OnDeath);
-        PickDirection();
         cam = Camera.main;
+        PickDirection();
     }
 
     public void PickDirection()
     {
-        _velocity.y = (Random.value < 0.5f) ? -1 : 1;
-        Movement.PreferHorizontal = true;
+        _velocity.x = (Random.value < 0.5f) ? -1 : 1;
+        Movement.PreferHorizontal = false;
         Movement.DiagonalMovement = true;
-        Movement.MoveLeft(_persistentMovement);
         if(_velocity.y == -1)
         {
             Movement.MoveUp(_persistentMovement);
@@ -34,23 +33,19 @@ public class Asteroid : CharacterBehaviour
         {
             Movement.MoveDown(_persistentMovement);
         }
+        if (_velocity.x == -1)
+        {
+            Movement.MoveRight(_persistentMovement);
+        }
+        else
+        {
+            Movement.MoveLeft(_persistentMovement);
+        }
     }
 
     public void SetDirection(Vector2 dir)
     {
         _velocity = dir;
-        _velocity.y = (Random.value < 0.5f) ? -1 : 1;
-        Movement.PreferHorizontal = true;
-        Movement.DiagonalMovement = true;
-        Movement.MoveLeft(_persistentMovement);
-        if (_velocity.y == -1)
-        {
-            Movement.MoveUp(_persistentMovement);
-        }
-        else
-        {
-            Movement.MoveDown(_persistentMovement);
-        }
     }
 
     private void OnDeath(Dictionary<string, string> damageInfo)
@@ -81,6 +76,11 @@ public class Asteroid : CharacterBehaviour
             if (viewportPosition.y > 1 || viewportPosition.y < 0)
             {
                 transform.position = new Vector3(transform.position.x, -transform.position.y, 0);
+            }
+
+            if(viewportPosition.x > 1)
+            {
+                transform.position = new Vector3(-transform.position.x, transform.position.y, 0);
             }
         }
     }
