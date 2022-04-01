@@ -528,6 +528,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1731963263707207951, guid: 4d905866ed932a144a34f4b35d1d665f,
+        type: 3}
+      propertyPath: DamageWhitelistTags.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731963263707207951, guid: 4d905866ed932a144a34f4b35d1d665f,
+        type: 3}
+      propertyPath: DamageWhitelistTags.Array.data[1]
+      value: Asteroid
+      objectReference: {fileID: 0}
     - target: {fileID: 5711945325022199937, guid: 4d905866ed932a144a34f4b35d1d665f,
         type: 3}
       propertyPath: m_RootOrder
@@ -1516,7 +1526,7 @@ MonoBehaviour:
   - {fileID: 7186072102224231594, guid: 735e32eb379ab2644819901dba0b3ef0, type: 3}
   numberToSpawn: 1
   limit: 20
-  rate: 2
+  rate: 1
   useCoRoutine: 1
 --- !u!4 &722682327
 Transform:
