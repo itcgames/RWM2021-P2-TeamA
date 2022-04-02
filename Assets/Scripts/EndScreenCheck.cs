@@ -20,6 +20,6 @@ public class EndScreenCheck : MonoBehaviour
     {
         Time.timeScale = 0;
         endScreen.SetActive(true);
-        txt.text = "Died!!";
+        txt.text = "You Died!!";
     }
 }
