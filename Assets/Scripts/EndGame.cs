@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TopdownCharacterController;
+using UnityEngine.UI;
 
 public class EndGame : MonoBehaviour
 {
 
     public GameObject player;
-    public Text
+    public GameObject txt;
 
     public void Start()
     {
@@ -16,9 +17,10 @@ public class EndGame : MonoBehaviour
         health.DeathCallbacks.Add(DeathCallback);
     }
 
-    private void DeathCallback()
+    private void DeathCallback(Dictionary<string, string> damageInfo)
     {
-        txt.text = 
+        Time.timeScale = 0;
+        txt.GetComponent<Text>().text = "You Died!";
         gameObject.SetActive(true);
     }
 
@@ -36,10 +38,5 @@ public class EndGame : MonoBehaviour
         {
             UnityEditor.EditorApplication.isPlaying = false;
         }
-    }
-
-    private void Death()
-    {
-        if (player)
     }
 }

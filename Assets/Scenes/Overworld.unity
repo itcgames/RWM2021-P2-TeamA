@@ -2725,6 +2725,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: End Game
       objectReference: {fileID: 0}
+    - target: {fileID: 1844933590172177425, guid: 63806c320f1b20447ba63ab9c15754f9,
+        type: 3}
+      propertyPath: txt
+      value: 
+      objectReference: {fileID: 1707619172}
+    - target: {fileID: 1844933590172177425, guid: 63806c320f1b20447ba63ab9c15754f9,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 260865020}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63806c320f1b20447ba63ab9c15754f9, type: 3}
 --- !u!1 &1449655384
@@ -3007,6 +3017,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1611705563}
   m_CullTransparentMesh: 0
+--- !u!1 &1707619172 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1844933590565223438, guid: 63806c320f1b20447ba63ab9c15754f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1379985834}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1772265402
 GameObject:
   m_ObjectHideFlags: 0
