@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TopdownCharacterController;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class EndGame : MonoBehaviour
 {
