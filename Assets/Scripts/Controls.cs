@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Menu : MonoBehaviour
+public class Controls : MonoBehaviour
 {
-    public void PlayGame()
+    public int mainMenuBuildIndex = 0;
+    public int gameBuildIndex = 1;
+    public void MainMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(mainMenuBuildIndex);
     }
 
+    public void PlayGame()
+    {
+        SceneManager.LoadScene(gameBuildIndex);
+    }
 
     public void EndGame()
     {
@@ -18,10 +24,5 @@ public class Menu : MonoBehaviour
         {
             UnityEditor.EditorApplication.isPlaying = false;
         }
-    }
-
-    public void ViewControls()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 4);
     }
 }
