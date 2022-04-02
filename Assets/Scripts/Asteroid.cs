@@ -21,6 +21,8 @@ public class Asteroid : CharacterBehaviour
         PickDirection();
         cam = Camera.main;
         StartCoroutine(DestroyAsteroid());
+        MeleeAttack.AttackInfo.Add("weapon_name", "collision");
+        MeleeAttack.AttackInfo.Add("enemy_type", "asteroid");
     }
 
     public void PickDirection()
