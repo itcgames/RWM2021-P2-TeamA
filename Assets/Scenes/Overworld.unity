@@ -2690,6 +2690,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CloseGame
       objectReference: {fileID: 0}
+    - target: {fileID: 1844933590032594497, guid: 63806c320f1b20447ba63ab9c15754f9,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 1844933590032594497, guid: 63806c320f1b20447ba63ab9c15754f9,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 140
+      objectReference: {fileID: 0}
     - target: {fileID: 1844933590172177422, guid: 63806c320f1b20447ba63ab9c15754f9,
         type: 3}
       propertyPath: m_Pivot.x

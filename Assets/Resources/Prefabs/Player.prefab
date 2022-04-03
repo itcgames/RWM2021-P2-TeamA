@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96915f5f0f3ca2489e1dbaca1058fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 5
+  _HP: 6
   _damageGracePeriod: 0.8
   GracePeriodFlashes: 4
   DamageWhitelistTags:
@@ -298,6 +298,7 @@ MonoBehaviour:
   - {fileID: 0}
   fadedHeart: {fileID: 21300000, guid: 5fd5b0cd2e8c56a478fc6dc8f3c5999f, type: 3}
   fullHeart: {fileID: 21300000, guid: d6b8676fdae598a46a90a7e935f9a15c, type: 3}
+  completed: 0
 --- !u!114 &6437729028663326167
 MonoBehaviour:
   m_ObjectHideFlags: 0
