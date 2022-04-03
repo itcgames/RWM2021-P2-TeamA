@@ -665,6 +665,17 @@ PrefabInstance:
       objectReference: {fileID: 192014677}
     - target: {fileID: 6437729028663326166, guid: 4d905866ed932a144a34f4b35d1d665f,
         type: 3}
+      propertyPath: health
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437729028663326166, guid: 4d905866ed932a144a34f4b35d1d665f,
+        type: 3}
+      propertyPath: halfHeart
+      value: 
+      objectReference: {fileID: 21300000, guid: 6425b2d3596fa5348b9234acef60e301,
+        type: 3}
+    - target: {fileID: 6437729028663326166, guid: 4d905866ed932a144a34f4b35d1d665f,
+        type: 3}
       propertyPath: hearts.Array.data[0]
       value: 
       objectReference: {fileID: 240637226}
