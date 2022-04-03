@@ -156,6 +156,7 @@ public class PlayerBehaviour : CharacterBehaviour
 				StartCoroutine(AnalyticsManager.PostMethod(jsonData));
 			}
 		}
+		PostEndGameDataToServer();
 	}
 
 	public void PostEndGameDataToServer()
