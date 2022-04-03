@@ -50,6 +50,9 @@ public class Asteroid : CharacterBehaviour
     {
         if(nextAsteroid != null)
         {
+            GameObject go = GameObject.FindGameObjectWithTag("Score");
+            ScoreController scoreTxt = (ScoreController)go.GetComponent(typeof(ScoreController));
+            scoreTxt.IncreaseScore();
             AsteroidData.asteroidsDestroyed += 1;
             AsteroidData.asteroidsSpawned += 1;
             Instantiate(nextAsteroid, transform.position, Quaternion.identity);
