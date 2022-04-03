@@ -10,8 +10,8 @@ public class PlayerBehaviour : CharacterBehaviour
 	public int maxHealth;
 	public Image[] hearts;
 	public Sprite fadedHeart;
+	public Sprite halfHeart;
 	public Sprite fullHeart;
-
 	public bool completed = false;
 
 	private DateTime _timeStart;
@@ -121,10 +121,18 @@ public class PlayerBehaviour : CharacterBehaviour
 
 	private void HealthChangedCallback(float newHealth, Dictionary<string, string> damageInfo)
 	{
+		int halfHealthIndex = -1;
+		if (Mathf.Floor(newHealth) < newHealth)
+		{
+			halfHealthIndex = Mathf.FloorToInt(newHealth);
+		}
 		for (int i = 0; i < maxHealth; i++)
 		{
-			if (i >= (int)newHealth)
+
+			if (i >= newHealth)
 				hearts[i].sprite = fadedHeart;
+			else if (i == halfHealthIndex)
+				hearts[i].sprite = halfHeart;
 			else
 				hearts[i].sprite = fullHeart;
 		}
