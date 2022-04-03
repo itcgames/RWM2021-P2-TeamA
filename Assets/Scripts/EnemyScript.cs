@@ -29,6 +29,9 @@ public class EnemyScript : MonoBehaviour
         KillOccurs killOccurs = new KillOccurs { weaponUsed = weaponUsed, enemyType = enemyType, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, eventId = 2 };
         string jsonData = JsonUtility.ToJson(killOccurs);
         StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+        GameObject go = GameObject.FindGameObjectWithTag("Score");
+        ScoreController please = (ScoreController)go.GetComponent(typeof(ScoreController));
+        please.IncreaseScore();
     }
 
     public void PlayParticleEffect()
