@@ -192,5 +192,5 @@ MonoBehaviour:
   AttackDamage: 0
   AttackRadius: 0.5
   _attackCooldown: 0.5
-  ThornsDamage: 0.5
+  ThornsDamage: 2
   FreezeOnAttack: 0
