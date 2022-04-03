@@ -2228,7 +2228,7 @@ MonoBehaviour:
   spawnMargin: 2
   spawnSpacing: 1
   approxEnemyRadius: 1.5
-  spawnDistance: 18
+  spawnDistance: 36
   enemyPrefabs:
   - {fileID: 5916769944785432130, guid: cd6215b988f350e44b248e09583c62b0, type: 3}
   _camera: {fileID: 1698634491}
