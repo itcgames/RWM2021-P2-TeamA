@@ -11,7 +11,7 @@ public class PlayerBehaviour : CharacterBehaviour
 	public Image[] hearts;
 	public Sprite fadedHeart;
 	public Sprite fullHeart;
-
+	public Text health;
 	public bool completed = false;
 
 	private DateTime _timeStart;
@@ -123,11 +123,12 @@ public class PlayerBehaviour : CharacterBehaviour
 	{
 		for (int i = 0; i < maxHealth; i++)
 		{
-			if (i >= (int)newHealth)
+			if (i >= Mathf.Ceil(newHealth))
 				hearts[i].sprite = fadedHeart;
 			else
 				hearts[i].sprite = fullHeart;
 		}
+		health.text = "Health: " + newHealth;
 	}
 
 	private void DeathCallback(Dictionary<string, string> damageInfo)
