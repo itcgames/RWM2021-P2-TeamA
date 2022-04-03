@@ -877,6 +877,7 @@ GameObject:
   m_Component:
   - component: {fileID: 555594861}
   - component: {fileID: 555594860}
+  - component: {fileID: 555594862}
   m_Layer: 0
   m_Name: ' Background (1)'
   m_TagString: Background
@@ -948,6 +949,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &555594862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555594859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b241b824717a1438ca173c18a0b361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &574182517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3666,6 +3679,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CloseGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 1844933590032594497, guid: 63806c320f1b20447ba63ab9c15754f9,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: 1844933590032594497, guid: 63806c320f1b20447ba63ab9c15754f9,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 1844933590172177422, guid: 63806c320f1b20447ba63ab9c15754f9,
         type: 3}
