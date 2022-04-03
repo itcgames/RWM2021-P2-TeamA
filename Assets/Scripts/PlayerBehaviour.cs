@@ -12,6 +12,8 @@ public class PlayerBehaviour : CharacterBehaviour
 	public Sprite fadedHeart;
 	public Sprite fullHeart;
 
+	public bool completed = false;
+
 	private DateTime _timeStart;
 	private Animator _animator;
 
@@ -30,6 +32,7 @@ public class PlayerBehaviour : CharacterBehaviour
 		public DateTime timeEnded;
 		public int eventId;
 		public double timePlayed;//time in seconds that they played the game for
+		public bool completed;
 	}
 
 	[System.Serializable]
@@ -147,9 +150,16 @@ public class PlayerBehaviour : CharacterBehaviour
 		}
 	}
 
-	private void OnApplicationQuit()
-	{
-		GameEnd gameEnd = new GameEnd { timeEnded = DateTime.UtcNow, deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier, timePlayed=(DateTime.UtcNow - _timeStart).TotalSeconds, eventId = 1 };
+	public void PostEndGameDataToServer()
+    {
+		GameEnd gameEnd = new GameEnd
+		{
+			timeEnded = DateTime.UtcNow,
+			deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier,
+			timePlayed = (DateTime.UtcNow - _timeStart).TotalSeconds,
+			eventId = 1,
+			completed = completed
+		};
 		string jsonData = JsonUtility.ToJson(gameEnd);
 		StartCoroutine(AnalyticsManager.PostMethod(jsonData));
 
@@ -167,6 +177,11 @@ public class PlayerBehaviour : CharacterBehaviour
 
 		if (!Application.isEditor)
 			Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLScQSZOf3EBjnzuc8Aw1kmCWVHfrod-ccsLGcIxlj7hfG0kH-Q/viewform?usp=pp_url&entry.1452894741=" + SystemInfo.deviceUniqueIdentifier);
+	}
+
+	private void OnApplicationQuit()
+	{
+		PostEndGameDataToServer();
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -10,6 +10,8 @@ public class EndGame : MonoBehaviour
 {
     public void MenuReturn()
     {
+        PlayerBehaviour player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
+        player.PostEndGameDataToServer();
         Time.timeScale = 1;
         SceneManager.LoadScene("Main Menu", LoadSceneMode.Single);
     }
