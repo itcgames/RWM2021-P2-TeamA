@@ -30,8 +30,8 @@ public class EnemyScript : MonoBehaviour
         string jsonData = JsonUtility.ToJson(killOccurs);
         StartCoroutine(AnalyticsManager.PostMethod(jsonData));
         GameObject go = GameObject.FindGameObjectWithTag("Score");
-        ScoreController please = (ScoreController)go.GetComponent(typeof(ScoreController));
-        please.IncreaseScore();
+        ScoreController scoreTxt = (ScoreController)go.GetComponent(typeof(ScoreController));
+        scoreTxt.IncreaseScore();
     }
 
     public void PlayParticleEffect()
