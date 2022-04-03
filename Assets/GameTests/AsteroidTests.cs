@@ -64,6 +64,7 @@ namespace Tests
         public IEnumerator LargerAsteroidsCreateNewAsteroids()
         {
             Spawner spawner = GetSpawner();
+            Camera cam = Camera.main;
             spawner.useCoRoutine = false;
             List<GameObject> asteroids = GameObject.FindGameObjectsWithTag("Asteroid").ToList();
             Assert.AreEqual(0, asteroids.Count);
@@ -74,6 +75,7 @@ namespace Tests
             //large asteroid spawns a medium asteroid
             Assert.AreEqual(1, asteroids.Count);
             Assert.AreEqual("Large", asteroids[0].GetComponent<Asteroid>().Type);
+            asteroids[0].transform.position = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
             asteroids[0].GetComponent<Health>().TakeDamage(2.0f);
             yield return new WaitForSeconds(0.2f);//give unity time to actually go destroy the asteroid
             asteroids = GameObject.FindGameObjectsWithTag("Asteroid").ToList();
@@ -88,6 +90,7 @@ namespace Tests
             //small asteroids shouldn't spawn anything
             Assert.AreEqual(1, asteroids.Count);
             Assert.AreEqual("Small", asteroids[0].GetComponent<Asteroid>().Type);
+            asteroids[0].transform.position = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
             asteroids[0].GetComponent<Health>().TakeDamage(1.0f);
             yield return new WaitForSeconds(0.2f);//give unity time to actually go destroy the asteroid
             asteroids = GameObject.FindGameObjectsWithTag("Asteroid").ToList();
