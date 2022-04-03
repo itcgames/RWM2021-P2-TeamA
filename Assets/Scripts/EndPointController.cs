@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndPointController : MonoBehaviour
 {
@@ -34,8 +35,16 @@ public class EndPointController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Time.timeScale = 0;
-            EndScreen.SetActive(true);
+            if (SceneManager.GetActiveScene().name == "Overworld")
+            {
+
+                SceneManager.LoadScene("Overworld2", LoadSceneMode.Single);
+            }
+            else
+            {
+                Time.timeScale = 0;
+                EndScreen.SetActive(true);
+            }
         }
     }
 }
