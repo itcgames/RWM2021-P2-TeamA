@@ -23,9 +23,9 @@ public class EndGame : MonoBehaviour
     {
         Time.timeScale = 1;
         Application.Quit();
-        if (UnityEditor.EditorApplication.isPlaying)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-        }
+        //if (UnityEditor.EditorApplication.isPlaying)
+        //{
+        //    UnityEditor.EditorApplication.isPlaying = false;
+        //}
     }
 }

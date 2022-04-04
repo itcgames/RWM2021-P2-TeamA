@@ -12,7 +12,10 @@ public class PlayerBehaviour : CharacterBehaviour
 	public Sprite fadedHeart;
 	public Sprite halfHeart;
 	public Sprite fullHeart;
+	public EntityManager entityManager;
 	public bool completed = false;
+	public int levelNumber = 0;
+	private bool endDataSent = false;
 
 	private DateTime _timeStart;
 	private Animator _animator;
@@ -33,6 +36,7 @@ public class PlayerBehaviour : CharacterBehaviour
 		public int eventId;
 		public double timePlayed;//time in seconds that they played the game for
 		public bool completed;
+		public int levelNumber;
 	}
 
 	[System.Serializable]
@@ -53,6 +57,7 @@ public class PlayerBehaviour : CharacterBehaviour
 		public int asteroidsSpawned;
 		public int asteroidsMissed;
 		public int asteroidsCollisions;
+		public int levelNumber;
     }
 
 	public void HealToFull()
@@ -157,35 +162,42 @@ public class PlayerBehaviour : CharacterBehaviour
 			}
 		}
 		PostEndGameDataToServer();
+
+		if (!Application.isEditor)
+			Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLScSrRyrGcTiTLFYvx7RDkLH3un7zAv2KwawNi6YStAA9mesrA/viewform?usp=pp_url&entry.1452894741=" + SystemInfo.deviceUniqueIdentifier);
 	}
 
 	public void PostEndGameDataToServer()
     {
-		GameEnd gameEnd = new GameEnd
+		if (!endDataSent)
 		{
-			timeEnded = DateTime.UtcNow,
-			deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier,
-			timePlayed = (DateTime.UtcNow - _timeStart).TotalSeconds,
-			eventId = 1,
-			completed = completed
-		};
-		string jsonData = JsonUtility.ToJson(gameEnd);
-		StartCoroutine(AnalyticsManager.PostMethod(jsonData));
+			endDataSent = true;
 
-		AsteroidExternalData asteroidData = new AsteroidExternalData
-		{
-			eventId = 6,
-			deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier,
-			asteroidsDestroyed = AsteroidData.asteroidsDestroyed,
-			asteroidsMissed = AsteroidData.numberAsteroidsMissed,
-			asteroidsSpawned = AsteroidData.asteroidsSpawned,
-			asteroidsCollisions = AsteroidData.asteroidCollisions
-		};
-		string asteroidJson = JsonUtility.ToJson(asteroidData);
-		StartCoroutine(AnalyticsManager.PostMethod(asteroidJson));
+			GameEnd gameEnd = new GameEnd
+			{
+				timeEnded = DateTime.UtcNow,
+				deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier,
+				timePlayed = (DateTime.UtcNow - _timeStart).TotalSeconds,
+				eventId = 1,
+				completed = completed,
+				levelNumber = levelNumber
+			};
+			string jsonData = JsonUtility.ToJson(gameEnd);
+			entityManager.StartCoroutine(AnalyticsManager.PostMethod(jsonData));
 
-		if (!Application.isEditor)
-			Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLScQSZOf3EBjnzuc8Aw1kmCWVHfrod-ccsLGcIxlj7hfG0kH-Q/viewform?usp=pp_url&entry.1452894741=" + SystemInfo.deviceUniqueIdentifier);
+			AsteroidExternalData asteroidData = new AsteroidExternalData
+			{
+				eventId = 6,
+				deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier,
+				asteroidsDestroyed = AsteroidData.asteroidsDestroyed,
+				asteroidsMissed = AsteroidData.numberAsteroidsMissed,
+				asteroidsSpawned = AsteroidData.asteroidsSpawned,
+				asteroidsCollisions = AsteroidData.asteroidCollisions,
+				levelNumber = levelNumber
+			};
+			string asteroidJson = JsonUtility.ToJson(asteroidData);
+			entityManager.StartCoroutine(AnalyticsManager.PostMethod(asteroidJson));
+		}
 	}
 
 	private void OnApplicationQuit()

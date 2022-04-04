@@ -1917,6 +1917,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6437729028663326166, guid: 4d905866ed932a144a34f4b35d1d665f,
         type: 3}
+      propertyPath: levelNumber
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437729028663326166, guid: 4d905866ed932a144a34f4b35d1d665f,
+        type: 3}
+      propertyPath: entityManager
+      value: 
+      objectReference: {fileID: 945678781}
+    - target: {fileID: 6437729028663326166, guid: 4d905866ed932a144a34f4b35d1d665f,
+        type: 3}
       propertyPath: hearts.Array.data[0]
       value: 
       objectReference: {fileID: 1870079185}

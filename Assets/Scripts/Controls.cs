@@ -20,9 +20,9 @@ public class Controls : MonoBehaviour
     public void EndGame()
     {
         Application.Quit();
-        if (UnityEditor.EditorApplication.isPlaying)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-        }
+        //if (UnityEditor.EditorApplication.isPlaying)
+        //{
+        //    UnityEditor.EditorApplication.isPlaying = false;
+        //}
     }
 }

@@ -676,6 +676,16 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 6437729028663326166, guid: 4d905866ed932a144a34f4b35d1d665f,
         type: 3}
+      propertyPath: levelNumber
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437729028663326166, guid: 4d905866ed932a144a34f4b35d1d665f,
+        type: 3}
+      propertyPath: entityManager
+      value: 
+      objectReference: {fileID: 836570714}
+    - target: {fileID: 6437729028663326166, guid: 4d905866ed932a144a34f4b35d1d665f,
+        type: 3}
       propertyPath: hearts.Array.data[0]
       value: 
       objectReference: {fileID: 240637226}

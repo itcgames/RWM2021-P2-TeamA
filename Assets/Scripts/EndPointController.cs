@@ -35,15 +35,21 @@ public class EndPointController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            PlayerBehaviour player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
+            player.completed = true;
+            player.PostEndGameDataToServer();
+
             if (SceneManager.GetActiveScene().name == "Overworld")
             {
-
                 SceneManager.LoadScene("Overworld2", LoadSceneMode.Single);
             }
             else
             {
                 Time.timeScale = 0;
                 EndScreen.SetActive(true);
+
+                if (!Application.isEditor)
+                    Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLScSrRyrGcTiTLFYvx7RDkLH3un7zAv2KwawNi6YStAA9mesrA/viewform?usp=pp_url&entry.1452894741=" + SystemInfo.deviceUniqueIdentifier);
             }
         }
     }
